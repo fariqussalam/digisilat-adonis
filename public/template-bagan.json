@@ -1,0 +1,281 @@
+{
+  "brackets": {
+    "2": {
+      "jumlah": 2,
+      "data": {
+        "teams" : [
+          ["Undian:1", "Undian:2"]
+        ],
+        "results" : []
+      }
+    },
+    "3": {
+      "jumlah": 3,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"]
+        ],
+        "results" : []
+      }
+    },
+    "4": {
+      "jumlah": 4,
+      "data": {
+        "teams" : [
+          ["Undian:1", "Undian:2"],
+          ["Undian:3", "Undian:4"]
+        ],
+        "results" : []
+      }
+    },
+    "5": {
+      "jumlah": 5,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          [null, null],
+          ["Undian:4", "Undian:5"]
+        ],
+        "results" : []
+      }
+    },
+    "6": {
+      "jumlah": 6,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", "Undian:5"],
+          ["Undian:6", null]
+        ],
+        "results" : []
+      }
+    },
+    "7": {
+      "jumlah": 7,
+      "data": {
+        "teams" : [
+          ["Undian:1", "Undian:2"],
+          ["Undian:3", "Undian:4"],
+          ["Undian:5", "Undian:6"],
+          ["Undian:7", null]
+        ],
+        "results" : []
+      }
+    },
+    "8": {
+      "jumlah": 8,
+      "data": {
+        "teams" : [
+          ["Undian:1", "Undian:2"],
+          ["Undian:3", "Undian:4"],
+          ["Undian:5", "Undian:6"],
+          ["Undian:7", "Undian:8"]
+        ],
+        "results" : []
+      }
+    },
+    "9": {
+      "jumlah": 9,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          [null, null],
+          ["Undian:4", "Undian:5"],
+          ["Undian:6", "Undian:7"],
+          [null, null],
+          ["Undian:8", "Undian:9"],
+          [null, null]
+        ],
+        "results" : []
+      }
+    },
+    "10": {
+      "jumlah": 10,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", "Undian:5"],
+          [null, null],
+          ["Undian:6", "Undian:7"],
+          [null, null],
+          ["Undian:8", "Undian:9"],
+          ["Undian:10", null]
+        ],
+        "results" : []
+      }
+    },
+    "11": {
+      "jumlah": 11,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", "Undian:5"],
+          ["Undian:6", null],
+          ["Undian:7", null],
+          ["Undian:8", null],
+          ["Undian:9", "Undian:10"],
+          ["Undian:11", null]
+        ],
+        "results" : []
+      }
+    },
+    "12": {
+      "jumlah": 12,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", "Undian:5"],
+          ["Undian:6", null],
+          ["Undian:7", null],
+          ["Undian:8", "Undian:9"],
+          ["Undian:10", "Undian:11"],
+          ["Undian:12", null]
+        ],
+        "results" : []
+      }
+    },
+    "13": {
+      "jumlah": 13,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", "Undian:5"],
+          ["Undian:6", "Undian:7"],
+          ["Undian:8", null],
+          ["Undian:9", "Undian:10"],
+          ["Undian:11", "Undian:12"],
+          ["Undian:13", null]
+        ],
+        "results" : []
+      }
+    },
+    "14": {
+      "jumlah": 14,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", "Undian:5"],
+          ["Undian:6", "Undian:7"],
+          ["Undian:8", "Undian:9"],
+          ["Undian:10", "Undian:11"],
+          ["Undian:12", "Undian:13"],
+          ["Undian:14", null]
+        ],
+        "results" : []
+      }
+    },
+    "15": {
+      "jumlah": 15,
+      "data": {
+        "teams" : [
+          ["Undian:1", "Undian:2"],
+          ["Undian:3", "Undian:4"],
+          ["Undian:5", "Undian:6"],
+          ["Undian:7", "Undian:8"],
+          ["Undian:9", null],
+          ["Undian:10", "Undian:11"],
+          ["Undian:12", "Undian:13"],
+          ["Undian:14", "Undian:15"]
+        ],
+        "results" : []
+      }
+    },
+    "16": {
+      "jumlah": 16,
+      "data": {
+        "teams" : [
+          ["Undian:1", "Undian:2"],
+          ["Undian:3", "Undian:4"],
+          ["Undian:5", "Undian:6"],
+          ["Undian:7", "Undian:8"],
+          ["Undian:9", "Undian:10"],
+          ["Undian:11", "Undian:12"],
+          ["Undian:13", "Undian:14"],
+          ["Undian:15", "Undian:16"]
+        ],
+        "results" : []
+      }
+    },
+    "17": {
+      "jumlah": 17,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", null],
+          ["Undian:5", null],
+          ["Undian:6", null],
+          ["Undian:7", null],
+          ["Undian:8", null],
+          ["Undian:9", null],
+          ["Undian:10", null],
+          ["Undian:11", null],
+          ["Undian:12", null],
+          ["Undian:13", null],
+          ["Undian:14", null],
+          ["Undian:15", null],
+          ["Undian:16", null],
+          ["Undian:17", null]
+        ],
+        "results" : []
+      }
+    },
+    "18": {
+      "jumlah": 18,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", null],
+          ["Undian:5", null],
+          ["Undian:6", null],
+          ["Undian:7", null],
+          ["Undian:8", null],
+          ["Undian:9", null],
+          ["Undian:10", null],
+          ["Undian:11", null],
+          ["Undian:12", null],
+          ["Undian:13", null],
+          ["Undian:14", null],
+          ["Undian:15", null],
+          ["Undian:16", "Undian:17"],
+          ["Undian:18", null]
+        ],
+        "results" : []
+      }
+    },
+    "19": {
+      "jumlah": 19,
+      "data": {
+        "teams" : [
+          ["Undian:1", null],
+          ["Undian:2", "Undian:3"],
+          ["Undian:4", null],
+          ["Undian:5", null],
+          ["Undian:6", null],
+          ["Undian:7", null],
+          ["Undian:8", "Undian:9"],
+          ["Undian:10", null],
+          ["Undian:11", null],
+          ["Undian:12", null],
+          ["Undian:13", null],
+          ["Undian:14", null],
+          ["Undian:15", null],
+          ["Undian:16", null],
+          ["Undian:17", "Undian:18"],
+          ["Undian:19", null]
+        ],
+        "results" : []
+      }
+    }
+  }
+}

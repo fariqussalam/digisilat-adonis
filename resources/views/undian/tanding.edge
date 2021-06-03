@@ -1,0 +1,95 @@
+@layout('layouts/layout')
+
+@section('content')
+    <div class="container-fluid p-0">
+        <div class="row mb-1 mb-xl-3">
+            <div class="col-auto d-none d-sm-block">
+                <h3>Undian Tanding</h3>
+            </div>
+            @include('partials/flash')
+        </div>
+        <div class="row">
+          <div class="card">
+              <div class="col-5">
+                <div style="padding-top: 20px;">
+                  <form>
+                    <div class="mb-3 row">
+                      <label class="col-form-label col-sm-2"><b>Kelas</b></label>
+                      <div class="col-sm-6 pl-0">
+                        <select name="kelas" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Kelas">
+                          <option></option>
+                          @each(k in kelasList)
+                          <option value="{{ k.id }}" {{ k.id == kelas  ? 'selected' : '' }}>{{ k.nama }}</option>
+                          @endeach
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+        @if(pesilatList.length > 0)
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="float-end">
+                            @if(undian)
+                            <button class="btn btn-success js-undian-export-to-excel" data-undian="{{undian.id}}" data-url="{{route('UndianController.exportExcel')}}">Export To Excel</button>
+                            @endif
+                            <button class="btn btn-primary js-undian-undi"
+                            data-kategori="{{ kelas }}"
+                            data-type="tanding"
+                            data-peserta-undian="{{ pesilatNamaList.join(',') }}"
+                            data-url="{{ route('UndianController.undi') }}">
+                                Undi
+                            </button>
+                        </div>
+                        <h5 class="card-title">Daftar Pesilat</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table datatables-kategori table-full-width">
+                            <thead>
+                            <tr>
+                                <th width="5%">No</th>
+                                <th width="40%">Nama</th>
+                                <th width="20%">Kelas</th>
+                                <th width="20%">Kontingen</th>
+                                <th width="15%">Nomor Undian</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @each(pesilat in pesilatList)
+                                @set('nomorUndian', pesilat.nomor_undian != null ? pesilat.nomor_undian : "-")
+                                <tr class="js-data-peserta" data-nama="{{ pesilat.nama }}" data-nama-kontingen="{{pesilat.kontingen.nama}}" data-kontingen="{{ pesilat.kontingen.id }}" data-nomor-undian="{{ nomorUndian }}">
+                                    <td>{{ $loop.index + 1 }}</td>
+                                    <td>{{ pesilat.nama }}</td>
+                                    <td>{{ pesilat.kelas.nama }}</td>
+                                    <td>{{ pesilat.kontingen.nama }}</td>
+                                    <td>{{ nomorUndian }}</td>
+                                </tr>
+                                @endeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="jumlah_peserta" value='{{ jumlahPeserta }}'>
+            <input type="hidden" name="template_bagan" value='{{{ templateBagan }}}' />
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Bagan</h5>
+                    </div>
+                    <div class="card-body js-bracket-wrapper">
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+        </div>
+        <form class="d-none js-download-form" method="GET" action="{{route('FileController.download')}}">
+            <input type=hidden name="filename" value=""/>
+        </form>
+@endsection

@@ -1,0 +1,21 @@
+.turnamen-active-text {
+    width: 100%;
+    white-space: nowrap;
+    padding-top: 5px;
+    font-size: 17px;
+}
+
+.table-full-width {
+    width: 100%;
+}
+
+.undian-box-wrapper {
+    min-height: 200px;
+}
+
+.undian-box {
+    font-size:40px;
+    margin-top:30px;
+    margin-bottom:30px;
+    padding-top:80px
+}

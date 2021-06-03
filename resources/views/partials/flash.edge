@@ -1,0 +1,20 @@
+@if(flash.message)
+<div class="col-12 pt-1">
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+		<div class="alert-message">
+			{{flash.message}}
+		</div>
+	</div>
+</div>  
+@endif
+@if(flash.error)
+<div class="col-12 pt-1">
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+		<div class="alert-message">
+			{{flash.error}}
+		</div>
+	</div>
+</div>  
+@endif

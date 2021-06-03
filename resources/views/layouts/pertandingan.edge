@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    @section('head')
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Digisilat - {{ title  }}</title>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <!-- CSS -->
+        <link href="/pertandingan/lib/bootstrap.min.css" rel="stylesheet">
+        <link href="/pertandingan/assets/css/application.css" rel="stylesheet">
+        <link href="/pertandingan/assets/css/helper.css" rel="stylesheet">
+        <link href="/pertandingan/sticky-footer-navbar.css" rel="stylesheet">
+        <link href="/pertandingan/dist/css/custom.css" rel="stylesheet">
+        @section('module_css')
+        @endsection
+    @endsection
+</head>
+<body>
+<input type="hidden" name="pertandingan_id" value="{{ pertandingan.id }}" />
+<input type="hidden" name="tournament_id" value="{{ tournament.id }}" />
+@section('content')
+  
+@endsection
+<script src="/pertandingan/lib/jquery.min.js"></script>
+<script src="/pertandingan/lib/bootstrap.min.js"></script>
+<script src="/pertandingan/socket.io.js"></script>
+<script src="/pertandingan/lib/html2canvas.min.js"></script>
+<script src="/pertandingan/lib/underscore-min.js"></script>
+<script src="/pertandingan/lib/daysjs/dayjs.min.js"></script>
+<script src="/pertandingan/lib/daysjs/id.js"></script>
+<script src="/pertandingan/common/utils.js"></script>
+<script src="/pertandingan/common/socketEvent.js"></script>
+<script src="/pertandingan/common/model.js"></script>
+<script src="/pertandingan/common/globals.js"></script>
+<script src="/pertandingan/helpers.js"></script>
+<script src="/pertandingan/assets/js/jquery.serialize-object.min.js"></script>
+@section('module_js')
+@endsection
+</body>
+</html>

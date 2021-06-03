@@ -1,0 +1,78 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+
+    <div class="row mb-2 mb-xl-3">
+      <div class="col-auto d-none d-sm-block">
+        <h3>Tambah Turnamen Baru</h3>
+      </div>
+  
+      <div class="col-auto ml-auto text-right mt-n1">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+            <li class="breadcrumb-item"><a href="#">DigiSilat</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Turnamen</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+    
+      <div class="col-md-12">
+        <form method="POST" enctype="multipart/form-data" action="{{ route('TournamentController.update') }}">
+          <div class="card">
+              <div class="card-body">
+                    {{ csrfField() }}
+                    <input type="hidden" name="id" value="{{tournament.id}}" />
+                      <div class="row">
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="nama">Nama</label>
+                              <input type="text" class="form-control" id="nama" name="nama" value="{{tournament.nama}}" placeholder="Nama Turnamen" required>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="tempat">Tempat</label>
+                              <input type="text" class="form-control" id="tempat" name="tempat" value="{{tournament.tempat}}" placeholder="Tempat Pelaksanaan Turnamen" required>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="waktu">Waktu</label>
+                              <input type="text" class="form-control" id="waktu" name="waktu" value="{{tournament.waktu}}" placeholder="Waktu Pelaksanaan Turnamen" required>
+                          </div>
+                      </div>
+              </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="mb-3 col-md-6" style="width:30%">
+                  @if(tournament.logo_1)
+                  <label class="form-label">Logo 1</label>
+                  <img src="/uploads/{{tournament.logo_1}}" class="img-thumbnail pe-2">
+                  <button class="btn btn-primary js-tournament-change-image btn-sm mt-1" data-name="logo_1" data-label="Logo 1"> X Ganti</button>
+                  @else
+                  <label class="form-label">Logo 1</label>
+                  <input type="file" class="form-control" name="logo_1" >
+                  @endif
+                </div>
+                <div class="mb-3 col-md-6" style="width:30%">
+                  @if(tournament.logo_2)
+                  <label class="form-label">Logo 2</label>
+                  <img src="/uploads/{{tournament.logo_2}}" class="img-thumbnail pe-2">
+                  <button class="btn btn-primary js-tournament-change-image btn-sm mt-1" data-name="logo_2" data-label="Logo 2"> X Ganti</button>
+                  @else
+                  <label class="form-label">Logo 2</label>
+                  <input type="file" class="form-control" name="logo_2" >
+                  @endif
+                </div>
+            </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </form>
+      </div>
+    </div>
+  
+  </div>
+@endsection

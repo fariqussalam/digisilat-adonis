@@ -1,0 +1,30 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+    <div class="row mb-1 mb-xl-3">
+        <div class="col-auto d-none d-sm-block">
+            <h3>Contoh Bagan</h3>
+        </div>
+        <div class="col-auto ml-auto text-right mt-n1">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+                    <li class="breadcrumb-item"><a href="#">DigiSilat</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contoh Bagan</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <input type="hidden" name="template_bagan" value='{{ templateBagan }}' />
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Bagan</h5>
+                </div>
+                <div class="card-body js-contoh-bagan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

@@ -1,0 +1,171 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+  <div class="row mb-1 mb-xl-3">
+    <div class="col-2 d-none d-sm-block">
+      <h3>Daftar Penampilan</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-5">
+              <div style="padding-top: 20px;">
+                <form method="get" action="{{ route('JadwalController.jadwalSeni') }}">
+                  <div class="row">
+                    <label class="col-form-label col-sm-3">Kategori Seni</label>
+                    <div class="col-sm-6 pl-0">
+                      <select name="kategori" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Kategori">
+                        <option value="all" {{kelas == 'all' ? 'selected' : ''}}>Seluruh Kategori</option>
+                        @each(k in kategoriList)
+                        <option value="{{ k.id }}" {{ k.id == kategori  ? 'selected' : '' }}>{{ k.nama }}</option>
+                        @endeach
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped datatables-pertandingan" style="width:100%">
+            <thead>
+            <tr>
+              <th width="5%">Pool</th>
+              <th width="5%">Kategori</th>
+              <th>Nama</th>
+              <th>Kontingen</th>
+              <th>Nomor Penampil</th>
+              <th>Status</th>
+              <th>Nilai Akhir</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @each(pertandingan in pertandinganList)
+            <tr>
+              <td>{{ pertandingan.nomor_pool ? pertandingan.nomor_pool : "-" }}</td>
+              <td>{{ pertandingan.kategori.nama }}</td>
+              <td>{{ pertandingan.pesilat.nama }}</td>
+              <td>{{ pertandingan.kontingen.nama }}</td>
+              <td>{{ pertandingan.nomor_penampil ? pertandingan.nomor_penampil : "-" }}</td>
+              <td>{{ pertandingan.status.value }}</td>
+              <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
+              <td>
+                @if(pertandingan.status.name == 'BELUM_DIMULAI')
+                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalController.updatePool') }}" data-id="{{pertandingan.id}}" >Atur</button>
+                @else
+                -
+                @endif
+              </td>
+            </tr>
+            @endeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-1 mb-xl-3">
+        <div class="col-2 d-none d-sm-block">
+            <h3>Jadwal Seni</h3>
+        </div>
+        <div class="col-10">
+          <a class="float-end btn btn-info" href="{{route('JadwalController.resetPool')}}">Reset Pool</a>
+        </div>
+        @include('partials/flash')
+    </div>
+</div>
+@if(activeTournament.jumlah_pool > 0)
+<input type="hidden" name="jumlah_pool" value="{{activeTournament.jumlah_pool}}" />
+<div class="row mb-2">
+  <div class="col-8">
+      <div>
+       <h4>Jumlah Pool : {{ activeTournament.jumlah_pool }}</h4>
+      </div>
+  </div>
+</div>
+@each(nomor_pool in range(activeTournament.jumlah_pool))
+@set('poolList', poolMap[$loop.index + 1])
+@set('nomorPool', $loop.index + 1)
+  <div class="row">
+  <div class="col-12">
+
+    <div class="card">
+      <div class="card-header">
+        <h4>Pool {{ nomorPool }}</h4>
+        <a href="{{ route('SeniController.pool', {nomor_pool: nomorPool}) }}" class="mb-1 btn btn-sm btn-success">
+          Luncurkan Pool
+        </a>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped datatables-kategori" style="width:100%">
+          <thead>
+            <tr>
+              <th width="5%">Kategori</th>
+              <th>Nama</th>
+              <th>Kontingen</th>
+              <th>Nomor Penampil</th>
+              <th>Status</th>
+              <th>Nilai Akhir</th>
+              <th></th>
+            </tr>
+          </thead>
+         <tbody>
+          @each(pertandingan in poolList)
+          <tr>
+            <td>{{ pertandingan.kategori.nama }}</td>
+              <td>{{ pertandingan.pesilat.nama }}</td>
+              <td>{{ pertandingan.kontingen.nama }}</td>
+              <td>{{ pertandingan.nomor_penampil ? pertandingan.nomor_penampil : "-" }}</td>
+              <td>{{ pertandingan.status.value }}</td>
+              <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
+              <td>
+                @if(pertandingan.status.name == 'BELUM_DIMULAI')
+                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalController.updatePool') }}" data-id="{{pertandingan.id}}" >Atur</button>
+                @else
+                -
+                @endif
+              </td>
+          </tr>
+        @endeach
+         </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+@endeach
+@else
+<div class="row">
+  <div class="col-8">
+      <div style="padding-top: 20px;">
+          <form method="POST" action="{{ route('JadwalController.updatePool') }}">
+            {{ csrfField() }}
+              <h4>Setup Pool</h4>
+              <div class="mb-3 row">
+                  <label class="col-form-label col-sm-3">Tentukan Jumlah Pool</label>
+                  <div class="col-sm-3">
+                      <select name="jumlah_pool" class="form-control js-select2" data-placeholder="Jumlah Pool">
+                          <option></option>
+                          @each(n in [1,2,3,4])
+                            <option value="{{n}}">{{ n }} pool</option>
+                          @endeach
+                      </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <button type="submit" class="btn btn-primary">Buat Pool</button>
+                  </div>
+
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+@endif
+@endsection

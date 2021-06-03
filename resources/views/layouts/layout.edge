@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Administrasi Pertandingan DigiSilat">
+  <meta name="author" content="Cryptech Sports">
+  <link rel="shortcut icon" href="/img/icons/icon-48x48.png" />
+  <title>DigiSilat - Administrasi Pertandingan</title>
+  {{ style('lib/odometer-master/themes/odometer-theme-plaza.css') }}
+  {{ style('css/app') }}
+  {{ style('css/digisilat-admin') }}
+  {{ style('lib/vex') }}
+  {{ style('lib/vex-theme-plain') }}
+  {{ style('lib/select2.min') }}
+  {{ style('lib/jquery.bracket.min') }}
+</head>
+
+<body>
+  <div class="wrapper" data-csrf="{{ csrfToken }}">
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="/">
+          <span class="align-middle">DigiSilat</span>
+        </a>
+
+        <ul class="sidebar-nav">
+          <li class="sidebar-item {{ url.includes('tournament') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('TournamentController.index') }}">
+              <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Turnamen</span>
+            </a>
+          </li>
+          <li class="sidebar-header">
+            Manajemen Data
+          </li>
+          </li>
+          <li class="sidebar-item {{ url.includes('kategori') ? 'active' : '' }}">
+            <a class="sidebar-link" href="/kategori">
+              <i class="align-middle" data-feather="database"></i> <span class="align-middle">Kategori</span>
+            </a>
+          </li>
+          </li>
+          <li class="sidebar-item {{ url.includes('peserta') ? 'active' : '' }}">
+						<a data-bs-target="#peserta" data-bs-toggle="collapse" class="sidebar-link">
+							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Peserta</span>
+						</a>
+						<ul id="peserta" class="sidebar-dropdown list-unstyled collapse hide" data-bs-parent="#sidebar">
+							<li class="sidebar-item"><a class="sidebar-link" href="{{ route('PesertaController.tanding') }}">Tanding</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="{{ route('PesertaController.seni') }}">Seni</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="{{ route('PesertaController.official') }}">Official</a></li>
+						</ul>
+					</li>
+          <li class="sidebar-header">
+            Undian
+          </li>
+
+            <li class="sidebar-item {{ url.includes('/undian/tanding') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('UndianController.tanding') }}">
+              <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Undian Tanding</span>
+            </a>
+          </li>
+          <li class="sidebar-item {{ url.includes('/undian/seni') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('UndianController.seni') }}">
+              <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Undian Seni</span>
+            </a>
+          </li>
+          <li class="sidebar-header">
+            Pertandingan
+          </li>
+          @if(activeTournament.jadwal_generated)
+          <li class="sidebar-item {{ url.includes('/pertandingan/jadwal/tanding') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('JadwalController.jadwalTanding') }}">
+              <i class="align-middle" data-feather="users"></i> <span class="align-middle">Jadwal Tanding</span>
+            </a>
+          </li>
+          @else 
+          <div class="sidebar-cta">
+            <div class="sidebar-cta-content">
+              <strong class="d-inline-block mb-2">Buat Jadwal Pertandingan</strong>
+              <div class="d-grid">
+                <button class="btn btn-primary js-turnamen-generate-jadwal" data-url="{{ route('JadwalController.generateJadwal') }}">Buat</button>
+              </div>
+            </div>
+          </div>
+          @endif
+          @if(activeTournament.jadwal_seni_generated)
+          <li class="sidebar-item {{ url.includes('/pertandingan/jadwal/seni') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('JadwalController.jadwalSeni') }}">
+              <i class="align-middle" data-feather="wind"></i> <span class="align-middle">Jadwal Seni</span>
+            </a>
+          </li>
+          @else
+          <div class="sidebar-cta">
+            <div class="sidebar-cta-content">
+              <strong class="d-inline-block mb-2">Buat Jadwal Seni</strong>
+              <div class="d-grid">
+                <button class="btn btn-primary js-turnamen-generate-jadwal" data-url="{{ route('JadwalController.generateJadwalSeni') }}">Buat</button>
+              </div>
+            </div>
+          </div>
+          @endif
+        </ul>
+
+      </div>
+    </nav>
+
+    <div class="main">
+      <nav class="navbar navbar-expand navbar-light navbar-bg">
+        <a class="sidebar-toggle d-flex">
+          <i class="hamburger align-self-center"></i>
+        </a>
+        @if(activeTournament != null)
+        <div class="turnamen-active-text">
+          <span class="badge bg-primary">Turnamen : {{activeTournament.nama}}</span>
+        </div>
+        @endif
+        <div class="navbar-collapse collapse">
+          <ul class="navbar-nav navbar-align">
+            <li class="nav-item dropdown">
+              <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+
+              <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                <span class="text-dark">Charles Hall</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="pages-profile.html"><i class="align-middle mr-1" data-feather="user"></i>
+                  Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Log out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <main class="content">
+        @section('content')
+        @endsection
+      </main>
+
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row text-muted">
+            <div class="col-6 text-left">
+              <p class="mb-0">
+                <a href="#" class="text-muted"><strong>DigiSilat</strong></a> &copy;
+              </p>
+            </div>
+            <div class="col-6 text-right">
+
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  {{ script('js/app.js') }}
+  {{ script('lib/jquery-3.5.1.min.js') }}
+  {{ script('https://unpkg.com/sweetalert/dist/sweetalert.min.js') }}
+  {{ script('lib/bootbox.min.js') }}
+  {{ script('js/datatables.js') }}
+  {{ script('lib/vex.combined.min.js') }}
+  {{ script('lib/select2.min.js') }}
+  {{ script('lib/odometer-master/odometer.min.js') }}
+  {{ script('lib/jquery.bracket.min.js') }}
+  {{ script('lib/underscore-min.js') }}
+  {{ script('lib/socket.io.js') }}
+  {{ script('js/digisilat-admin.js') }}
+  <script type="text/javascript">
+    vex.defaultOptions.className = 'vex-theme-plain'
+  </script>
+</body>
+
+</html>

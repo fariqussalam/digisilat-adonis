@@ -1,0 +1,61 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+  <div class="row mb-1 mb-xl-3">
+    <div class="col-auto d-none d-sm-block">
+      <h3>Turnamen</h3>
+    </div>
+
+    @include('partials/flash')
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+            <a href="{{ route('TournamentController.create') }}" class="float-end btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Tambah Turnamen
+            </a>
+          <h5 class="card-title">Daftar Turnamen</h5>
+        </div>
+        <div class="card-body">
+          <table id="datatables-turnamen" class="table table-striped table-full-width">
+            <thead>
+              <tr>
+                <th width="5%">No</th>
+                <th>Nama</th>
+                <th>Tempat</th>
+                <th>Waktu</th>
+                <th>Aktif</th>
+                <th width="15%"></th>
+              </tr>
+            </thead>
+            <tbody>
+                @each(tournament in tournamentList)
+                <tr>
+                    <td>{{ ($loop.index + 1) }}</td>
+                    <td>{{ tournament.nama }}</td>
+                    <td>{{ tournament.tempat }}</td>
+                    <td>{{ tournament.waktu }}</td>
+                    <td>
+                    @if(tournament.is_active == true)
+                    <span class="badge bg-success">Aktif</span>
+                    @else
+                    <button class="btn btn-sm btn-primary js-turnamen-activate" data-id="{{tournament.id}}" data-url="{{ route('TournamentController.activate') }}">Aktifkan</button>
+                    @endif
+                    </td>
+                    <td>
+                      <a href="{{ route('TournamentController.edit', { id: tournament.id }) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+                      <button class="btn btn-sm btn-danger js-turnamen-delete" data-id="{{tournament.id}}" data-url={{ route('TournamentController.delete') }}><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+              @endeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection

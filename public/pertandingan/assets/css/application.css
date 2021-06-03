@@ -1,0 +1,104 @@
+.list-nama-pesilat {
+    margin-left: -25px;
+}
+
+.kolom-skor-tertinggi {
+    background-color: red;
+    color: white;
+}
+
+.kolom-skor-terendah {
+    background-color: blue;
+    color: white;
+}
+
+.list-page {
+    width: 300px;
+    display: block;
+    margin: 50px auto 50px; }
+.list-page h3 {
+    font-size: 32px;
+    line-height: 42px;
+    font-weight: 300; }
+.list-page ul {
+    background: #fff;
+    padding: 0;
+    margin: 0 0 30px 0;
+    list-style: none;
+    display: block; }
+.list-page ul li {
+    display: block; }
+.list-page ul li a {
+    display: block;
+    padding: 15px 20px;
+    background: #fff;
+    color: #6f6f6f;
+    border-bottom: solid 1px #efefef;
+    text-decoration: none !important; }
+.list-page ul li a:focus, .list-page ul li a:hover {
+    color: #ec1d24; }
+
+.printed-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    background-color:white;
+}
+
+.printed-container-15 {
+    padding-left: 25px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    background-color:white;
+}
+
+.f-9 {
+    font-size: 9px;
+}
+
+.f-10 {
+    font-size: 10px;
+}
+
+.f-16 {
+    font-size: 16px;
+}
+
+.mt-min-30 {
+    margin-top: -30px
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.f-13 {
+    font-size: 13px;
+}
+.f-15 {
+    font-size: 15px;
+}
+.v-middle {
+    vertical-align: middle;
+}
+
+
+table.tanding-admin.table-bordered > tbody > tr > td {
+    border:1px solid black;
+}
+
+.sisi-biru {
+    color: #fff;
+    background-color: #337ab7;
+}
+.sisi-merah {
+    color: white;
+    background-color: red;
+}
+
+.tanding-juri-radio {
+    margin-top: 30px;
+    font-size: 20px;
+    margin-bottom: 30px;
+}

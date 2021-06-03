@@ -1,0 +1,57 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+  <div class="row mb-1 mb-xl-3">
+    <div class="col-auto d-none d-sm-block">
+      <h3>Kategori</h3>
+    </div>
+    <div class="col-auto ml-auto text-right mt-n1">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+          <li class="breadcrumb-item"><a href="#">DigiSilat</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Kategori</li>
+        </ol>
+      </nav>
+    </div>
+    @include('partials/flash')
+  </div>
+  <div class="row">
+    @each(type in typeList)
+    <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+              <button class="btn btn-primary float-end js-kategori-create" data-type="{{type.type}}" data-url="{{ route('KategoriController.save') }}">
+                  Tambah {{type.name}}
+              </button>
+            <h5 class="card-title">Daftar {{type.name}}</h5>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped datatables-kategori table-full-width">
+              <thead>
+                <tr>
+                  <th width="5%">No</th>
+                  <th width="80%">Nama</th>
+                  <th width="15%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                @each(kategori in type.list)
+                  <tr>
+                      <td>{{ $loop.index + 1 }}</td>
+                      <td>{{ kategori.nama }}</td>
+                      <td>
+                          <button class="btn btn-sm btn-info js-kategori-edit" data-id="{{kategori.id}}" data-url="{{ route('KategoriController.update') }}" data-nama="{{kategori.nama}}"><i class="fas fa-edit"></i></button>
+                          <button class="btn btn-sm btn-danger js-kategori-delete" data-id="{{kategori.id}}" data-url="{{ route('KategoriController.delete') }}"><i class="fas fa-trash"></i></button>
+                      </td>
+                  </tr>
+                  @endeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    @endeach
+  </div>
+</div>
+@endsection

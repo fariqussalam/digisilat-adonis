@@ -1,0 +1,42 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+
+    <div class="row mb-2 mb-xl-3">
+      <div class="col-auto d-none d-sm-block">
+        <h3>Tambah Turnamen Baru</h3>
+      </div>
+    </div>
+    <div class="row">
+    
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-body">
+                  <form method="POST" action="{{ route('TournamentController.save') }}">
+                    {{ csrfField() }}
+                      <div class="row">
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="nama">Nama</label>
+                              <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="Nama Turnamen" required>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="tempat">Tempat</label>
+                              <input type="text" class="form-control" id="tempat" name="tempat" value="" placeholder="Tempat Pelaksanaan Turnamen" required>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="waktu">Waktu</label>
+                              <input type="text" class="form-control" id="waktu" name="waktu" value="" placeholder="Waktu Pelaksanaan Turnamen" required>
+                          </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+  
+  </div>
+@endsection

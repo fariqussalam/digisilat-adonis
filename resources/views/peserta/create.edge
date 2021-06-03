@@ -1,0 +1,76 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+
+  <div class="row mb-2 mb-xl-3">
+    <div class="col-auto d-none d-sm-block">
+      <h3>Formulir Peserta</h3>
+    </div>
+
+  </div>
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <form method="POST" action="{{ route('PesertaController.save', {type: type}) }}">
+            {{ csrfField() }}
+            <input type="hidden" name="type" value="{{type}}" />
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label class="form-label" for="nama">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="Nama Peserta" required>
+              </div>
+            </div>
+            <div class="row">
+              @if(type == 'tanding')
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="kelas">Kelas</label>
+                <select class="form-control" name="kelas">
+                  <option selected="">Pilih Kelas</option>
+                  @each(kelas in kelasList)
+                  <option value="{{kelas.id}}">{{kelas.nama}}</option>
+                  @endeach
+                </select>
+              </div>
+              @elseif(type == 'seni')
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="kategoriSeni">Kategori Seni</label>
+                <select class="form-control" name="kategoriSeni">
+                  <option selected="">Pilih Kategori Seni</option>
+                  @each(seni in seniList)
+                  <option value="{{seni.id}}">{{seni.nama}}</option>
+                  @endeach
+                </select>
+              </div>
+              @else
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="jabatan">Jabatan</label>
+                <select class="form-control" name="jabatan">
+                  <option selected="">Pilih Jabatan</option>
+                  @each(jabatan in jabatanList)
+                  <option value="{{jabatan.id}}">{{jabatan.nama}}</option>
+                  @endeach
+                </select>
+              </div>
+              @endif
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="kontingen">Kontingen</label>
+                <select class="form-control" name="kontingen">
+                  <option selected="">Pilih Kontingen</option>
+                  @each(kontingen in kontingenList)
+                  <option value="{{kontingen.id}}">{{kontingen.nama}}</option>
+                  @endeach
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+@endsection
