@@ -502,6 +502,54 @@
       })
     })
 
+    $('.js-jadwal__atur-pertandingan-seni').click(function() {
+      var id = $(this).data("id");
+      var url = $(this).data("url");
+      var jumlah_pool = $('input[name="jumlah_pool"]').val()
+      var template = "";
+      for (var i = 1;i <= jumlah_pool;i++) {
+        template += '<option value="' + i + '">Pool ' + i + '</option>'
+      }
+      vex.dialog.open({
+          message: 'Atur Nomor Pool',
+          input: [
+              '<style>',
+                  '.vex-custom-field-wrapper {',
+                      'margin: 1em 0;',
+                  '}',
+                  '.vex-custom-field-wrapper > label {',
+                      'display: inline-block;',
+                      'margin-bottom: .2em;',
+                  '}',
+              '</style>',
+              '<div class="vex-custom-field-wrapper">',
+                  '<label for="color">Nomor Pool</label>',
+                  '<div class="vex-custom-input-wrapper">',
+                  '<select name="nomor_pool" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Nomor Pool">',
+                      template,
+                      '</select>',
+                  '</div>',
+              '</div>'
+          ].join(''),
+          callback: function (data) {
+              if (!data) {
+                  return console.log('Cancelled')
+              }
+              $.ajax({
+                method: "POST",
+                url: url,
+                data: {
+                  _csrf: window['_csrf'],
+                  id: id,
+                  nomor_pool: data.nomor_pool
+                }
+              }).done(function () {
+                window.location.reload();
+              });
+          }
+      })
+    })
+
     $('.js-gelanggang__mulai-pertandingan').click(function() {
       var data = $(this).data()
       if (!data) {

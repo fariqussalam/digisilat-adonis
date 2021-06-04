@@ -58,7 +58,7 @@
               <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
               <td>
                 @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalController.updatePool') }}" data-id="{{pertandingan.id}}" >Atur</button>
+                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalController.updatePartaiSeni') }}" data-id="{{pertandingan.id}}" >Atur</button>
                 @else
                 -
                 @endif
@@ -113,7 +113,6 @@
               <th>Nomor Penampil</th>
               <th>Status</th>
               <th>Nilai Akhir</th>
-              <th></th>
             </tr>
           </thead>
          <tbody>
@@ -125,13 +124,6 @@
               <td>{{ pertandingan.nomor_penampil ? pertandingan.nomor_penampil : "-" }}</td>
               <td>{{ pertandingan.status.value }}</td>
               <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
-              <td>
-                @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalController.updatePool') }}" data-id="{{pertandingan.id}}" >Atur</button>
-                @else
-                -
-                @endif
-              </td>
           </tr>
         @endeach
          </tbody>

@@ -69,6 +69,7 @@ Route.get('pertandingan/jadwal/seni', 'JadwalController.jadwalSeni')
 Route.post('pertandingan/jadwal/update-gelanggang', 'JadwalController.updateGelanggang')
 Route.post('pertandingan/jadwal/update-partai', 'JadwalController.updatePartai')
 Route.post('pertandingan/jadwal/update-pool', 'JadwalController.updatePool')
+Route.post('pertandingan/jadwal/update-partai-seni', 'JadwalController.updatePartaiSeni')
 Route.get('pertandingan/jadwal/reset-gelanggang', 'JadwalController.resetGelanggang')
 Route.get('pertandingan/jadwal/reset-pool', 'JadwalController.resetPool')
 

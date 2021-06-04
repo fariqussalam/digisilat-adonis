@@ -187,6 +187,16 @@ class JadwalController {
     response.route('JadwalController.jadwalTanding')
   }
 
+  async updatePartaiSeni({request, response}) {
+    const params = request.only(['id', 'nomor_pool'])
+
+    const pertandinganSeni = await PertandinganSeni.find(params.id)
+    pertandinganSeni.nomor_pool = params.nomor_pool
+    await pertandinganSeni.save()
+
+    response.route('JadwalController.jadwalSeni')
+  }
+
   async resetGelanggang({request, response}) {
 
     const tournament = await request.activeTournament
