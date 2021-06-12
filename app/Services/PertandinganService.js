@@ -59,7 +59,7 @@ class PertandinganService {
     }
   }
 
-  async getPertandinganList({kelas, nomor_gelanggang}, tournament_id) {
+  async getPertandinganList({kelas, nomor_gelanggang}, tournament_id, without_data) {
     const queryParams = {tournament_id}
     if (kelas != "all" && kelas != null) {
       queryParams.kelas_id = kelas
@@ -73,6 +73,9 @@ class PertandinganService {
     for (let p of pertandinganList){
       const resp = await this.prosesPertandingan(p)
       if (resp) {
+        if (without_data) {
+          resp.data_pertandingan = null
+        }
         resp.kelas = await Kelas.find(p.kelas_id)
         resp.status = await this.getPertandinganStatus(p.status)
         responseList.push(resp)
@@ -125,11 +128,26 @@ class PertandinganService {
       const eliminasi = await Eliminasi.query().where({pertandingan_id: pertandingan.id}).first()
       if (!eliminasi) return null
 
-      // console.log(`pertandingan id : ${pertandingan.id}`)
-      // console.log(`a id : ${eliminasi.pemenang_a_id}`)
-      // console.log(`b id : ${eliminasi.pemenang_b_id}`)
+      console.log(`pertandingan id : ${pertandingan.id}`)
+      console.log(`a id : ${eliminasi.pemenang_a_id}`)
+      console.log(`b id : ${eliminasi.pemenang_b_id}`)
       const merah = await this.findRootPertandingan(eliminasi.pemenang_a_id)
+      console.log("merah", merah)
       const biru = await this.findRootPertandingan(eliminasi.pemenang_b_id)
+      console.log("biru", biru)
+
+      if(merah && merah.isBye) {
+        const updateBiru = await Pertandingan.find(pertandingan.id)
+        updateBiru.pemenang = "BIRU"
+        updateBiru.status = "SELESAI"
+        await updateBiru.save()
+      } else if (biru && biru.isBye) {
+        const updateMerah = await Pertandingan.find(pertandingan.id)
+        updateMerah.pemenang = "MERAH"
+        updateMerah.status = "SELESAI"
+        await updateMerah.save()
+      }
+
 
       if (!merah || !biru) {
         return null
@@ -159,7 +177,7 @@ class PertandinganService {
     } else {
       const kualifikasi = await Kualifikasi.query().where({pertandingan_id: pertandingan.id}).first()
       if (!kualifikasi) return null
-      if (!kualifikasi.merah_id || !kualifikasi.biru_id) return null
+      if (!kualifikasi.merah_id && !kualifikasi.biru_id) return {isBye: true}
 
       if (pertandingan.pemenang == "MERAH") {
         return await this.pesilatService.getPesilatTanding(kualifikasi.merah_id)
@@ -200,7 +218,7 @@ class PertandinganService {
     const pertandinganList = await this.getPertandinganGelanggang(nomor_gelanggang, tournament)
 
     const pertandinganAktif = _.find(pertandinganList, (el) => {
-          return el.status.name == 'BERJALAN'
+      return el.status.name == 'BERJALAN'
     })
     if (!pertandinganAktif) return null
 
@@ -248,6 +266,15 @@ class PertandinganService {
         kualifikasi.pertandingan_id = pertandingan.id
         kualifikasi.merah_id = parseInt(matchup[0])
         kualifikasi.biru_id = parseInt(matchup[1])
+        if (kualifikasi.merah_id == null) {
+          pertandingan.pemenang = "BIRU"
+          pertandingan.status = "SELESAI"
+          await pertandingan.save()
+        } else if (kualifikasi.biru_id == null) {
+          pertandingan.pemenang = "MERAH"
+          pertandingan.status = "SELESAI"
+          await pertandingan.save()
+        }
         await kualifikasi.save()
         match_rounds.push({
           pertandingan: pertandingan.toJSON(),
@@ -272,13 +299,13 @@ class PertandinganService {
   }
 
   /**
-     * Master Data :
-    	- id, nomor_partai
-    	- ronde
-    	- pesilat merah
-    	- pesilat biru
-    	- kelas
-     */
+   * Master Data :
+   - id, nomor_partai
+   - ronde
+   - pesilat merah
+   - pesilat biru
+   - kelas
+   */
   async getMasterDataPertandingan(pertandingan) {
     const rootPertandingan = await this.prosesPertandingan(pertandingan)
     let masterData = {}
@@ -303,7 +330,7 @@ class PertandinganService {
     const pertandinganList = await this.getPertandinganPool(nomor_pool, tournament)
 
     const pertandinganAktif = _.find(pertandinganList, (el) => {
-          return el.status.name == 'BERJALAN'
+      return el.status.name == 'BERJALAN'
     })
     if (!pertandinganAktif) return null
 

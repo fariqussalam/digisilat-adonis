@@ -107,7 +107,7 @@ class JadwalController {
     const kelas = params.kelas
     const tournament_id = request.activeTournament.id
     const kelasList = await Kelas.query().where({ tournament_id }).fetch().then((result) => result.toJSON())
-    const pertandinganList = await this.pertandinganService.getPertandinganList({ kelas: params.kelas }, tournament_id)
+    const pertandinganList = await this.pertandinganService.getPertandinganList({ kelas: params.kelas }, tournament_id, true)
     const jumlah_gelanggang = request.activeTournament.jumlah_gelanggang
 
     const gelanggangMap = {}
@@ -117,11 +117,21 @@ class JadwalController {
       }
     }
 
-    // return response.json(pertandinganList)
+    const rondePertandinganList = []
+    const rondeList = _.sortBy(_.uniq(_.map(pertandinganList, function (p) {return p.ronde})), (num) => num)
+    _.each(rondeList, (ronde) => {
+      const pertandingans = _.where(pertandinganList, { ronde: ronde })
+      rondePertandinganList.push({
+        ronde: ronde,
+        pertandinganList: pertandingans
+      })
+    })
+
+    // return response.json(rondePertandinganList)
     return view.render('jadwal.tanding', {
       kelasList,
-      pertandinganList,
       kelas,
+      rondePertandinganList,
       gelanggangMap
     })
   }

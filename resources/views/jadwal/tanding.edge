@@ -2,200 +2,198 @@
 
 @section('content')
 <div class="container-fluid p-0">
-  <div class="row mb-1 mb-xl-3">
-    <div class="col-2 d-none d-sm-block">
-      <h3>Daftar Pertandingan</h3>
+    <div class="row mb-1 mb-xl-3">
+        <div class="col-2 d-none d-sm-block">
+            <h3>Daftar Pertandingan</h3>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-
-      <div class="card">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-5">
-              <div style="padding-top: 20px;">
-                <form method="get" action="{{ route('JadwalController.jadwalTanding') }}">
-                  <div class="row">
+    <div class="row mb-1 pb-2">
+        <div class="col-5">
+            <form method="get" action="{{ route('JadwalController.jadwalTanding') }}">
+                <div class="row">
                     <label class="col-form-label col-sm-2">Kelas</label>
                     <div class="col-sm-4 pl-0">
-                      <select name="kelas" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Kelas">
-                        <option value="all" {{kelas == 'all' ? 'selected' : ''}}>Seluruh Kelas</option>
-                        @each(k in kelasList)
-                        <option value="{{ k.id }}" {{ k.id == kelas  ? 'selected' : '' }}>{{ k.nama }}</option>
-                        @endeach
-                      </select>
+                        <select name="kelas" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Kelas">
+                            <option value="all" {{kelas == 'all' ? 'selected' : ''}}>Seluruh Kelas</option>
+                            @each(k in kelasList)
+                            <option value="{{ k.id }}" {{ k.id == kelas  ? 'selected' : '' }}>{{ k.nama }}</option>
+                            @endeach
+                        </select>
                     </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+                </div>
+            </form>
         </div>
-        <div class="card-body">
-          <table class="table table-striped datatables-pertandingan" style="width:100%">
-            <thead>
-            <tr>
-              <th width="5%">Partai</th>
-              <th width="5%">Gelanggang</th>
-              <th>Kelas</th>
-              <th>Sudut Merah</th>
-              <th>Sudut Biru</th>
-              <th>Jenis</th>
-              <th>Status</th>
-              <th>Pemenang</th>
-              <th>Alasan Kemenangan</th>
-              <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            @each(pertandingan in pertandinganList)
-            <tr>
-              <td>{{ pertandingan.nomor_partai ? pertandingan.nomor_partai : "-" }}</td>
-              <td>{{ pertandingan.nomor_gelanggang ? pertandingan.nomor_gelanggang : "-" }}</td>
-              <td>{{ pertandingan.kelas.nama}}</td>
-              <td>
-                @if(pertandingan.merah)
-                {{ pertandingan.merah.nama}} ({{pertandingan.merah.kontingen.nama}})
-                @else
-                BYE
-                @endif
-              </td>
-              <td>
-                @if(pertandingan.biru)
-                {{ pertandingan.biru.nama}} ({{pertandingan.biru.kontingen.nama}})
-                @else
-                BYE
-                @endif
-              </td>
-              <td>{{ pertandingan.jenis }}</td>
-              <td>{{ pertandingan.status.value }}</td>
-              <td>{{ pertandingan.pemenang ? pertandingan.pemenang : '-' }}</td>
-              <td>{{ pertandingan.alasan_kemenangan ? pertandingan.alasan_kemenangan : '-' }}</td>
-              <td>
-                @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan" data-url="{{ route('JadwalController.updatePartai') }}" data-id="{{pertandingan.id}}" >Atur</button>
-                @else
-                -
-                @endif
-              </td>
-            </tr>
-            @endeach
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="row mb-1 mb-xl-3">
+    <div class="row">
+        <div class="col-12">
+            @each(rp in rondePertandinganList)
+            <div class="card">
+                <div class="card-header">
+                    <h4>Ronde {{rp.ronde}}</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped datatables-pertandingan" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th width="5%">Partai</th>
+                            <th width="5%">Gelanggang</th>
+                            <th>Kelas</th>
+                            <th>Sudut Merah</th>
+                            <th>Sudut Biru</th>
+                            <th>Jenis</th>
+                            <th>Status</th>
+                            <th>Pemenang</th>
+                            <th>Alasan Kemenangan</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @each(pertandingan in rp.pertandinganList)
+                        <tr>
+                            <td>{{ pertandingan.nomor_partai ? pertandingan.nomor_partai : "-" }}</td>
+                            <td>{{ pertandingan.nomor_gelanggang ? pertandingan.nomor_gelanggang : "-" }}</td>
+                            <td>{{ pertandingan.kelas.nama}}</td>
+                            <td>
+                                @if(pertandingan.merah && !pertandingan.merah.isBye)
+                                {{ pertandingan.merah.nama}} ({{pertandingan.merah.kontingen.nama}})
+                                @else
+                                BYE
+                                @endif
+                            </td>
+                            <td>
+                                @if(pertandingan.biru && !pertandingan.biru.isBye)
+                                {{ pertandingan.biru.nama}} ({{pertandingan.biru.kontingen.nama}})
+                                @else
+                                BYE
+                                @endif
+                            </td>
+                            <td>{{ pertandingan.jenis }}</td>
+                            <td>{{ pertandingan.status.value }}</td>
+                            <td>{{ pertandingan.pemenang ? pertandingan.pemenang : '-' }}</td>
+                            <td>{{ pertandingan.alasan_kemenangan ? pertandingan.alasan_kemenangan : '-' }}</td>
+                            <td>
+                                @if(pertandingan.status.name == 'BELUM_DIMULAI')
+                                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan" data-url="{{ route('JadwalController.updatePartai') }}" data-id="{{pertandingan.id}}" >Atur</button>
+                                @else
+                                -
+                                @endif
+                            </td>
+                        </tr>
+                        @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @endeach
+        </div>
+    </div>
+    <div class="row mb-1 mb-xl-3">
         <div class="col-2 d-none d-sm-block">
             <h3>Jadwal Tanding</h3>
         </div>
         <div class="col-10">
-          <a class="float-end btn btn-info" href="{{route('JadwalController.resetGelanggang')}}">Reset Gelanggang</a>
+            <a class="float-end btn btn-info" href="{{route('JadwalController.resetGelanggang')}}">Reset Gelanggang</a>
         </div>
         @include('partials/flash')
     </div>
     @if(activeTournament.jumlah_gelanggang > 0)
     <input type="hidden" name="jumlah_gelanggang" value="{{activeTournament.jumlah_gelanggang}}" />
     <div class="row mb-2">
-      <div class="col-8">
-          <div>
-           <h4>Jumlah Gelanggang : {{ activeTournament.jumlah_gelanggang }}</h4>
-          </div>
-      </div>
+        <div class="col-8">
+            <div>
+                <h4>Jumlah Gelanggang : {{ activeTournament.jumlah_gelanggang }}</h4>
+            </div>
+        </div>
     </div>
     @each(nomor_gelanggang in range(activeTournament.jumlah_gelanggang))
     @set('gelanggangList', gelanggangMap[$loop.index + 1])
     @set('nomorGelanggang', $loop.index + 1)
-      <div class="row">
-      <div class="col-12">
+    <div class="row">
+        <div class="col-12">
 
-        <div class="card">
-          <div class="card-header">
-            <h4>Gelanggang {{ nomorGelanggang }}</h4>
-            <a href="{{ route('TandingController.gelanggang', {nomor_gelanggang: nomorGelanggang}) }}" class="mb-1 btn btn-sm btn-success">
-              Luncurkan Gelanggang
-            </a>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped datatables-kategori" style="width:100%">
-              <thead>
-                <tr>
-                  <th>No Partai</th>
-                  <th>Kelas</th>
-                  <th>Sudut Merah</th>
-                  <th>Sudut Biru</th>
-                  <th>Jenis</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-             <tbody>
-              @each(pertandingan in gelanggangList)
-              <tr>
-                <td>{{ pertandingan.nomor_partai ? pertandingan.nomor_partai : "-" }}</td>
-                <td>{{ pertandingan.kelas.nama}}</td>
-                <td>
-                 @if(pertandingan.merah)
-                 {{ pertandingan.merah.nama}} ({{pertandingan.merah.kontingen.nama}})
-                 @else
-                 BYE
-                 @endif
-                </td>
-                <td>
-                 @if(pertandingan.biru)
-                 {{ pertandingan.biru.nama}} ({{pertandingan.biru.kontingen.nama}})
-                 @else
-                 BYE
-                 @endif
-                </td>
-                <td>{{ pertandingan.jenis }}</td>
-                <td>{{ pertandingan.status.value }}</td>
-                <td>
-                  @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                  <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomorGelanggang}}" >Mulai</button>
-                  @elseif(pertandingan.status.name == 'BERJALAN')
-                  <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomorGelanggang}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
-                  @endif
-                </td>
-              </tr>
-            @endeach
-             </tbody>
-            </table>
-          </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Gelanggang {{ nomorGelanggang }}</h4>
+                    <a href="{{ route('TandingController.gelanggang', {nomor_gelanggang: nomorGelanggang}) }}" class="mb-1 btn btn-sm btn-success">
+                        Luncurkan Gelanggang
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped datatables-kategori" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>No Partai</th>
+                            <th>Kelas</th>
+                            <th>Sudut Merah</th>
+                            <th>Sudut Biru</th>
+                            <th>Jenis</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @each(pertandingan in gelanggangList)
+                        <tr>
+                            <td>{{ pertandingan.nomor_partai ? pertandingan.nomor_partai : "-" }}</td>
+                            <td>{{ pertandingan.kelas.nama}}</td>
+                            <td>
+                                @if(pertandingan.merah)
+                                {{ pertandingan.merah.nama}} ({{pertandingan.merah.kontingen.nama}})
+                                @else
+                                BYE
+                                @endif
+                            </td>
+                            <td>
+                                @if(pertandingan.biru)
+                                {{ pertandingan.biru.nama}} ({{pertandingan.biru.kontingen.nama}})
+                                @else
+                                BYE
+                                @endif
+                            </td>
+                            <td>{{ pertandingan.jenis }}</td>
+                            <td>{{ pertandingan.status.value }}</td>
+                            <td>
+                                @if(pertandingan.status.name == 'BELUM_DIMULAI')
+                                <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomorGelanggang}}" >Mulai</button>
+                                @elseif(pertandingan.status.name == 'BERJALAN')
+                                <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomorGelanggang}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
+                                @endif
+                            </td>
+                        </tr>
+                        @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     @endeach
     @else
     <div class="row">
-      <div class="col-8">
-          <div style="padding-top: 20px;">
-              <form method="POST" action="{{ route('JadwalController.updateGelanggang') }}">
-                {{ csrfField() }}
-                  <h4>Setup Gelanggang</h4>
-                  <div class="mb-3 row">
-                      <label class="col-form-label col-sm-3">Tentukan Jumlah Gelanggang</label>
-                      <div class="col-sm-3">
-                          <select name="jumlah_gelanggang" class="form-control js-select2" data-placeholder="Jumlah Gelanggang">
-                              <option></option>
-                              @each(n in [1,2,3,4])
+        <div class="col-8">
+            <div style="padding-top: 20px;">
+                <form method="POST" action="{{ route('JadwalController.updateGelanggang') }}">
+                    {{ csrfField() }}
+                    <h4>Setup Gelanggang</h4>
+                    <div class="mb-3 row">
+                        <label class="col-form-label col-sm-3">Tentukan Jumlah Gelanggang</label>
+                        <div class="col-sm-3">
+                            <select name="jumlah_gelanggang" class="form-control js-select2" data-placeholder="Jumlah Gelanggang">
+                                <option></option>
+                                @each(n in [1,2,3,4])
                                 <option value="{{n}}">{{ n }} gelanggang</option>
-                              @endeach
-                          </select>
-                      </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn btn-primary">Buat Gelanggang</button>
-                      </div>
+                                @endeach
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary">Buat Gelanggang</button>
+                        </div>
 
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     @endif
-
-
 </div>
 @endsection
