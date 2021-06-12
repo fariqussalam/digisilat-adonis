@@ -1,5 +1,6 @@
 'use strict'
 const _ = require('underscore')
+var s = require("underscore.string");
 
 const Tournament = use('App/Models/Tournament')
 const Kelas = use('App/Models/Kelas')
@@ -307,6 +308,21 @@ class PertandinganService {
     if (!pertandinganAktif) return null
 
     return pertandinganAktif
+  }
+
+  async getTipeSeni(kategori_id) {
+    const kategori = await KategoriSeni.findOrFail(kategori_id)
+    const nama = kategori.nama.toLowerCase()
+    let tipeSeni
+    if (s.include(nama, 'tunggal')) {
+      tipeSeni = 'tunggal'
+    } else if (s.include(nama), 'ganda') {
+      tipeSeni = 'ganda'
+    } else if (s.include(nama), 'regu') {
+      tipeSeni = 'regu'
+    }
+
+    return tipeSeni
   }
 }
 

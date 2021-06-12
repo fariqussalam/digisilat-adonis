@@ -1,0 +1,412 @@
+@layout('layouts/pertandingan')
+@section('content')
+<div class="container" id="container">
+    <div id="printed" class="printed-container-15" style="background-color:white;margin-left:10px;">
+        <div class="text-center">
+            <h4><b>
+                <span id="nama-turnamen">OPEN TOURNAMENT PIALA PANGDAM XIII/MERDEKA</span><br>
+                <span id="tempat-turnamen">Manado - Sulawesi Utara</span><br>
+                <span id="waktu-turnamen">11-14 Desember 2017</span></b></h4>
+        </div>
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-4">
+                <table style="font-size:15px;">
+                    <tr>
+                        <td><b>JENIS</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
+                        <td class="text-center" style="font-size:15px;">Beregu</td>
+                    </tr>
+                    <tr>
+                        <td><b>POOL</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
+                        <td id="pool" class="text-center" style="font-size:15px;"><b></b></td>
+                    </tr>
+                    <tr>
+                        <td><b>NOMOR PENAMPIL</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
+                        <td id="nomor-penampil" class="text-center" style="font-size:15px;"><b></b></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-4">
+                <table style="font-size:15px;">
+                    <tr>
+                        <td><b>NAMA PESILAT</b></td>
+                    </tr>
+                    <tr>
+                        <td class="daftar-nama-pesilat"></td>
+                    </tr>
+                    <tr>
+                        <td><b>KONTINGEN</b></td>
+                    </tr>
+                    <tr>
+                        <td id="kontingen" style="font-size:15px;"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4">
+            </div>
+        </div>
+        <div class="row" style=" word-wrap: break-word;overflow-wrap: break-word;width: 100%;margin-top:10px;margin-bottom:30px">
+            <h5 style="margin-left:30px;">Nilai Kebenaran</h5>
+            <table class="table table-bordered table-condensed text-center" style="font-size:16px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center" style="font-size:13px;">
+                    <th rowspan="2" class="text-center" style="vertical-align:middle">JURI</th>
+                    <th colspan="12" class="text-center">JURUS</th>
+                    <th rowspan="2" class="text-center">TOTAL</th>
+                </tr>
+                <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">2</th>
+                    <th class="text-center">3</th>
+                    <th class="text-center">4</th>
+                    <th class="text-center">5</th>
+                    <th class="text-center">6</th>
+                    <th class="text-center">7</th>
+                    <th class="text-center">8</th>
+                    <th class="text-center">9</th>
+                    <th class="text-center">10</th>
+                    <th class="text-center">11</th>
+                    <th class="text-center">12</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center">1</td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="1"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="2"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="3"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="4"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="5"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="6"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="7"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="8"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="9"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="10"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="11"></td>
+                    <td class="nilai-kebenaran" data-juri="1" data-jurus="12"></td>
+                    <td class="nilai-kebenaran-total" data-juri="1"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">2</td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="1"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="2"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="3"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="4"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="5"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="6"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="7"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="8"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="9"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="10"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="11"></td>
+                    <td class="nilai-kebenaran" data-juri="2" data-jurus="12"></td>
+                    <td class="nilai-kebenaran-total" data-juri="2"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">3</td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="1"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="2"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="3"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="4"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="5"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="6"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="7"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="8"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="9"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="10"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="11"></td>
+                    <td class="nilai-kebenaran" data-juri="3" data-jurus="12"></td>
+                    <td class="nilai-kebenaran-total" data-juri="2"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">4</td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="1"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="2"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="3"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="4"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="5"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="6"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="7"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="8"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="9"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="10"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="11"></td>
+                    <td class="nilai-kebenaran" data-juri="4" data-jurus="12"></td>
+                    <td class="nilai-kebenaran-total" data-juri="2"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">5</td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="1"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="2"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="3"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="4"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="5"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="6"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="7"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="8"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="9"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="10"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="11"></td>
+                    <td class="nilai-kebenaran" data-juri="5" data-jurus="12"></td>
+                    <td class="nilai-kebenaran-total" data-juri="2"></td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 style="margin-left:30px;">Hukuman</h5>
+            <!-- <table class="table table-bordered text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                    <tr class="text-center" style="font-size:16px;">
+                        <th class="text-center" style="vertical-align:middle">JURI 1</th>
+                        <th class="text-center" style="vertical-align:middle">JURI 2</th>
+                        <th class="text-center" style="vertical-align:middle">JURI 3</th>
+                        <th class="text-center" style="vertical-align:middle">JURI 4</th>
+                        <th class="text-center" style="vertical-align:middle">JURI 5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="font-size:16px;">
+                        <td class="nilai-hukuman text-center" data-juri="1">0</td>
+                        <td class="nilai-hukuman text-center" data-juri="2">0</td>
+                        <td class="nilai-hukuman text-center" data-juri="3">0</td>
+                        <td class="nilai-hukuman text-center" data-juri="4">0</td>
+                        <td class="nilai-hukuman text-center" data-juri="5">0</td>
+                    </tr>
+                </tbody>
+            </table> -->
+            <table class="table table-bordered table-condensed text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center" style="font-size:11px;">
+                    <th rowspan="2" class="text-center" style="vertical-align:middle">JURI</th>
+                    <th colspan="6" class="text-center">JENIS HUKUMAN</th>
+                    <th rowspan="2" class="text-center">TOTAL</th>
+                </tr>
+                <tr>
+                    <th class="text-center">Keluar Garis</th>
+                    <th class="text-center">Salah Pakaian</th>
+                    <th class="text-center">Mengeluarkan Suara</th>
+                    <th class="text-center">Senjata Lepas</th>
+                    <th class="text-center">W-5</th>
+                    <th class="text-center">W-10</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center">1</td>
+                    <td class="keluar-garis" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="salah-pakaian" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="mengeluarkan-suara" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="senjata-lepas" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="w-5" data-juri="1"><span>0</span></td>
+                    <td class="w-10" data-juri="1"><span>0</span></td>
+                    <td class="nilai-hukuman" data-juri="1"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">2</td>
+                    <td class="keluar-garis" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="salah-pakaian" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="mengeluarkan-suara" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="senjata-lepas" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="w-5" data-juri="2"><span>0</span></td>
+                    <td class="w-10" data-juri="2"><span>0</span></td>
+                    <td class="nilai-hukuman" data-juri="2"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">3</td>
+                    <td class="keluar-garis" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="salah-pakaian" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="mengeluarkan-suara" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="senjata-lepas" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="w-5" data-juri="3"><span>0</span></td>
+                    <td class="w-10" data-juri="3"><span>0</span></td>
+                    <td class="nilai-hukuman" data-juri="3"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">4</td>
+                    <td class="keluar-garis" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="salah-pakaian" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="mengeluarkan-suara" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="senjata-lepas" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="w-5" data-juri="4"><span>0</span></td>
+                    <td class="w-10" data-juri="4"><span>0</span></td>
+                    <td class="nilai-hukuman" data-juri="4"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">5</td>
+                    <td class="keluar-garis" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="salah-pakaian" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="mengeluarkan-suara" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="senjata-lepas" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="w-5" data-juri="5"><span>0</span></td>
+                    <td class="w-10" data-juri="5"><span>0</span></td>
+                    <td class="nilai-hukuman" data-juri="5"></td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 style="margin-left:30px;">Nilai Kekompakan</h5>
+            <table class="table table-bordered text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center" style="font-size:13px;">
+                    <th class="text-center" style="vertical-align:middle">JURI 1</th>
+                    <th class="text-center" style="vertical-align:middle">JURI 2</th>
+                    <th class="text-center" style="vertical-align:middle">JURI 3</th>
+                    <th class="text-center" style="vertical-align:middle">JURI 4</th>
+                    <th class="text-center" style="vertical-align:middle">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="font-size:13px;">
+                    <td class="text-center nilai-kekompakan" data-juri="1">0</td>
+                    <td class="text-center nilai-kekompakan" data-juri="2">0</td>
+                    <td class="text-center nilai-kekompakan" data-juri="3">0</td>
+                    <td class="text-center nilai-kekompakan" data-juri="4">0</td>
+                    <td class="text-center nilai-kekompakan" data-juri="5">0</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 style="margin-left:30px;">Nilai Total</h5>
+            <table class="table table-bordered text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center" style="font-size:13px;">
+                    <th class="text-center display-total" data-juri="1" style="vertical-align:middle">JURI 1</th>
+                    <th class="text-center display-total" data-juri="2" style="vertical-align:middle">JURI 2</th>
+                    <th class="text-center display-total" data-juri="3" style="vertical-align:middle">JURI 3</th>
+                    <th class="text-center display-total" data-juri="4" style="vertical-align:middle">JURI 4</th>
+                    <th class="text-center display-total" data-juri="5" style="vertical-align:middle">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="font-size:13px;">
+                    <td class="text-center nilai-total" data-juri="1">0</td>
+                    <td class="text-center nilai-total" data-juri="2">0</td>
+                    <td class="text-center nilai-total" data-juri="3">0</td>
+                    <td class="text-center nilai-total" data-juri="4">0</td>
+                    <td class="text-center nilai-total" data-juri="5">0</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4" style="margin-top:-40px;">
+                <h4><b>HASIL PENAMPILAN</b></h4>
+                <table>
+                    <tr>
+                        <td><b>WAKTU DIGUNAKAN</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;: </b></td>
+                        <td id="waktu-digunakan" style="font-size:15px;"></td>
+                    </tr>
+                    <tr>
+                        <td><b>TOTAL NILAI</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;: </b></td>
+                        <td id="total-nilai" style="font-size:15px;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <table class="table table-bordered table-condensed text-center" style="font-size:10px;table-layout: fixed;width: 100%;margin-top:20px;">
+            <thead>
+            <tr class="text-center" style="font-size:11px;">
+                <th colspan="5" class="text-center">TANDA TANGAN</th>
+            </tr>
+            <tr class="text-center" style="font-size:11px;">
+                <th rowspan="1" class="text-center" style="vertical-align:middle">JURI 1</th>
+                <th rowspan="1" class="text-center" style="vertical-align:middle">JURI 2</th>
+                <th rowspan="1" class="text-center" style="vertical-align:middle">JURI 3</th>
+                <th rowspan="1" class="text-center" style="vertical-align:middle">JURI 4</th>
+                <th rowspan="1" class="text-center" style="vertical-align:middle">JURI 5</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-center" style="color:white;"><br><br><br></td>
+                <td></td>
+                <td></td>
+                <td class="text-center"></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-right" style="margin-top:20px;">
+            KETUA PERTANDINGAN<br><br><br><br>
+            ____________________
+        </div>
+        <table style="font-size:15px;">
+            <tr>
+                <td><b>Tanggal</b></td>
+                <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                <td id="tanggal"></td>
+            </tr>
+            <tr>
+                <td><b>Waktu</b></td>
+                <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                <td id="waktu"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="row" style="margin-top:30px;">
+        <div class="col-md-8">
+            <a class="btn btn-primary" href="#" style="margin:5px" id="simpan-data">Simpan Data </a>
+            <button class="btn btn-danger" style="margin:5px" id="pengumuman-pemenang">Pengumuman Pemenang </button>
+            <button class="btn btn-success" style="margin:5px" id="mulai-baru">Mulai Regu Baru </button>
+        </div>
+    </div>
+    <div class="modal fade pg-show-modal" id="modalAwal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Masukkan Data Pertandingan</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <b>POOL</b>
+                        <br>
+                        <input type="text" class="form-control" id="input-pool">
+                    </div>
+                    <div class="form-group">
+                        <b>Nomor Penampil</b>
+                        <br>
+                        <input type="text" class="form-control" id="input-nomor-penampil">
+                    </div>
+                    <div class="form-group">
+                        <b>Nama Pesilat 1</b>
+                        <br>
+                        <input type="text" class="form-control input-nama-pesilat" data-urutan="1">
+                    </div>
+                    <div class="form-group">
+                        <b>Nama Pesilat 2</b>
+                        <br>
+                        <input type="text" class="form-control input-nama-pesilat" data-urutan="2">
+                    </div>
+                    <div class="form-group">
+                        <b>Nama Pesilat 3</b>
+                        <br>
+                        <input type="text" class="form-control input-nama-pesilat" data-urutan="3">
+                    </div>
+                    <div class="form-group">
+                        <b>Kontingen</b>
+                        <br>
+                        <input type="text" class="form-control" id="input-kontingen">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="simpan-data-penampil">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+<script src="/pertandingan/assets/js/modul/regu-admin.js"></script>
+@endsection

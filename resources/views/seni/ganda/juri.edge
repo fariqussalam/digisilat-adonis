@@ -1,0 +1,309 @@
+@layout('layouts/pertandingan')
+@section('module_css')
+<link href="/pertandingan/starter-template.css" rel="stylesheet">
+@endsection
+@section('content')
+@if(request_params.nomor_juri)
+<input type="hidden" name="nomorJuri" value="{{ request_params.nomor_juri }}" />
+@endif
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color:white;">Digital Scoring TGR | Ganda</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="container" style="width:100%">
+    <div class="starter-template">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <button onclick="window.location.reload(true)" type="button" class="btn btn-success js-ganda-juri__finish" style="font-size:18px">SELESAI</button>
+            <button data-toggle="modal" data-target="#modal1" type="button" class="btn btn-info" style="font-size:18px;MARGIN-LEFT:10PX">KETERANGAN</button>
+        </div>
+    </div>
+    <div class="starter-template" style="margin-top:-20px">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered table-condensed text-center" style="font-size:20px">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="js-ganda-juri__display text-center" data-tipe="teknik-serang-bela">Teknik Serang Bela (60-80)</th>
+                                <th class="text-center"></th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="kekompakan">Nilai Kemantapan (50-60)</th>
+                                <th class="text-center"></th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="penghayatan">Nilai Pengahayatan (50-60)</th>
+                                <th class="text-center"></th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="hukuman">Nilai Hukuman</th>
+                                <th class="text-center"></th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="total">Jumlah</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="=">
+                                <td class="js-ganda-juri__display-skor" data-tipe="teknik-serang-bela">0</td>
+                                <td>+</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="kekompakan">0</td>
+                                <td>+</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="penghayatan">0</td>
+                                <td>-</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="hukuman">0</td>
+                                <td>=</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="total">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:-30px">
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+                <table class="table table-bordered text-center bg-primary">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Nomor Juri</th>
+                        <th colspan="2" class="text-center">Keluar Garis</th>
+                        <th colspan="2" class="text-center">Senjata Jatuh Tidak Sesuai Deskripsi</th>
+                        <th colspan="2" class="text-center">Senjata Tidak Jatuh Sesuai Deskripsi</th>
+                        <th colspan="2" class="text-center">Senjata Jatuh Diluar Arena</th>
+                        <th class="text-center">Senjata Tidak Sesuai (Patah)</th>
+                        <th class="text-center">Faktor Waktu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="js-ganda-juri__nomor-juri">1</td>
+                        <td class="js-ganda-juri__nilai-hukuman" data-hukuman="keluar-garis">0&nbsp;</td>
+                        <td>X -5</td>
+                        <td class="js-ganda-juri__nilai-hukuman" data-hukuman="senjata-jatuh">0</td>
+                        <td>X -5</td>
+                        <td class="js-ganda-juri__nilai-hukuman" data-hukuman="senjata-tidak-jatuh">0</td>
+                        <td>X -5</td>
+                        <td class="js-ganda-juri__nilai-hukuman" data-hukuman="senjata-diluar-arena">0</td>
+                        <td>X -5</td>
+                        <td class="js-ganda-juri__nilai-hukuman" data-hukuman="senjata-tidak-sesuai">0</td>
+                        <td class="js-ganda-juri__nilai-hukuman" data-hukuman="faktor-waktu">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-1">
+            </div>
+        </div>
+    </div>
+    <div class="starter-template" style="padding:20px">
+        <div class="row">
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="1" class="js-ganda-juri__input btn btn-danger btn-lg btn-block" style="font-size:25px">1</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="2" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">2</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="3" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">3</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="4" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">4</button>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-2">
+                <button type="button" data-state="teknik-serang-bela" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:25px">N. TSB</button>
+            </div>
+            <div class="col-sm-2">
+                <button type="button" data-state="kekompakan" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:25px">N. KMN</button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="5" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">5</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="6" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">6</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="7" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">7</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="8" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">8</button>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-2">
+                <button id="inputPGN" type="button" data-state="penghayatan" class="js-ganda-juri__set-state btn btn-lg btn-danger btn-block" style="font-size:25px;">N. PGN</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button id="vButtonKG" type="button" data-hukuman="keluar-garis" class="js-ganda-juri__input-hukuman btn btn-lg btn-danger" style="font-size:25px">KG</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button id="vButtonSJ" type="button" data-hukuman="senjata-jatuh" class="js-ganda-juri__input-hukuman btn btn-lg btn-danger" style="font-size:25px">SJ</button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="9" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">9</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="0" class="js-ganda-juri__input btn btn-danger btn-block btn-lg" style="font-size:25px">0</button>
+            </div>
+            <div class="col-md-1 col-sm-1" style="text-align: center;">
+                <button type="button" class="js-ganda-juri__input-enter btn btn-danger btn-lg btn-block" style="font-size:25px;">ENT</button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" class="js-ganda-juri__input-clear btn btn-danger btn-lg btn-block" style="font-size:25px; text-align: center;">CLR</button>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-2">
+                <button type="button" data-hukuman="senjata-tidak-jatuh" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">STJ</button>
+            </div>
+            <div class="col-sm-1" style="margin-right:10px">
+                <button type="button" data-hukuman="senjata-tidak-sesuai" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">STS</button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" data-hukuman="senjata-diluar-arena" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">SJDA</button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-1 col-sm-1">
+            </div>
+            <div class="col-md-1 col-sm-1">
+            </div>
+            <div class="col-md-1 col-sm-1">
+            </div>
+            <div class="col-md-1 col-sm-1">
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <button id="vButtonDis" type="button" class="btn btn-danger btn-block btn-lg" style="font-size:25px">DIS</button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" data-hukuman="w-5" data-waktu="true" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-5</button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" data-hukuman="w-10" data-waktu="true" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-10</button>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-xs-4 col-xs-offset-7">
+                <button type="button" class="js-ganda-juri__hapus-hukuman btn btn-danger btn-lg btn-block" style="font-size:25px">HAPUS HUKUMAN</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Keterangan Tombol</h4>
+            </div>
+            <div class="modal-body">
+                <h4>N. TSB &nbsp; &nbsp;= Input Nilai Teknik Serang Bela</h4>
+                <h4>N. KMN &nbsp; = Input Nilai Kemantapan</h4>
+                <h4>N. PGN &nbsp; = Input Nilai Penghayatan</h4>
+                <h4>KG &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= Input Hukuman Setiap Keluar Garis</h4>
+                <h4>SJ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = Input Hukuman Senjata Jatuh Tidak Sesuai Deskripsi</h4>
+                <h4>STJ &nbsp; &nbsp; &nbsp; &nbsp; = Input Hukuman Senjata Tidak Jatuh Sesuai Deskripsi</h4>
+                <h4>STS &nbsp; &nbsp; &nbsp; &nbsp;= Input Hukuman Senjata Tidak Sesuai (Patah)</h4>
+                <h4>SJDA &nbsp; &nbsp; &nbsp;= Input Hukuman Senjata Jatuh Diluar Arena</h4>
+                <h4>DIS &nbsp; &nbsp; &nbsp; &nbsp; = Diskualifikasi</h4>
+                <h4>W -5 &nbsp; &nbsp; &nbsp; = Waktu Minus 5&nbsp;</h4>
+                <h4>W -10 &nbsp; &nbsp; &nbsp; = Waktu Minus 10&nbsp;</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="modalDis" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Pemain Diskualifikasi</h4>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-center"> Pesilat Telah Didiskualifikasi</h3>
+                <div class="text-center">
+                    <button onclick="window.location.reload(true)" type="button" class="btn btn-success text-center" style="font-size:18px">SELESAI</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="konfirmDis" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Konfirmasi Diskualifikasi</h4>
+            </div>
+            <div class="modal-body">
+                <p>Yakin Ingin mendiskualifikasi Peserta ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Tidak</button>
+                <button type="button" class="btn btn-danger btn-konfirm-dis">
+                    Iya
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="modalAwal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Masukkan Nomor Juri</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <b>Nomor Juri</b>
+                    <br>
+                    <select class="form-control js-ganda-juri__select-nomor-juri">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info js-ganda-juri__connect" data-dismiss="modal">Connect</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+<script src="/pertandingan/assets/js/modul/ganda-juri.js"></script>
+@endsection
+    

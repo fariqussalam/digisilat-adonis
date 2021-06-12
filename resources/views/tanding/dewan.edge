@@ -1,12 +1,28 @@
 @layout('layouts/pertandingan')
 @section('content')
     <div class="container" id="container" style="width: 95%;">
-        <div id="printed" class="printed-container-15">
-            <div class="text-center">
-                <h4><b>
-                        <span id="nama-turnamen" class="f-16">{{ tournament.nama }}</span><br>
-                        <span id="tempat-turnamen" class="f-16">{{ tournament.tempat }}</span><br>
-                        <span id="waktu-turnamen" class="f-16">{{ tournament.waktu }}</span></b></h4>
+        <div id="printed" class="printed-container-15 html-content">
+
+            <div class="text-center row">
+                <div class="col-sm-4">
+                    @if(tournament.logo_1)
+                    <img style="width:150px;height:150px;" src="/uploads/{{tournament.logo_1}}">
+                    @endif
+                </div>
+                <div class="col-sm-4">
+                    <h4>
+                        <b>
+                            <span id="nama-turnamen" class="f-16">{{ tournament.nama }}</span><br>
+                            <span id="tempat-turnamen" class="f-16">{{ tournament.tempat }}</span><br>
+                            <span id="waktu-turnamen" class="f-16">{{ tournament.waktu }}</span>
+                        </b>
+                    </h4>
+                </div>
+                <div class="col-sm-4">
+                    @if(tournament.logo_2)
+                    <img style="width:150px;height:150px;" src="/uploads/{{tournament.logo_2}}">
+                    @endif
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-5"></div>
@@ -36,12 +52,12 @@
                     <table>
                         <tr>
                             <td style="color:white;background-color:red"><b>PESILAT MERAH</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-data-pertandingan__merah-nama"></td>
                         </tr>
                         <tr>
                             <td style="color:white;background-color:red"><b>KONTINGEN</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-data-pertandingan__merah-kontingen"></td>
                         </tr>
                     </table>
@@ -52,12 +68,12 @@
                     <table>
                         <tr>
                             <td style="color:white;background-color:blue"><b>PESILAT BIRU</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-data-pertandingan__biru-nama"></td>
                         </tr>
                         <tr>
                             <td style="color:white;background-color:blue"><b>KONTINGEN</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-data-pertandingan__biru-kontingen"></td>
                         </tr>
                     </table>
@@ -105,113 +121,108 @@
                         <tbody>
                         <tr>
                             <td class="text-center">1</td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="1" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="1" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="1" data-ronde="1" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="1" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="1" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="1" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="1" data-ronde="1" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="1" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="1" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="1" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="1" data-ronde="2" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="1" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="1" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="1" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="1" data-ronde="2" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="1" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="1" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="1" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="1" data-ronde="3" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="1" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="1" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="1" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="1" data-ronde="3" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="1" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="biru"></td>
-                           
                         </tr>
                         <tr>
                             <td class="text-center">2</td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="2" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="2" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="2" data-ronde="1" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="2" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="2" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="2" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="2" data-ronde="1" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="2" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="2" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="2" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="2" data-ronde="2" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="2" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="2" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="2" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="2" data-ronde="2" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="2" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="2" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="2" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="2" data-ronde="3" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="2" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="2" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="2" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="2" data-ronde="3" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="2" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="3" data-sudut="biru"></td>
-                           
                         </tr>
                         <tr>
                             <td class="text-center">3</td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="3" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="3" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="3" data-ronde="1" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="3" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="3" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="3" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="3" data-ronde="1" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="3" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="3" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="3" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="3" data-ronde="2" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="3" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="3" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="3" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="3" data-ronde="2" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="3" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="3" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="3" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="3" data-ronde="3" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="3" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="3" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="3" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="3" data-ronde="3" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="3" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="3" data-sudut="biru"></td>
-                          
                         </tr>
                         <tr>
                             <td class="text-center">4</td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="4" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="4" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="4" data-ronde="1" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="4" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="4" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="4" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="4" data-ronde="1" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="4" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="4" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="4" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="4" data-ronde="2" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="4" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="4" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="4" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="4" data-ronde="2" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="4" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="4" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="4" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="4" data-ronde="3" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="4" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="4" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="4" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="4" data-ronde="3" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="4" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="3" data-sudut="biru"></td>
-                          
                         </tr>
                         <tr>
                             <td class="text-center">5</td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="5" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="5" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="5" data-ronde="1" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="5" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="5" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="5" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="5" data-ronde="1" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="5" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="5" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="5" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="5" data-ronde="2" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="5" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="5" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="5" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="5" data-ronde="2" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="5" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="5" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="5" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="5" data-ronde="3" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="5" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="poin" data-juri="5" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="nilai" data-juri="5" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="jatuhan" data-juri="5" data-ronde="3" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="minus" data-juri="5" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="3" data-sudut="biru"></td>
-                           
                         </tr>
                         </tbody>
                     </table>
@@ -246,53 +257,53 @@
                             <td class="text-center">1</td>
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="1" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="1" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="1" data-sudut="biru"></td>
                         </tr>
                         <tr>
                             <td class="text-center">2</td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="2" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="2" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="2" data-sudut="biru"></td>
                         </tr>
                         <tr>
                             <td class="text-center">3</td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="biru"></td>
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="3" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="3" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="3" data-sudut="biru"></td>
                         </tr>
                         <tr>
                             <td class="text-center">Total</td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="1" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="2" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="3" data-sudut="biru"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
-                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td> 
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="merah"></td>
                             <td class="js-nilai-pertandingan" data-tipe="total" data-juri="1" data-ronde="total" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="total" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="2" data-ronde="total" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="total" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="3" data-ronde="total" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="total" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="4" data-ronde="total" data-sudut="biru"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="total" data-sudut="merah"></td>
+                            <td class="js-nilai-pertandingan" data-tipe="total" data-juri="5" data-ronde="total" data-sudut="biru"></td>
                         </tr>
                      
                         </tbody>
@@ -303,14 +314,9 @@
                 <div class="col-md-4">
                     <table>
                         <tr>
-                            <td><b>Tanggal</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td><b>Tanggal/Waktu</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;: </b></td>
                             <td class="js-current-date"><b></b></td>
-                        </tr>
-                        <tr>
-                            <td><b>Waktu</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
-                            <td class="js-current-time"><b></b></td>
                         </tr>
                     </table>
                 </div>
@@ -319,23 +325,23 @@
                     <table>
                         <tr>
                             <td><b>SUDUT</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-pemenang__sudut"></td>
                         </tr>
                         <tr>
                             <td><b>NAMA</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-pemenang__nama"></td>
                         </tr>
                         <tr>
                             <td><b>KONTINGEN</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-pemenang__kontingen"></td>
                         </tr>
                         <tr>
                             <td><b>JENIS KEMENANGAN</b></td>
-                            <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
-                            <td class="js-pemenang__poin"></td>
+                            <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
+                            <td class="js-pemenang__alasan"></td>
                         </tr>
                     </table>
                 </div>
@@ -370,12 +376,17 @@
                 </div>
             </div>
         </div>
+        @if(!request_params.for_printed)
         <div class="row" style="margin-top:30px;">
             <div class="col-md-4">
-                <button type="button" class="btn btn-success" style="margin:5px" id="admin_pertandingan_baru">Pengumuman Pemenang</button>
-                <button type="button" class="btn btn-white" style="margin:5px">Export to PDF</button>
+                <button type="button" class="btn btn-success js-gelanggang__pengumuman-pemenang" style="margin:5px" id="admin_pertandingan_baru" data-pertandingan="{{pertandingan.id}}" data-url="{{ route('TandingController.pengumumanPemenang') }}">Pengumuman Pemenang</button>
+                <button type="button" class="btn btn-white js-dewan-tanding__save-pdf" style="margin:5px">Export to PDF</button>
             </div>
         </div>
+        <form hidden name="export-pdf-form" method="post" action="{{ route('TandingController.exportToPdf') }}">
+            {{ csrfField() }}
+            <input type="hidden" name="printed_url" value="{{ current_url }}?for_printed=1" />
+        </form>
         <div class="modal fade pg-show-modal" id="modalPertandingan" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -423,6 +434,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 @endsection
 @section('module_js')

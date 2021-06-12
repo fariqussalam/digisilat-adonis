@@ -15,6 +15,7 @@
 
         var pertandingan = new Pertandingan()
         var pemenang = "";
+        var poinMerah = 0, poinBiru = 0
 
         function setWarnaRonde(ronde) {
             $('.js-tanding-display-ronde').css({
@@ -60,6 +61,12 @@
                 renderInitialData(juri);
             }) ;
             setWarnaRonde(state.ronde)
+            if (data.pemenang) {
+                poinMerah = data.skor_merah
+                poinBiru = data.skor_biru
+                if (data.pemenang === 'MERAH') setPemenangMerah()
+                else if (data.pemenang === 'BIRU') setPemenangBiru()
+            }
         })
         socket.on('kontrol-ronde', function(currentRonde) {
             state.ronde = currentRonde

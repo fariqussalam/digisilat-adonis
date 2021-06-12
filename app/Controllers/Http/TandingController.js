@@ -2,6 +2,7 @@
 const _ = require('underscore')
 const s = require('underscore.string')
 const moment = require('moment')
+const puppeteer = require('puppeteer')
 const PertandinganService = use('App/Services/PertandinganService')
 const TandingService = use('App/Services/TandingService')
 const Pertandingan = use('App/Models/Pertandingan')
@@ -94,28 +95,53 @@ class TandingController {
       nomor_gelanggang: params.nomor_gelanggang,
       pertandingan: pertandingan,
       tournament: tournament,
-      request_params: request_params
+      request_params: request_params,
+      current_url: request.url()
     })
   }
 
   async pengumumanPemenang({request, response, view}) {
-    const params = request.only(['pertandingan_id', 'sudut', 'alasan'])
+    const params = request.only(['pertandingan_id', 'sudut', 'alasan', 'skor_merah', 'skor_biru'])
     const pertandingan = await Pertandingan.findOrFail(params.pertandingan_id)
+    const alasanKemenangan = params.alasan.toLowerCase()
     pertandingan.pemenang = params.sudut.toUpperCase()
     pertandingan.alasan_kemenangan = params.alasan
     pertandingan.tanggal_pertandingan = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
-    pertandingan.status = "SELESAI"
+    // pertandingan.status = "SELESAI"
 
-    if (params.alasan_kemenangan == 'Menang Angka') {
-      const poin = await this.tandingService.getPoinPertandingan(pertandingan.id)
-      if (poin) {
-        pertandingan.skor_merah = poin.skor_merah
-        pertandingan.skor_biru = poin.skor_biru
-      }
+    try {
+      const poinMerah = params.skor_merah
+      const poinBiru = params.skor_biru
+      pertandingan.skor_merah = parseInt(poinMerah)
+      pertandingan.skor_biru = parseInt(poinBiru)
+    } catch (e) {
+      pertandingan.skor_merah = null
+      pertandingan.skor_biru = null
+    }
+
+    if (alasanKemenangan === 'menang angka') {
+      // const poin = await this.tandingService.getPoinPertandingan(pertandingan.id)
+      // console.log(poin)
+      // if (poin) {
+      //   pertandingan.skor_merah = poin.skor_merah
+      //   pertandingan.skor_biru = poin.skor_biru
+      // }
     }
     await pertandingan.save()
 
     return response.json({success: true})
+  }
+
+  async exportToPdf({request, response, view}) {
+    const params = request.only(['printed_url'])
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1645, height: 868 });
+    await page.goto(params.printed_url, {waitUntil: 'networkidle2'});
+    const pdf = await page.pdf({ printBackground: true, landscape: true, scale: 0.6 });
+    await browser.close();
+    response.type('application/octet-stream')
+    response.send(pdf)
   }
 
 }

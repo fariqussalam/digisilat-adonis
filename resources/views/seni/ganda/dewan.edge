@@ -1,0 +1,327 @@
+@layout('layouts/pertandingan')
+@section('content')
+<div class="container" id="container">
+    <div id="printed" class="printed-container-15" style="background-color:white;margin-left:10px;">
+        <div class="text-center">
+            <h4><b>
+                <span id="nama-turnamen">OPEN TOURNAMENT PIALA PANGDAM XIII/MERDEKA</span><br>
+                <span id="tempat-turnamen">Manado - Sulawesi Utara</span><br>
+                <span id="waktu-turnamen">11-14 Desember 2017</span></b></h4>
+        </div>
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-4">
+                <table class="f-15">
+                    <tr>
+                        <td><b>JENIS</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
+                        <td class="text-center">Ganda</td>
+                    </tr>
+                    <tr>
+                        <td><b>POOL</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
+                        <td class="text-center js-data-pertandingan__pool"><b></b></td>
+                    </tr>
+                    <tr>
+                        <td><b>NOMOR PENAMPIL</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
+                        <td class="text-center f-15 js-data-pertandingan__nomor-penampil">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-4">
+                <table style="font-size:15px;">
+                    <tr>
+                        <td><b>NAMA PESILAT</b></td>
+                    </tr>
+                    <tr>
+                        <td class="daftar-nama-pesilat"></td>
+                    </tr>
+                    <tr>
+                        <td><b>KONTINGEN</b></td>
+                    </tr>
+                    <tr>
+                        <td class="js-data-pertandingan__kontingen f-15"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4">
+            </div>
+        </div>
+        <div class="row" style=" word-wrap: break-word;overflow-wrap: break-word;width: 100%;margin-top:10px;margin-bottom:30px">
+            <h5 style="margin-left:30px;">Teknik Serang Bela</h5>
+            <table class="table table-bordered text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center f-13">
+                    <th class="text-center v-middle">JURI 1</th>
+                    <th class="text-center v-middle">JURI 2</th>
+                    <th class="text-center v-middle">JURI 3</th>
+                    <th class="text-center v-middle">JURI 4</th>
+                    <th class="text-center v-middle">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="f-13">
+                    <td class="text-center js-nilai__nilai-serang-bela" data-juri="1">0</td>
+                    <td class="text-center js-nilai__nilai-serang-bela" data-juri="2">0</td>
+                    <td class="text-center js-nilai__nilai-serang-bela" data-juri="3">0</td>
+                    <td class="text-center js-nilai__nilai-serang-bela" data-juri="4">0</td>
+                    <td class="text-center js-nilai__nilai-serang-bela" data-juri="5">0</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 style="margin-left:30px;">Nilai Kemantapan</h5>
+            <table class="table table-bordered text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center f-13">
+                    <th class="text-center v-middle">JURI 1</th>
+                    <th class="text-center v-middle">JURI 2</th>
+                    <th class="text-center v-middle">JURI 3</th>
+                    <th class="text-center v-middle">JURI 4</th>
+                    <th class="text-center v-middle">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="font-size:13px;">
+                    <td class="text-center js-nilai__nilai-kemantapan" data-juri="1">0</td>
+                    <td class="text-center js-nilai__nilai-kemantapan" data-juri="2">0</td>
+                    <td class="text-center js-nilai__nilai-kemantapan" data-juri="3">0</td>
+                    <td class="text-center js-nilai__nilai-kemantapan" data-juri="4">0</td>
+                    <td class="text-center js-nilai__nilai-kemantapan" data-juri="5">0</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 style="margin-left:30px;">Nilai Penghayatan</h5>
+            <table class="table table-bordered text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center f-13">
+                    <th class="text-center v-middle">JURI 1</th>
+                    <th class="text-center v-middle">JURI 2</th>
+                    <th class="text-center v-middle">JURI 3</th>
+                    <th class="text-center v-middle">JURI 4</th>
+                    <th class="text-center v-middle">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="f-13">
+                    <td class="text-center js-nilai__nilai-penghayatan" data-juri="1">0</td>
+                    <td class="text-center js-nilai__nilai-penghayatan" data-juri="2">0</td>
+                    <td class="text-center js-nilai__nilai-penghayatan" data-juri="3">0</td>
+                    <td class="text-center js-nilai__nilai-penghayatan" data-juri="4">0</td>
+                    <td class="text-center js-nilai__nilai-penghayatan" data-juri="5">0</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 style="margin-left:30px;">Hukuman</h5>
+            <table class="table table-bordered table-condensed text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center" style="font-size:11px;">
+                    <th rowspan="2" class="text-center v-middle">JURI</th>
+                    <th colspan="7" class="text-center">JENIS HUKUMAN</th>
+                    <th rowspan="2" class="text-center">TOTAL</th>
+                </tr>
+                <tr>
+                    <th class="text-center">Keluar Garis</th>
+                    <th class="text-center">Senjata Jatuh Tidak Sesuai Deskirpsi</th>
+                    <th class="text-center">Senjata Tidak Jatuh Sesuai Deskirpsi</th>
+                    <th class="text-center">Senjata Jatuh Diluar Arena</th>
+                    <th class="text-center">Senjata Tidak Sesuai (Patah)</th>
+                    <th class="text-center">W-5</th>
+                    <th class="text-center">W-10</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center">1</td>
+                    <td class="js-hukuman__keluar-garis" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-jatuh" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-jatuh" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-diluar-arena" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-sesuai" data-juri="1"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__w-5" data-juri="1"><span>0</span></td>
+                    <td class="js-hukuman__w-10" data-juri="1"><span>0</span></td>
+                    <td class="js-hukuman__nilai-hukuman" data-juri="1"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">2</td>
+                    <td class="js-hukuman__keluar-garis" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-jatuh" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-jatuh" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-diluar-arena" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-sesuai" data-juri="2"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__w-5" data-juri="2"><span>0</span></td>
+                    <td class="js-hukuman__w-10" data-juri="2"><span>0</span></td>
+                    <td class="js-hukuman__nilai-hukuman" data-juri="2"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">3</td>
+                    <td class="js-hukuman__keluar-garis" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-jatuh" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-jatuh" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-diluar-arena" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-sesuai" data-juri="3"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__w-5" data-juri="3"><span>0</span></td>
+                    <td class="js-hukuman__w-10" data-juri="3"><span>0</span></td>
+                    <td class="js-hukuman__nilai-hukuman" data-juri="3"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">4</td>
+                    <td class="js-hukuman__keluar-garis" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-jatuh" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-jatuh" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-diluar-arena" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-sesuai" data-juri="4"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__w-5" data-juri="4"><span>0</span></td>
+                    <td class="js-hukuman__w-10" data-juri="4"><span>0</span></td>
+                    <td class="js-hukuman__nilai-hukuman" data-juri="4"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">5</td>
+                    <td class="js-hukuman__keluar-garis" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-jatuh" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-jatuh" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-diluar-arena" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__senjata-tidak-sesuai" data-juri="5"><span>0</span> X -5 </td>
+                    <td class="js-hukuman__w-5" data-juri="5"><span>0</span></td>
+                    <td class="js-hukuman__w-10" data-juri="5"><span>0</span></td>
+                    <td class="js-hukuman__nilai-hukuman" data-juri="5"></td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 style="margin-left:30px;">Nilai Total</h5>
+            <table class="table table-bordered text-center" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center f-13">
+                    <th class="text-center v-middle js-nilai__display-total" data-juri="1">JURI 1</th>
+                    <th class="text-center v-middle js-nilai__display-total" data-juri="2">JURI 2</th>
+                    <th class="text-center v-middle js-nilai__display-total" data-juri="3">JURI 3</th>
+                    <th class="text-center v-middle js-nilai__display-total" data-juri="4">JURI 4</th>
+                    <th class="text-center v-middle js-nilai__display-total" data-juri="5">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="f-13">
+                    <td class="text-center v-middle js-nilai__nilai-total" data-juri="1">0</td>
+                    <td class="text-center v-middle js-nilai__nilai-total" data-juri="2">0</td>
+                    <td class="text-center v-middle js-nilai__nilai-total" data-juri="3">0</td>
+                    <td class="text-center v-middle js-nilai__nilai-total" data-juri="4">0</td>
+                    <td class="text-center v-middle js-nilai__nilai-total" data-juri="5">0</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4" style="margin-top:-40px;">
+                <h4><b>HASIL PENAMPILAN</b></h4>
+                <table>
+                    <tr>
+                        <td><b>WAKTU DIGUNAKAN</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;: </b></td>
+                        <td id="waktu-digunakan" style="font-size:15px;"></td>
+                    </tr>
+                    <tr>
+                        <td><b>TOTAL NILAI</b></td>
+                        <td class="text-center"><b>&nbsp;&nbsp;: </b></td>
+                        <td id="total-nilai" style="font-size:15px;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <table class="table table-bordered table-condensed text-center" style="font-size:10px;table-layout: fixed;width: 100%;margin-top:20px;">
+            <thead>
+            <tr class="text-center" style="font-size:11px;">
+                <th colspan="5" class="text-center">TANDA TANGAN</th>
+            </tr>
+            <tr class="text-center" style="font-size:11px;">
+                <th rowspan="1" class="text-center v-middle">JURI 1</th>
+                <th rowspan="1" class="text-center v-middle">JURI 2</th>
+                <th rowspan="1" class="text-center v-middle">JURI 3</th>
+                <th rowspan="1" class="text-center v-middle">JURI 4</th>
+                <th rowspan="1" class="text-center v-middle">JURI 5</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-center" style="color:white;"><br><br><br></td>
+                <td></td>
+                <td></td>
+                <td class="text-center"></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-right" style="margin-top:20px;">
+            KETUA PERTANDINGAN<br><br><br><br>
+            ____________________
+        </div>
+        <table style="font-size:15px;">
+            <tr>
+                <td><b>Tanggal</b></td>
+                <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                <td id="tanggal"></td>
+            </tr>
+            <tr>
+                <td><b>Waktu</b></td>
+                <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
+                <td id="waktu"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="row" style="margin-top:30px;">
+        <div class="col-md-8">
+            <a class="btn btn-primary" href="#" style="margin:5px" id="simpan-data">Simpan Data </a>
+            <button class="btn btn-danger" style="margin:5px" id="pengumuman-pemenang">Pengumuman Pemenang </button>
+            <button class="btn btn-success" style="margin:5px" id="mulai-baru">Mulai Regu Baru </button>
+        </div>
+    </div>
+    <div class="modal fade pg-show-modal" id="modalPertandingan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Masukkan Data Pertandingan</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="form-pertandingan">
+                        <div class="form-group">
+                            <label><b>Pool</b></label>
+                            <input type="text" class="form-control" name="pool">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Nomor Penampil</b></label>
+                            <input type="text" class="form-control" name="nomor-penampil">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Nama Pesilat 1</b></label>
+                            <input type="text" class="form-control" name="pesilat-1-nama">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Nama Pesilat 2</b></label>
+                            <input type="text" class="form-control" name="pesilat-2-nama">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Kontingen</b></label>
+                            <input type="text" class="form-control" name="kontingen">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary js-modal-pertandingan--simpan">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+<script src="/pertandingan/assets/js/modul/ganda-admin.js"></script>
+@endsection

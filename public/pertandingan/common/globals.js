@@ -25,6 +25,24 @@
                 _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
                 return nilaiString
             }
+            this.getJatuhan = function(sudut, ronde) {
+                var nilaiList = _.filter(this.penilaian, function(n) {
+                    var isJatuhan = n.nilaiString === '1 + 3' || n.nilaiString == '3'
+                    return n.ronde === ronde && n.sudut === sudut && n.nilai > 0 && isJatuhan
+                })
+                var nilaiString = []
+                _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
+                return nilaiString
+            }
+            this.getNilaiPoin = function(sudut, ronde) {
+                var nilaiList = _.filter(this.penilaian, function(n) {
+                    var isJatuhan = n.nilaiString !== '1 + 3' && n.nilaiString != '3'
+                    return n.ronde === ronde && n.sudut === sudut && n.nilai > 0 && isJatuhan
+                })
+                var nilaiString = []
+                _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
+                return nilaiString
+            }
             this.getTotalRonde = function(sudut, ronde) {
                 var nilaiList = _.filter(this.penilaian, function(n) { return n.ronde === ronde && n.sudut === sudut })
                 var nilai = 0
@@ -41,13 +59,17 @@
                 var poin = this.getPoin(sudut, ronde),
                     minus = this.getMinus(sudut, ronde),
                     totalRonde = this.getTotalRonde(sudut, ronde),
-                    total = this.getTotal(sudut)
+                    total = this.getTotal(sudut),
+                    jatuhan = this.getJatuhan(sudut, ronde),
+                    nilai = this.getNilaiPoin(sudut, ronde)
 
                 return {
                     poin: poin,
                     minus: minus,
                     totalRonde: totalRonde,
-                    total: total
+                    total: total,
+                    jatuhan: jatuhan,
+                    nilaiPoin: nilai
                 }
             }
         },

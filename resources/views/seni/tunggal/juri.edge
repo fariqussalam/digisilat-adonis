@@ -1,0 +1,441 @@
+@layout('layouts/pertandingan')
+@section('module_css')
+<link href="/pertandingan/starter-template.css" rel="stylesheet">
+@endsection
+@section('content')
+@if(request_params.nomor_juri)
+<input type="hidden" name="nomorJuri" value="{{ request_params.nomor_juri }}" />
+@endif
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color:white;">DigiSilat TGR | Tunggal</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="container" style="width:100%">
+    <div class="starter-template">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-condensed text-center">
+                        <thead>
+                        <tr class="text-center">
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="1">Jurus 1</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="2">Jurus 2</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="3">Jurus 3</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="4">Jurus 4</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="5">Jurus 5</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="6">Jurus 6</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="7">Jurus 7</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="1">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="2">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="3">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="4">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="5">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="6">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="7">0</td>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr class="text-center">
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="8">Jurus 8</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="9">Jurus 9</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="10">Jurus 10</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="11">Jurus 11</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="12">Jurus 12</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="13">Jurus 13</th>
+                            <th class="text-center js-tunggal-juri__display-jurus" data-jurus="14">Jurus 14</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="8">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="9">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="10">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="11">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="12">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="13">0</td>
+                            <td class="js-tunggal-juri__skor-jurus" data-jurus="14">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <div class="col-sm-2">
+                        <table class="table table-bordered table-condensed text-center">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="text-center">Nilai Kebenaran</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="js-tunggal-juri__nilai-kebenaran">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-1">
+                        <h3>+</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        <table class="table table-bordered table-condensed text-center">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="text-center js-tunggal-juri__display-nilai-kemantapan">Kemantapan
+                                    (50-60)
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="js-tunggal-juri__nilai-kemantapan">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-1">
+                        <h3>-</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        <table class="table table-bordered table-condensed text-center">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="text-center">Hukuman</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="js-tunggal-juri__nilai-hukuman">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-1">
+                        <h3>=</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        <table class="table table-bordered table-condensed text-center">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="text-center">Nilai Jumlah</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="js-tunggal-juri__nilai-total">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:-30px">
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+                <table class="table table-bordered text-center bg-primary">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Nomor Juri</th>
+                        <th colspan="2" class="text-center">Keluar Garis</th>
+                        <th colspan="2" class="text-center">Mengeluarkan Suara</th>
+                        <th colspan="2" class="text-center">Senjata Lepas</th>
+                        <th class="text-center">Salah Pakaian</th>
+                        <th class="text-center">Faktor Waktu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="js-tunggal-juri__nomor-juri">1</td>
+                        <td class="js-tunggal-juri__display-hukuman" data-hukuman="keluar-garis">0</td>
+                        <td>X -5</td>
+                        <td class="js-tunggal-juri__display-hukuman" data-hukuman="mengeluarkan-suara">0</td>
+                        <td>X -5</td>
+                        <td class="js-tunggal-juri__display-hukuman" data-hukuman="senjata-lepas">0</td>
+                        <td>X -5</td>
+                        <td class="js-tunggal-juri__display-hukuman" data-hukuman="salah-pakaian">Tidak</td>
+                        <td class="js-tunggal-juri__display-hukuman" data-hukuman="faktor-waktu">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-1">
+            </div>
+        </div>
+    </div>
+    <div class="starter-template" style="padding:20px">
+        <div class="row">
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="1" class="js-tunggal-juri__input btn btn-danger btn-lg btn-block"
+                        style="font-size:25px">1
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="2" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">2
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="3" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">3
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="4" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">4
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-4">
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <button type="button" class="js-tunggal-juri__minus btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">-
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <button type="button" class="js-tunggal-juri__up-jurus btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">-> Jurus
+                </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="5" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">5
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="6" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">6
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="7" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">7
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="8" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">8
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-4">
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <button type="button" class="js-tunggal-juri__input-kemantapan btn btn-danger btn-lg btn-block"
+                        style="font-size:25px">N. KEMANTAPAN
+                </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="9" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">9
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-value="0" class="js-tunggal-juri__input btn btn-danger btn-block btn-lg"
+                        style="font-size:25px">0
+                </button>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-md-4 col-sm-4">
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-hukuman="keluar-garis"
+                        class="js-tunggal-juri__input-hukuman btn btn-lg btn-danger" style="font-size:25px;">KG
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-hukuman="salah-pakaian"
+                        class="js-tunggal-juri__input-hukuman btn btn-lg btn-danger" style="font-size:25px">SP
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-hukuman="mengeluarkan-suara"
+                        class="js-tunggal-juri__input-hukuman btn btn-lg btn-danger" style="font-size:25px">MS
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <button type="button" data-hukuman="senjata-lepas"
+                        class="js-tunggal-juri__input-hukuman btn btn-lg btn-danger" style="font-size:25px">SL
+                </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-sm-2">
+                <button type="button" class="js-tunggal-juri__input-enter btn btn-danger btn-lg btn-block"
+                        style="font-size:25px">ENT
+                </button>
+            </div>
+            <div class="col-sm-2">
+                <button type="button" class="js-tunggal-juri__input-clear btn btn-danger btn-lg btn-block"
+                        style="font-size:25px">CLR
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-4">
+            </div>
+            <div class="col-sm-2">
+                <button type="button" class="js-tunggal-juri__input-dis btn btn-danger btn-lg btn-block"
+                        style="font-size:25px">DIS
+                </button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" data-hukuman="w-5" data-waktu="true"
+                        class="js-tunggal-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-5
+                </button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" data-hukuman="w-10" data-waktu="true"
+                        class="js-tunggal-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-10
+                </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-sm-2">
+                <button type="button" class="js-tunggal-juri__finish btn btn-success btn-block"
+                        style="font-size:18px">SELESAI
+                </button>
+            </div>
+            <div class="col-sm-2">
+                <button data-toggle="modal" data-target="#modal1" type="button"
+                        class="js-tunggal-juri__keterangan btn btn-info btn-block"
+                        style="font-size:18px;MARGIN-LEFT:10PX">KETERANGAN
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-4">
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="js-tunggal-juri__hapus-hukuman btn btn-danger btn-lg btn-block"
+                        style="font-size:25px">HAPUS HUKUMAN
+                </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Keterangan Tombol</h4>
+            </div>
+            <div class="modal-body">
+                <h4>- = Input Kesalahan Tiap Jurus</h4>
+                <h4>Up Jurus = Pindah Ke Jurus Berikutnya</h4>
+                <h4>KG = Input Hukuman Tiap Keluar Garis</h4>
+                <h4>SP = Input Hukuman Salah Pakaian/Kostum/Senjata</h4>
+                <h4>MS = Input Hukuman Tiap Mengeluarkan Suara</h4>
+                <h4>N.KMN = Input Nilai Tiap Kemantapan</h4>
+                <h4>DIS = Diskualifikasi</h4>
+                <h4>w-5 = Input Hukuman Waktu -5</h4>
+                <h4>w-10 = Input Hukuman Waktu -10</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="modalDis" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Pemain Diskualifikasi</h4>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-center"> Pesilat Telah Didiskualifikasi</h3>
+                <div class="text-center">
+                    <button onclick="window.location.reload(true)" type="button" class="btn btn-success text-center"
+                            style="font-size:18px">SELESAI
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="konfirmDis" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Konfirmasi Diskualifikasi</h4>
+            </div>
+            <div class="modal-body">
+                <p>Yakin Ingin mendiskualifikasi Peserta ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Tidak</button>
+                <button type="button" class="btn btn-danger btn-konfirm-dis">
+                    Iya
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pg-show-modal" id="modalAwal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Masukkan Nomor Juri</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <b>Nomor Juri</b>
+                    <br>
+                    <select class="form-control js-tunggal-juri__select-nomor-juri">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info js-tunggal-juri__connect" data-dismiss="modal">Connect
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+<script src="/pertandingan/assets/js/modul/tunggal-juri.js"></script>
+@endsection
+    

@@ -2,6 +2,9 @@
   $(function () {
 
     var _csrf = $('.wrapper').data('csrf');
+    if (!_csrf) {
+      _csrf = $('input[name="csrf"]').val();
+    }
     window['_csrf'] = _csrf
 
     $(".js-select2").select2();
@@ -570,6 +573,25 @@
     });
     })
 
+    $('.js-gelanggang__mulai-pertandingan-seni').click(function() {
+      var data = $(this).data()
+      if (!data) {
+        return console.log('Cancelled')
+    }
+    $.ajax({
+      method: "POST",
+      url: data.url,
+      data: {
+        _csrf: window['_csrf'],
+        id: data.id,
+        nomor_pool: data.nomorPool,
+        status: data.status
+      }
+    }).done(function (data) {
+      window.location.reload();
+    });
+    })
+
     $('.js-gelanggang__pengumuman-pemenang').click(function() {
       var alasanKemenangan = window.alasanKemenangan
       if (!alasanKemenangan) return false;
@@ -615,7 +637,18 @@
                     alasanKemenanganTemplate,
                     '</select>',
                 '</div>',
-            '</div>'
+            '</div>',
+          '<div class="vex-custom-field-wrapper">',
+          '<label for="poin">Poin Merah</label>',
+          '<div class="vex-custom-input-wrapper">',
+          '<input type="number" name="poin_merah" max="10" value="0"/>',
+          '</div>',
+          '<div class="vex-custom-field-wrapper">',
+          '<label for="poin">Poin Biru</label>',
+          '<div class="vex-custom-input-wrapper">',
+          '<input type="number" name="poin_biru" max="10" value="0" />',
+          '</div>',
+          '</div>'
         ].join(''),
         callback: function (data) {
             if (!data) {
@@ -628,7 +661,9 @@
                 _csrf: window['_csrf'],
                 pertandingan_id: data.pertandingan_id,
                 sudut: data.sudut,
-                alasan: data.alasan_kemenangan
+                alasan: data.alasan_kemenangan,
+                skor_merah: data.poin_merah,
+                skor_biru: data.poin_biru
               }
             }).done(function () {
               window.location.reload();

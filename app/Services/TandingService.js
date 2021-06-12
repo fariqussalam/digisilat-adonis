@@ -9,6 +9,7 @@ const Kontingen = use('App/Models/Kontingen')
 const PesilatSeni = use('App/Models/PesilatSeni')
 const Pertandingan = use('App/Models/Pertandingan')
 const Kualifikasi = use('App/Models/Kualifikasi')
+const Eliminasi = use('App/Models/Eliminasi')
 const PesilatService = use('App/Services/PesilatService')
 const Setting = use ('App/Models/Setting')
 
@@ -23,6 +24,14 @@ class TandingService {
             const kualifikasi = await Kualifikasi.query().where({ pertandingan_id: pertandinganId }).first()
             const merah = await this.pesilatService.getPesilatTanding(kualifikasi.merah_id)
             const biru = await this.pesilatService.getPesilatTanding(kualifikasi.biru_id)
+            return {
+                merah,
+                biru
+            }
+        } else if (jenis == 'ELIMINASI') {
+            const eliminasi = await Eliminasi.query().where({pertandingan_id: pertandinganId}).first()
+            const merah = await this.pertandinganService.findRootPertandingan(eliminasi.pemenang_a_id)
+            const biru = await this.pertandinganService.findRootPertandingan(eliminasi.pemenang_b_id)
             return {
                 merah,
                 biru
@@ -44,6 +53,12 @@ class TandingService {
         const kelas = await Kelas.find(dataPertandingan.kelas_id)
         objPertandingan.kelas = kelas.toJSON()
         objPertandingan.nomor_partai = dataPertandingan.nomor_partai
+
+        if (dataPertandingan.pemenang) objPertandingan.pemenang = dataPertandingan.pemenang
+        if (dataPertandingan.alasan_kemenangan) objPertandingan.alasan_kemenangan = dataPertandingan.alasan_kemenangan
+        if (dataPertandingan.skor_merah) objPertandingan.skor_merah = dataPertandingan.skor_merah
+        if (dataPertandingan.skor_biru) objPertandingan.skor_biru = dataPertandingan.skor_biru
+        if (dataPertandingan.updated_at) objPertandingan.updated_at = dataPertandingan.updated_at
 
         return objPertandingan;
     }
@@ -87,9 +102,39 @@ class TandingService {
 
     async getPoinPertandingan(pertandingan_id) {
         const pertandingan = await Pertandingan.find(pertandingan_id)
+        const dataPertandinganString = pertandingan.data_pertandingan
+
+        let dataPertandinganJson, skor_merah = 0, skor_biru = 0;
+        try {
+            let listJuri = [1, 2, 3, 4, 5]
+            dataPertandinganJson = JSON.parse(dataPertandinganString)
+            let jsonDewanJuri = dataPertandinganJson.dewanJuri
+            _.each(listJuri, (nomorJuri) => {
+                let jsonJuri = jsonDewanJuri[nomorJuri.toString()]
+                if (!jsonJuri) return
+                let nilaiMerah = _.filter(jsonJuri['penilaian'], (nilai) => {
+                    return nilai['sudut'] === "merah"
+                })
+                let nilaiBiru = _.filter(jsonJuri['penilaian'], (nilai) => {
+                    return nilai['sudut'] === "biru"
+                })
+                let totalNilaiMerah = _.reduce(nilaiMerah, (memo, nilai) => { return memo + nilai['nilai'] }, 0)
+                let totalNilaiBiru = _.reduce(nilaiBiru, (memo, nilai) => { return memo + nilai['nilai'] }, 0)
+                if (totalNilaiMerah > totalNilaiBiru) {
+                    skor_merah = skor_merah + 1
+                } else if (totalNilaiBiru > totalNilaiMerah) {
+                    skor_biru = skor_biru + 1
+                }
+            })
+        }catch(e) {
+            dataPertandinganJson = null
+            skor_biru = 0
+            skor_merah = 0
+        }
+
         return {
-            skor_merah: 5,
-            skor_biru: 0
+            skor_merah,
+            skor_biru
         }
     }
 
@@ -97,6 +142,12 @@ class TandingService {
         const initData = await Setting.query().where( { setting_type: 'TEMPLATE_TANDING' } ).first()
         const initDataSetup = await this.setupInitData(pertandingan, initData.setting_value)
         return initDataSetup
+    }
+
+    async getInitDataPertandinganSeni(pertandingan) {
+        const initData = await Setting.query().where( { setting_type: 'TEMPLATE_SENI' } ).first()
+        const initDataSetup = await this.setupInitData(pertandingan, initData.setting_value)
+        return {}
     }
 
     async setupInitData(pertandingan, initData) {

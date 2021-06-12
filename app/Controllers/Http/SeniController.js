@@ -3,7 +3,7 @@ const _ = require('underscore')
 const s = require('underscore.string')
 const moment = require('moment')
 const PertandinganService = use('App/Services/PertandinganService')
-const Pertandingan = use('App/Models/Pertandingan')
+const PertandinganSeni = use('App/Models/PertandinganSeni')
 
 const SeniHalaman = {
   "DEWAN": {
@@ -53,7 +53,8 @@ class SeniController {
     const request_params = request.get()
     const tournament = request.activeTournament
     const pertandingan = await this.pertandinganService.getPertandinganSeniAktif(params.nomor_pool, tournament)
-    const page = `seni.${params.halaman}`
+    const tipeSeni = await this.pertandinganService.getTipeSeni(pertandingan.kategori_id)
+    const page = `seni.${tipeSeni}.${params.halaman}`
 
     return view.render(page, {
       nomor_pool: params.nomor_pool,
@@ -61,6 +62,37 @@ class SeniController {
       tournament: tournament,
       request_params: request_params
     })
+  }
+
+  async mulaiPertandingan({request, response}) {
+    const params = request.only(['id', 'nomor_pool', 'status'])
+    const pertandingan = await PertandinganSeni.find(params.id)
+
+    if (!params.status) {
+      const otherPertandingan = await PertandinganSeni.query().where({
+        nomor_pool: params.nomor_pool,
+        status: "BERJALAN"
+      }).fetch()
+      for (let p of otherPertandingan.rows) {
+        p.status = "BELUM_DIMULAI"
+        await p.save()
+      }
+      
+      pertandingan.status = "BERJALAN"
+      await pertandingan.save()
+    } else {
+      pertandingan.status = params.status
+      await pertandingan.save()
+    }
+
+    //init data pertandingan
+    if (pertandingan.data_pertandingan == null || s.isBlank(pertandingan.data_pertandingan)) {
+      // let initDataPertandingan = await this.tandingService.getInitDataPertandinganSeni(pertandingan)
+      pertandingan.data_pertandingan = JSON.stringify({})
+      await pertandingan.save()
+    }
+
+    return response.route('JadwalController.jadwalSeni')
   }
 
 }

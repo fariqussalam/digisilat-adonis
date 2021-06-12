@@ -2,12 +2,10 @@
 
 @section('content')
 <div class="container-fluid p-0">
-
     <div class="row mb-2 mb-xl-3">
         <div class="col-auto d-none d-sm-block">
             <h3>Pool {{ nomor_pool }}</h3>
         </div>
-
     </div>
     <div class="row">
         <div class="col-12">
@@ -38,13 +36,11 @@
                           <td>{{ pertandingan.status.value }}</td>
                           <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
                           <td>
-                            <td>
                               @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                              <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomor_gelanggang}}" >Mulai</button>
+                              <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" >Mulai</button>
                               @elseif(pertandingan.status.name == 'BERJALAN')
-                              <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomor_gelanggang}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
+                              <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
                               @endif
-                            </td>
                           </td>
                       </tr>
                     @endeach
@@ -61,32 +57,32 @@
               <div class="card-body">
                   <h4>Pertandingan Berjalan</h4>
                   <table class="table table-striped" style="width:100%">
-                      <thead>
-                        <tr>
-                          <th>No Partai</th>
-                          <th>Kelas</th>
-                          <th>Sudut Merah</th>
-                          <th>Sudut Biru</th>
-                        </tr>
-                      </thead>
+                    <thead>
+                      <tr>
+                        <th width="5%">Kategori</th>
+                        <th>Nama</th>
+                        <th>Kontingen</th>
+                        <th>Nomor Penampil</th>
+                        <th>Status</th>
+                        <th>Nilai Akhir</th>
+                        <th></th>
+                      </tr>
+                    </thead>
                      <tbody>
                       <tr>
-                        <td>{{ pertandinganAktif.nomor_partai ? pertandinganAktif.nomor_partai : "-" }}</td>
-                        <td>{{ pertandinganAktif.kelas.nama}}</td>
-                        <td>
-                         @if(pertandinganAktif.merah)
-                         {{ pertandinganAktif.merah.nama}} ({{pertandinganAktif.merah.kontingen.nama}})
-                         @else
-                         BYE
-                         @endif
-                        </td>
-                        <td>
-                         @if(pertandinganAktif.biru)
-                         {{ pertandinganAktif.biru.nama}} ({{pertandinganAktif.biru.kontingen.nama}})
-                         @else
-                         BYE
-                         @endif
-                        </td>
+                        <td>{{ pertandinganAktif.kategori.nama }}</td>
+                          <td>{{ pertandinganAktif.pesilat.nama }}</td>
+                          <td>{{ pertandinganAktif.kontingen.nama }}</td>
+                          <td>{{ pertandinganAktif.nomor_penampil ? pertandinganAktif.nomor_penampil : "-" }}</td>
+                          <td>{{ pertandinganAktif.status.value }}</td>
+                          <td>{{ pertandinganAktif.nilai_akhir ? pertandinganAktif.nilai_akhir : "-"  }}</td>
+                          <td>
+                              @if(pertandinganAktif.status.name == 'BELUM_DIMULAI')
+                              <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" >Mulai</button>
+                              @elseif(pertandinganAktif.status.name == 'BERJALAN')
+                              <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
+                              @endif
+                          </td>
                       </tr>
                      </tbody>
                     </table>
@@ -103,7 +99,7 @@
                           @each(h in halaman)
                           @set('h_lower', lowerCase(h.name))
                           <tr>
-                              <td><a href="{{ route('TandingController.halaman', {nomor_gelanggang:nomor_gelanggang ,halaman: h_lower}) }}">{{ h.label }}</a></td>
+                              <td><a href="{{ route('SeniController.halaman', {nomor_pool:nomor_pool ,halaman: h_lower}) }}">{{ h.label }}</a></td>
                           </tr>
                           @endeach
                       </tbody>
@@ -113,7 +109,5 @@
       </div>
   </div>
     @endif
-
-
 </div>
 @endsection

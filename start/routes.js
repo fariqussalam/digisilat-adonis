@@ -81,6 +81,11 @@ Route.post('tanding/pengumuman-pemenang', 'TandingController.pengumumanPemenang'
 /**
  * Pool
  */
+ Route.post('seni/jadwal/mulai-pertandingan', 'SeniController.mulaiPertandingan')
  Route.get('seni/pool/:nomor_pool', 'SeniController.pool')
  Route.get('seni/pool/:nomor_pool/:halaman', 'SeniController.halaman')
- 
+
+/**
+ * Print PDF
+ */
+Route.post('pertandingan/export-pdf', 'TandingController.exportToPdf' )

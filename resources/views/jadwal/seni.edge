@@ -113,6 +113,7 @@
               <th>Nomor Penampil</th>
               <th>Status</th>
               <th>Nilai Akhir</th>
+              <th></th>
             </tr>
           </thead>
          <tbody>
@@ -124,6 +125,13 @@
               <td>{{ pertandingan.nomor_penampil ? pertandingan.nomor_penampil : "-" }}</td>
               <td>{{ pertandingan.status.value }}</td>
               <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
+              <td>   
+                @if(pertandingan.status.name == 'BELUM_DIMULAI')
+                <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" >Mulai</button>
+                @elseif(pertandingan.status.name == 'BERJALAN')
+                <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
+                @endif
+              </td>
           </tr>
         @endeach
          </tbody>

@@ -1,0 +1,158 @@
+@layout('layouts/pertandingan')
+@section('module_css')
+<link href="/pertandingan/starter-template.css" rel="stylesheet">
+@endsection
+@section('content')
+<div class="container" style="width:100%">
+    <div style="margin:20px">
+        <div class="row" style="margin-top: -45px">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <table class="table" style="font-size:20px">
+                    <thead>
+                    <tr>
+                        <th class="text-center bg-primary">GANDA</th>
+                    </tr>
+                    </thead>
+                    <tbody style="background-color:green;color:white">
+                    <tr>
+                        <td class="text-center bg-primary pool">POOL</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center bg-primary kontingen">KONTINGEN</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-8 col-sm-8 col-md-8" style="margin-top:10px">
+                <table class="table table-bordered" style="font-size:25px">
+                    <tbody>
+                    <tr>
+                        <td class="text-left pesilat-1">Pesilat 1</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left pesilat-2">Pesilat 2</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" style="margin-left:10px;margin-right:10px;">
+            <table class="table table-bordered" style="font-size:32px;">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th class="text-center">JURI 1</th>
+                    <th class="text-center">JURI 2</th>
+                    <th class="text-center">JURI 3</th>
+                    <th class="text-center">JURI 4</th>
+                    <th class="text-center">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center">
+                    <td class="text-left success">SERANG BELA</td>
+                    <td class="js-ganda-display__nilai" data-nilai="teknik-serang-bela" data-juri="1">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="teknik-serang-bela" data-juri="2">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="teknik-serang-bela" data-juri="3">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="teknik-serang-bela" data-juri="4">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="teknik-serang-bela" data-juri="5">0</td>
+                </tr>
+                <tr class="text-center">
+                    <td class="text-left active">KEKOMPAKAN</td>
+                    <td class="js-ganda-display__nilai" data-nilai="kekompakan" data-juri="1">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="kekompakan" data-juri="2">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="kekompakan" data-juri="3">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="kekompakan" data-juri="4">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="kekompakan" data-juri="5">0</td>
+                </tr>
+                <tr class="text-center">
+                    <td class="text-left active">PENGHAYATAN</td>
+                    <td class="js-ganda-display__nilai" data-nilai="penghayatan" data-juri="1">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="penghayatan" data-juri="2">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="penghayatan" data-juri="3">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="penghayatan" data-juri="4">0</td>
+                    <td class="js-ganda-display__nilai" data-nilai="penghayatan" data-juri="5">0</td>
+                </tr>
+                <tr class="text-center">
+                    <td class="text-left danger">HUKUMAN</td>
+                    <td class="js-ganda-display__nilai-hukuman" data-juri="1">0</td>
+                    <td class="js-ganda-display__nilai-hukuman" data-juri="2">0</td>
+                    <td class="js-ganda-display__nilai-hukuman" data-juri="3">0</td>
+                    <td class="js-ganda-display__nilai-hukuman" data-juri="4">0</td>
+                    <td class="js-ganda-display__nilai-hukuman" data-juri="5">0</td>
+                </tr>
+                <tr class="text-center">
+                    <td class="text-left info">TOTAL</td>
+                    <td class="js-ganda-display__nilai-total" data-juri="1">0</td>
+                    <td class="js-ganda-display__nilai-total" data-juri="2">0</td>
+                    <td class="js-ganda-display__nilai-total" data-juri="3">0</td>
+                    <td class="js-ganda-display__nilai-total" data-juri="4">0</td>
+                    <td class="js-ganda-display__nilai-total" data-juri="5">0</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="height:25px">
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-sm-1 col-md-1">
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="clock" style="transform: scale(1.5);"></div>
+            </div>
+            <div class="col-sm-7">
+                <div class="row" style="margin-top:-30px;">
+                    <div class="col-sm-6">
+                        <table class="js-ganda-display__tabel-max table table-striped table-bordered table-condensed" style="font-size:20px;">
+                            <thead>
+                            <tr>
+                                <th class="text-center">JURI SKOR TERTINGGI</th>
+                                <th class="text-center">SKOR TERTINGGI</th>
+                            </tr>
+                            </thead>
+                            <tbody style="background-color:green;color:white">
+                            <td class="text-center nomor-juri" style="background-color:red;color:white">100</td>
+                            <td class="text-center skor" style="background-color:red;color:white">100</td>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="js-ganda-display__tabel-min table table-striped table-bordered table-condensed" style="font-size:20px;">
+                            <thead>
+                            <tr>
+                                <th class="text-center">JURI SKOR TERENDAH</th>
+                                <th class="text-center">SKOR TERENDAH</th>
+                            </tr>
+                            </thead>
+                            <tbody style="background-color:green;color:white">
+                            <td class="text-center nomor-juri" style="background-color:blue;color:white">100</td>
+                            <td class="text-center skor" style="background-color:blue;color:white">100</td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="js-ganda-display__tabel-total table table-striped table-bordered table-condensed" style="font-size:35px;">
+                        <thead>
+                        <tr>
+                            <th>TOTAL SKOR :</th>
+                            <th class="text-center skor" style="background-color:green;color:white">100</th>
+                        </tr>
+                        </thead>
+                        <tbody style="background-color:green;color:white">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+<script src="/pertandingan/lib/easytimer.min.js"></script>
+<script src="/pertandingan/assets/js/modul/ganda-display.js"></script>
+@endsection
