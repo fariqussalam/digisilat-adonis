@@ -4,30 +4,7 @@ const s = require('underscore.string')
 const moment = require('moment')
 const PertandinganService = use('App/Services/PertandinganService')
 const PertandinganSeni = use('App/Models/PertandinganSeni')
-
-const SeniHalaman = {
-  "DEWAN": {
-    name: "DEWAN",
-    label: "Dewan Pertandingan"
-  },
-  "DISPLAY": {
-    name: "DISPLAY",
-    label: "Display Pertandingan"
-  },
-  "JURI": {
-    name: "JURI",
-    label: "Juri Pertandingan"
-  },
-  "TIMER": {
-    name: "TIMER",
-    label: "Timer Pertandingan"
-  },
-}
-const SeniHalamanList = _.values(SeniHalaman)
-const Halaman = {
-  map: SeniHalaman,
-  list: SeniHalamanList
-}
+const Halaman = use('App/Enums/SeniHalaman')
 
 class SeniController {
   constructor() {

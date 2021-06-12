@@ -1,6 +1,11 @@
 @layout('layouts/pertandingan')
 @section('module_css')
 <link href="/pertandingan/starter-template.css" rel="stylesheet">
+<link
+        rel="stylesheet"
+        href="https://unpkg.com/glow-css@0.2.0/dist/css/glow.min.css"
+/>
+
 @endsection
 @section('content')
     <div class="container" style="width:100%;padding-top:0px;">
@@ -26,18 +31,17 @@
                     <table class="table text-center table-bordered">
                         <thead>
                         <tr>
-                            <th rowspan="2" colspan="5" class="text-center" width="40%"
-                                style="background-color:red;color: white;">
+                            <th rowspan="2" colspan="5" class="text-center sisi-merah" width="40%" data-indikator-merah="true">
                                 <span style="font-size:30px;" class="js-tanding-display-merah-nama"></span><br/>
                                 <span style="font-size:20px;" class="js-tanding-display-merah-kontingen"></span>
                             </th>
-                            <th width="10%" rowspan="2" colspan="1" class="text-center" style="width:5%;font-size:50px;vertical-align:middle;">
+                            <th width="10%" rowspan="2" colspan="1" class="text-center js-tanding-display-poin-merah" style="width:5%;font-size:50px;vertical-align:middle;">
                                 0
                             </th>
-                            <th width="10%" rowspan="2" colspan="1" class="text-center" style="width:5%;font-size:50px;vertical-align:middle;">
+                            <th width="10%" rowspan="2" colspan="1" class="text-center js-tanding-display-poin-biru" style="width:5%;font-size:50px;vertical-align:middle;">
                                 0
                             </th>
-                            <th rowspan="2" colspan="5" class="text-center bg-primary" width="40%">
+                            <th rowspan="2" colspan="5" class="text-center sisi-biru" width="40%" data-indikator-biru="true">
                                 <span style="font-size:30px;"class="js-tanding-display-biru-nama"></span><br/>
                                 <span style="font-size:20px;" class="js-tanding-display-biru-kontingen"></span>
                             </th>
@@ -56,19 +60,19 @@
                             <th class="text-center" colspan="2" width="15%">JURI 5</th>
                         </tr>
                         <tr style="font-size:20px;font-weight:bold">
-                            <td style="background-color:red;color: white;width:9%;">MERAH</td>
-                            <td style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td style="background-color:red;color:white;width:9%;">MERAH
+                            <td data-indikator-merah="true" style="background-color:red;color: white;width:9%;">MERAH</td>
+                            <td data-indikator-biru="true" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
+                            <td data-indikator-merah="true" style="background-color:red;color:white;width:9%;">MERAH
                             </td>
-                            <td style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td style="background-color:red;color:white;width:9%;">MERAH
+                            <td data-indikator-biru="true" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
+                            <td data-indikator-merah="true" style="background-color:red;color:white;width:9%;">MERAH
                             </td>
-                            <td style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td style="background-color:red;color:white;width:9%;">MERAH
+                            <td data-indikator-biru="true" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
+                            <td data-indikator-merah="true" style="background-color:red;color:white;width:9%;">MERAH
                             </td>
-                            <td style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td style="background-color:red;color:white;width:9%;">MERAH</td>
-                            <td style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
+                            <td data-indikator-biru="true" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
+                            <td data-indikator-merah="true" style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td data-indikator-biru="true" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
                         </tr>
                         </thead>
                         <tbody>

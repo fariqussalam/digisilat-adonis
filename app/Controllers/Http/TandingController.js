@@ -6,30 +6,7 @@ const puppeteer = require('puppeteer')
 const PertandinganService = use('App/Services/PertandinganService')
 const TandingService = use('App/Services/TandingService')
 const Pertandingan = use('App/Models/Pertandingan')
-
-const TandingHalaman = {
-  "DEWAN": {
-    name: "DEWAN",
-    label: "Dewan Pertandingan"
-  },
-  "DISPLAY": {
-    name: "DISPLAY",
-    label: "Display Pertandingan"
-  },
-  "JURI": {
-    name: "JURI",
-    label: "Juri Pertandingan"
-  },
-  "TIMER": {
-    name: "TIMER",
-    label: "Timer Pertandingan"
-  },
-}
-const TandingHalamanList = _.values(TandingHalaman)
-const Halaman = {
-  map: TandingHalaman,
-  list: TandingHalamanList
-}
+const Halaman = use('App/Enums/TandingHalaman')
 
 class TandingController {
   constructor() {

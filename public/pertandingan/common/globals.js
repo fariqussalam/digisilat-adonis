@@ -25,10 +25,12 @@
                 _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
                 return nilaiString
             }
+            var isJatuhan = function(nilai, nilaiString) {
+                return nilai > 0 && (nilaiString == '1+3' || nilaiString == '3')
+            }
             this.getJatuhan = function(sudut, ronde) {
                 var nilaiList = _.filter(this.penilaian, function(n) {
-                    var isJatuhan = n.nilaiString === '1 + 3' || n.nilaiString == '3'
-                    return n.ronde === ronde && n.sudut === sudut && n.nilai > 0 && isJatuhan
+                    return n.ronde === ronde && n.sudut === sudut && isJatuhan(n.nilai, n.nilaiString)
                 })
                 var nilaiString = []
                 _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
@@ -36,8 +38,7 @@
             }
             this.getNilaiPoin = function(sudut, ronde) {
                 var nilaiList = _.filter(this.penilaian, function(n) {
-                    var isJatuhan = n.nilaiString !== '1 + 3' && n.nilaiString != '3'
-                    return n.ronde === ronde && n.sudut === sudut && n.nilai > 0 && isJatuhan
+                    return n.ronde === ronde && n.sudut === sudut && !isJatuhan(n.nilai, n.nilaiString)
                 })
                 var nilaiString = []
                 _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
@@ -55,6 +56,18 @@
                 _.each(nilaiList, function(n) { nilai+=n.nilai })
                 return nilai
             }
+            this.getRingkasanNilai = function() {
+                var nilaiMerah = 0
+                var nilaiBiru = 0
+                var totalMerah = this.getTotal("merah")
+                var totalBiru = this.getTotal("biru")
+                if (totalMerah > totalBiru) nilaiMerah = 1
+                else if (totalBiru > totalMerah) nilaiBiru = 1
+                return {
+                    merah: nilaiMerah,
+                    biru: nilaiBiru
+                }
+             }
             this.getNilai = function(sudut, ronde) {
                 var poin = this.getPoin(sudut, ronde),
                     minus = this.getMinus(sudut, ronde),

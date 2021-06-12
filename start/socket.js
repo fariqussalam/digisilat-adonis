@@ -6,10 +6,10 @@ const tandingService = new TandingService()
 
 io.on('connection', async function(socket){
     var socketQuery = socket.handshake.query
-    console.log(`${socketQuery.name} Connected`);
+    // console.log(`${socketQuery.name} Connected`);
 
     socket.on('disconnect', function() {
-       console.log(`${socketQuery.name} Disconnected`)
+       // console.log(`${socketQuery.name} Disconnected`)
     });
 
     socket.on('get-data-pertandingan', async function(data) {
