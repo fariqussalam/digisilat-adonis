@@ -44,7 +44,7 @@
                 renderInitialData(juri);
             }) ;
 
-            if (data.pemenang) {
+            if (data.pemenang == "MERAH" || data.pemenang == "BIRU") {
                 if (data.updated_at) setDateAndTime(data.updated_at)
                 setDataPemenang(data)
             }
