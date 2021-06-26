@@ -2,12 +2,14 @@
 const _ = require('underscore')
 const s = require('underscore.string')
 const PertandinganService = use('App/Services/PertandinganService')
+const TandingService = use('App/Services/TandingService')
 const PertandinganSeni = use('App/Models/PertandinganSeni')
 const Halaman = use('App/Enums/SeniHalaman')
 
 class SeniController {
   constructor() {
     this.pertandinganService = new PertandinganService
+    this.tandingService = new TandingService
   }
 
   async pool({request, params, response, view}) {
@@ -62,12 +64,12 @@ class SeniController {
 
     //init data pertandingan
     if (pertandingan.data_pertandingan == null || s.isBlank(pertandingan.data_pertandingan)) {
-      // let initDataPertandingan = await this.tandingService.getInitDataPertandinganSeni(pertandingan)
-      pertandingan.data_pertandingan = JSON.stringify({})
+      let data_pertandingan = await this.tandingService.getInitDataPertandinganSeni(pertandingan)
+      pertandingan.data_pertandingan = JSON.stringify(data_pertandingan)
       await pertandingan.save()
     }
 
-    return response.route('JadwalSeniController.jadwalSeni')
+    response.route('JadwalSeniController.jadwalSeni')
   }
 
 }

@@ -146,9 +146,15 @@ class TandingService {
     }
 
     async getInitDataPertandinganSeni(pertandingan) {
-        const pertandinganInstance = new SeniInterface()
-        const masterData = await this.pertandinganService.getMasterDataPertandingan()
-        return pertandinganInstance
+        var init_data = await Setting.query().where( { setting_type: 'TEMPLATE_SENI' } ).first()
+        const master_data = await this.pertandinganService.getMasterDataPertandinganSeni(pertandingan.toJSON())
+        const jsonPertandingan = JSON.parse(init_data.setting_value)
+        master_data.dewanJuri = jsonPertandingan.dewanJuri
+
+        for (var juri in master_data.dewanJuri) {
+            master_data.dewanJuri[juri].daftarNilai = this.nilaiTunggalTemplate()
+        }
+        return master_data
     }
 
     async setupInitData(pertandingan, initData) {
@@ -162,6 +168,20 @@ class TandingService {
         jsonPertandingan.kelas = masterData.kelas
 
         return jsonPertandingan
+    }
+
+    nilaiTunggalTemplate() {
+        var daftarNilai = [
+            7, 6, 5, 7, 6, 8, 11, 7, 6, 12, 6, 5, 5, 9
+        ]
+        var jurusTunggal = []
+        for (var i = 0; i < daftarNilai.length; i++) {
+            jurusTunggal.push({
+                nomorJurus: i+1,
+                jumlahNilai: daftarNilai[i]
+            })
+        }
+        return jurusTunggal
     }
 }
 

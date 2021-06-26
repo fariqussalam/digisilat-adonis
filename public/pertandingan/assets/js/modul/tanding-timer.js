@@ -3,7 +3,7 @@
 
         var pertandinganId = $('input[name="pertandingan_id"]').val();
         var state = new DigiSilat.State.Timer();
-        var socket = DigiSilat.createSocket("Tanding Timer", pertandinganId);
+        var socket = DigiSilat.createSocket("tanding", "Tanding Timer", pertandinganId);
         socket.on('data-pertandingan', function(data) {
             state.ronde = data.ronde
             $('#counterRonde').text(data.ronde);

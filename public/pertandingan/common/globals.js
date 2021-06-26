@@ -115,14 +115,14 @@
         },
         setGlobalEvent: function(socket) {
             socket.on('connect', function() {
-                console.log("Connected To Socket")
+                console.log("Connected to Server")
             });
             socket.on('refresh', function() {
                 window.location.reload();
             });
         },
-        createSocket: function(name, pertandinganId) {
-            var socket = io({ query: { name : name, pertandinganId: pertandinganId } });
+        createSocket: function(type, name, pertandinganId) {
+            var socket = io({ query: { type: type, name : name, pertandinganId: pertandinganId } });
             this.setGlobalEvent(socket);
             return socket
         }

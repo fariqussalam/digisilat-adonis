@@ -1,45 +1,65 @@
 (function () {
     $(function () {
 
-        var clock;
+        var pertandinganId = $('input[name="pertandingan_id"]').val();
+        var state = new DigiSilat.Seni.State.Timer();
+        var socket = DigiSilat.createSocket("tunggal", "Tunggal Timer", pertandinganId);
 
-        clock = $('.clock').FlipClock({
-            clockFace: 'MinuteCounter',
-            autoStart: false,
-            callbacks: {
-                stop: function() {
-
-                }
-            }
+        function resetCountdown() {
+            state.countdown = 0
+        }
+        var $clock = $('.js-timer-clock');
+        var $timerSet = $('.js-timer-set');
+        var $timerStart = $('.js-timer-start');
+        var $timerStop = $('.js-timer-stop');
+        var $timerReset = $('.js-timer-reset');
+        var $timerAdd = $('.js-timer-add');
+        var timer = new easytimer.Timer({precision:"secondTenths", countdown: false})
+        timer.addEventListener('secondTenthsUpdated', function (e) {
+            state.countdown = timer.getTotalTimeValues().seconds;
+            $clock.html(timer.getTimeValues().toString().substring(3));
+        });
+        timer.addEventListener('started', function (e) {
+            $clock.html(timer.getTimeValues().toString().substring(3));
+        });
+        timer.addEventListener('reset', function (e) {
+            $clock.html(timer.getTimeValues().toString().substring(3));
         });
 
-        clock.setTime(120);
-        clock.setCountdown(true);
+        $timerSet.click(function() {
+            var waktuString = $('input[name="waktu-timer"]').val();
+            var waktu = parseInt(waktuString);
+            resetCountdown();
+            state.countdown = waktu
+            timer.start({startValues: {seconds: state.countdown}});
+            timer.stop();
+            state.countdown = waktu;
 
-        var socket = io('/tunggal');
-        socket.on('connect', function() {
-            socket.emit('koneksi', {
-                name: "Timer Tunggal"
-            });
+            socket.emit('timer-command', {countdown: waktu, command: 'set'});
+        })
+        $timerStart.click(function() {
+            timer.start({startValues: {seconds: state.countdown}});
+            socket.emit('timer-command', {command: 'start'});
         });
+        $timerStop.click(function() {
+            timer.stop();
+            socket.emit('timer-command', {command: 'stop', countdown: state.countdown});
+        });
+        $timerReset.click(function() {
+            resetCountdown();
+            timer.stop();
+            timer.start({startValues: {seconds: state.countdown}});
+            timer.stop();
+            socket.emit('timer-command', {command: 'reset'});
+        })
+        $timerAdd.click(function() {
+            state.countdown = $(this).data("time");
+            timer.stop();
+            timer.start({startValues: {seconds: state.countdown}});
+            timer.stop();
 
-        $("#set_timer").click(function() {
-            var waktufix = $("#waktu_timer").val();
-            var waktunum = parseInt(waktufix);
-            socket.emit('timer_set', waktunum);
-            clock.setTime(waktunum);
-
-        });
-        $("#start_timer").click(function() {
-            var action = "start";
-            clock.start();
-            socket.emit('timer-command', action);
-        });
-        $("#stop_timer").click(function() {
-            var action = "stop";
-            clock.stop();
-            socket.emit('control_timer', action);
-        });
+            socket.emit('timer-command', {countdown: state.countdown, command: 'set'});
+        })
 
     })
 })(jQuery);

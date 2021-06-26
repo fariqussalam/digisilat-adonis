@@ -3,15 +3,64 @@
 
         var pertandinganId = $('input[name="pertandingan_id"]').val();
         var state = new DigiSilat.Seni.State.Dewan();
-        var socket = DigiSilat.createSocket("Tunggal Dewan", pertandinganId)
+        var socket = DigiSilat.createSocket("tunggal", "Tunggal Dewan", pertandinganId)
 
         socket.on("connect", function() {
-            console.log(socket.connected)
             socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
         });
         socket.on('data-pertandingan-seni', function(data) {
             console.log("Data Pertandingan Seni", data)
+            renderPertandingan(data)
         })
+
+        function renderPertandingan(data) {
+            state.dewanJuri = data.dewanJuri
+            for (var nomorJuri in data.dewanJuri) {
+                var juri = data.dewanJuri[nomorJuri]
+                for (var jurus of juri.daftarNilai) {
+                    renderNilaiJurus(juri, jurus.nomorJurus)
+                }
+                renderNilaiHukuman(juri)
+                renderTotalNilai(juri)
+                renderNilaiKemantapan(juri)
+            }
+        }
+
+        function getNilaiJurus(juri, nomorJurus) {
+            var jurus = _.filter(juri.daftarNilai, function(n) {
+                return n.nomorJurus.toString() === nomorJurus.toString()
+            })
+            var jumlahNilai = jurus[0].jumlahNilai;
+            var penguranganJurus = _.filter(juri.pengurangan, function(n) {
+                return n.nomorJurus.toString() === nomorJurus.toString()
+            })
+            _.each(penguranganJurus, function(n) {
+                jumlahNilai += n.nilai;
+            })
+            return jumlahNilai
+        }
+
+        function getTotalNilaiJurus(juri) {
+            var totalNilai = 0;
+            _.each(juri.daftarNilai, function(jurus) {
+                totalNilai += getNilaiJurus(juri, jurus.nomorJurus);
+            })
+            return totalNilai
+        }
+
+        function getTotalNilaiHukuman(juri) {
+            var nilaiHukuman = 0
+            _.each(juri.hukuman, function(n) {
+                nilaiHukuman += n.nilai
+            })
+            return nilaiHukuman;
+        }
+
+        function getTotalNilai(juri) {
+            var totalNilaiJurus = getTotalNilaiJurus(juri)
+            var totalNilaiHukuman = getTotalNilaiHukuman(juri)
+            return totalNilaiJurus + totalNilaiHukuman + juri.kemantapan
+        }
 
         function NilaiJurus(nomorJurus, jumlahNilai) {
             this.nomorJurus = nomorJurus;
@@ -29,79 +78,22 @@
             return jurusTunggal
         }
 
-        function PenguranganJurus(nomorJurus, nilai) {
-            this.nomorJurus = nomorJurus;
-            this.nilai = nilai;
+        function renderNilaiJurus(juri, nomorJurus) {
+            var nilaiJurus = getNilaiJurus(juri, nomorJurus);
+            var totalNilaiJurus = getTotalNilaiJurus(juri);
+            $('.js-tunggal-admin__nilai[data-juri="' + juri.nomorJuri + '"][data-jurus="' + nomorJurus + '"]').text(nilaiJurus);
+            $('.js-tunggal-admin__nilai[data-juri="' + juri.nomorJuri + '"][data-jurus="total"]').text(totalNilaiJurus);
         }
-        function NilaiHukuman(kategori) {
-            this.kategori = kategori;
-            if (kategori === "W10") this.nilai = -10;
-            else this.nilai = -5;
+        function renderNilaiHukuman(juri) {
+            var nilaiHukuman = getTotalNilaiHukuman(juri);
+            $('.js-tunggal-admin__hukuman[data-juri="' + juri.nomorJuri + '"]').text(nilaiHukuman);
         }
-
-        function JuriTunggal(nomorJuri) {
-            this.nomorJuri = nomorJuri;
-            this.daftarNilai = nilaiTunggalTemplate();
-            this.pengurangan = [];
-            this.hukuman = [];
-            this.kemantapan = 0;
-            this.getNilaiJurus = function(nomorJurus) {
-                var jurus = _.filter(this.daftarNilai, function(n) {
-                    return n.nomorJurus.toString() === nomorJurus.toString()
-                })
-                var jumlahNilai = jurus[0].jumlahNilai;
-                var penguranganJurus = _.filter(this.pengurangan, function(n) {
-                    return n.nomorJurus.toString() === nomorJurus.toString()
-                })
-                _.each(penguranganJurus, function(n) {
-                    jumlahNilai += n.nilai;
-                })
-                return jumlahNilai
-            }
-            this.getTotalNilaiJurus = function() {
-                var instance = this;
-                var totalNilai = 0;
-                _.each(this.daftarNilai, function(jurus) {
-                    totalNilai += instance.getNilaiJurus(jurus.nomorJurus);
-                })
-                return totalNilai
-            }
-            this.getTotalNilaiHukuman = function() {
-                var nilaiHukuman = 0
-                _.each(this.hukuman, function(n) {
-                    nilaiHukuman += n.nilai
-                })
-                return nilaiHukuman;
-            }
-            this.getTotalNilai = function() {
-                var totalNilaiJurus = this.getTotalNilaiJurus();
-                var totalNilaiHukuman = this.getTotalNilaiHukuman();
-                return totalNilaiJurus + totalNilaiHukuman + this.kemantapan;
-            }
+        function renderTotalNilai(juri) {
+            var totalNilai = getTotalNilai(juri);
+            $('.js-tunggal-admin__nilai-total[data-juri="' + juri.nomorJuri + '"]').text(totalNilai);
         }
-
-        function DewanJuri(jumlah) {
-            var instance = this
-            for (var i = 1; i <= jumlah; i++) {
-                instance[i] = new JuriTunggal(i)
-            }
-        }
-
-        var dewanJuri = new DewanJuri(5);
-
-        function renderNilaiJurus(nomorJuri, nomorJurus) {
-            var nilaiJurus = dewanJuri[nomorJuri].getNilaiJurus(nomorJurus);
-            var totalNilaiJurus = dewanJuri[nomorJuri].getTotalNilaiJurus();
-            $('.js-tunggal-admin__nilai[data-juri="' + nomorJuri + '"][data-jurus="' + nomorJurus + '"]').text(nilaiJurus);
-            $('.js-tunggal-admin__nilai[data-juri="' + nomorJuri + '"][data-jurus="total"]').text(totalNilaiJurus);
-        }
-        function renderNilaiHukuman(nomorJuri) {
-            var nilaiHukuman = dewanJuri[nomorJuri].getTotalNilaiHukuman();
-            $('.js-tunggal-admin__hukuman[data-juri="' + nomorJuri + '"]').text(nilaiHukuman);
-        }
-        function renderTotalNilai(nomorJuri) {
-            var totalNilai = dewanJuri[nomorJuri].getTotalNilai();
-            $('.js-tunggal-admin__nilai-total[data-juri="' + nomorJuri + '"]').text(totalNilai);
+        function renderNilaiKemantapan(juri) {
+            $('.js-tunggal-admin__kemantapan[data-juri="' + juri.nomorJuri + '"]').text(juri.kemantapan);
         }
 
         function getMaxOfArray(numArray) {
@@ -164,58 +156,7 @@
             $('.js-current-time').text(" " + currentDate.time);
 
         });
-        socket.on('display_inputSkorMinus', function(data) {
-            dewanJuri[data.nJuri].pengurangan.push(new PenguranganJurus(data.nJurus, -1));
-            renderNilaiJurus(data.nJuri, data.nJurus);
-            renderTotalNilai(data.nJuri);
-        });
-        socket.on('display_inputSkorKemantapan', function(data) {
-            dewanJuri[data.nJuri].kemantapan = data.nilai;
-            $('.js-tunggal-admin__kemantapan[data-juri="' + data.nJuri + '"]').text(data.nilai);
-            renderTotalNilai(data.nJuri)
-        });
-
-        socket.on('display_inputSkorHukuman', function(data) {
-            dewanJuri[data.nJuri].hukuman.push(new NilaiHukuman(data.nKategori));
-            renderNilaiHukuman(data.nJuri);
-            renderTotalNilai(data.nJuri);
-        });
-        socket.on('display_hapusHukuman', function(data) {
-            dewanJuri[data].hukuman = []
-            renderNilaiHukuman(data);
-            renderTotalNilai(data);
-        });
-        socket.on('doRefreshTunggal', function() {
-            window.location.reload();
-        });
-        socket.on('terimaDataTurnamen', function(dataTurnamen) {
-            $('.js-tunggal-admin__nama-turnamen').text(dataTurnamen.nama);
-            $('.js-tunggal-admin__tempat-turnamen').text(dataTurnamen.tempat);
-            $('.js-tunggal-admin__waktu-turnamen').text(dataTurnamen.waktu);
-        });
-
-        $(".js-admin-tunggal__submit-form").click(function() {
-            var dataPertandingan = $("form[name='form-pertandingan']").serializeObject()
-            detil.pool = dataPertandingan['pool']
-            detil.nomorPenampil = dataPertandingan['nomor-penampil']
-            detil.kontingen = dataPertandingan['kontingen']
-            detil.namaPesilat = dataPertandingan['nama-penampil']
-            $('.js-admin-tunggal__pool').text(detil.pool);
-            $('.js-admin-tunggal__nomor-penampil').text(detil.nomorPenampil);
-            $('.js-admin-tunggal__nama-penampil').text(detil.namaPesilat);
-            $('.js-admin-tunggal__kontingen').text(detil.kontingen);
-            $modal.modal("hide");
-            socket.emit('detilTunggal', detil);
-        });
-
-        $(".js-admin-tunggal__pengumuman-pemenang").click(function() {
-            socket.emit('pengumuman');
-        });
-
-        $(".js-admin-tunggal__pertandingan-baru").click(function() {
-            socket.emit('refreshTunggal');
-        });
-
+    
         $('.js-dewan-tanding__save-pdf').click(function() {
             var url = window.location.href + "?for_printed=1"
             console.log(url)

@@ -13,13 +13,6 @@
       $(this).closest("form").submit();
     })
 
-    var datatablesButtons = $("#datatables-buttons").DataTable({
-      responsive: true,
-      lengthChange: !1,
-      buttons: ["copy", "print"]
-    });
-    datatablesButtons.buttons().container().appendTo("#datatables-buttons_wrapper .col-md-6:eq(0)");
-
     var datatablesTurnamen = $("#datatables-turnamen").DataTable({
       responsive: true,
       lengthChange: !1

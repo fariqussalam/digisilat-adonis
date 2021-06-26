@@ -30,7 +30,7 @@
         var state = new DigiSilat.State.Juri();
         var $modal = $('#modalJuri');
         $(document).ready(function() {
-            if (!nomorJuriInput) $modal.modal("show");
+            if (nomorJuriInput == null) $modal.modal("show");
             else {
                 state.nomorJuri = nomorJuriInput
                 $("#remot_nomor_juri").text(state.nomorJuri);
@@ -39,7 +39,8 @@
             }
         });
 
-        var socket = DigiSilat.createSocket("Tanding Juri", pertandinganId);
+        var socket = DigiSilat.createSocket("tanding", 
+        "Tanding Juri", pertandinganId);
         socket.on('data-pertandingan', function(data) {
             var nomorJuri = state.nomorJuri
             var dataJuri = data.dewanJuri[nomorJuri];

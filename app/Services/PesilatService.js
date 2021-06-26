@@ -75,6 +75,17 @@ class PesilatService {
 
     return pesilat
   }
+
+  async getPesilatSeni(id) {
+    if (!id) return null
+    const pesilat = await PesilatSeni.find(id).then((result) => result.toJSON())
+    if (!pesilat) return null
+
+    pesilat.kategori_seni = await KategoriSeni.find(pesilat.kategori_seni_id).then((result) => result.toJSON())
+    pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id).then((result) => result.toJSON())
+
+    return pesilat
+  }
 }
 
 module.exports = PesilatService

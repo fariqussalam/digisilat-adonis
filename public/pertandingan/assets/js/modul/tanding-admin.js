@@ -28,7 +28,7 @@
 
         var pertandinganId = $('input[name="pertandingan_id"]').val();
         var state = new DigiSilat.State.Dewan();
-        var socket = DigiSilat.createSocket("Tanding Dewan", pertandinganId)
+        var socket = DigiSilat.createSocket("tanding", "Tanding Dewan", pertandinganId)
 
         socket.on("connect", function() {
             console.log(socket.connected)

@@ -128,13 +128,13 @@ class PertandinganService {
       const eliminasi = await Eliminasi.query().where({pertandingan_id: pertandingan.id}).first()
       if (!eliminasi) return null
 
-      console.log(`pertandingan id : ${pertandingan.id}`)
-      console.log(`a id : ${eliminasi.pemenang_a_id}`)
-      console.log(`b id : ${eliminasi.pemenang_b_id}`)
+      // console.log(`pertandingan id : ${pertandingan.id}`)
+      // console.log(`a id : ${eliminasi.pemenang_a_id}`)
+      // console.log(`b id : ${eliminasi.pemenang_b_id}`)
       const merah = await this.findRootPertandingan(eliminasi.pemenang_a_id)
-      console.log("merah", merah)
+      // console.log("merah", merah)
       const biru = await this.findRootPertandingan(eliminasi.pemenang_b_id)
-      console.log("biru", biru)
+      // console.log("biru", biru)
 
       if(merah && merah.isBye) {
         const updateBiru = await Pertandingan.find(pertandingan.id)
@@ -326,16 +326,27 @@ class PertandinganService {
    - pesilat biru
    - kelas
    */
-  async getMasterDataPertandingan(pertandingan) {
-    const rootPertandingan = await this.prosesPertandingan(pertandingan)
-    let masterData = {}
-    masterData.id = pertandingan.id
-    masterData.nomor_partai = pertandingan.nomor_partai
-    masterData.ronde = pertandingan.ronde
-    masterData.merah = rootPertandingan.merah
-    masterData.biru =  rootPertandingan.biru
-    masterData.kelas = await Kelas.find(pertandingan.kelas_id).then((k)  =>  k.toJSON())
-    return masterData
+  async getMasterDataPertandinganSeni(pertandingan) {
+    var master_data = {
+      id: null,
+      nomor_pool: null,
+      nomor_penampil: null,
+      pesilat: null,
+      kategori: null,
+      tanggal_pertandingan: null,
+      skor_akhir: "",
+      diskualifikasi: false    
+    }
+    master_data.id = pertandingan.id
+    master_data.nomor_pool = pertandingan.nomor_pool
+    master_data.nomor_penampil = pertandingan.nomor_penampil
+    master_data.pesilat = await this.pesilatService.getPesilatSeni(pertandingan.pesilat_seni_id)
+    master_data.kategori = await KategoriSeni.find(pertandingan.kategori_id).then((k)  =>  k.toJSON())
+    master_data.tanggal_pertandingan = pertandingan.tanggal_pertandingan
+    master_data.skor_akhir = pertandingan.skor_akhir
+    master_data.diskualifikasi = pertandingan.diskualifikasi
+
+    return master_data
   }
 
   /**
@@ -368,6 +379,10 @@ class PertandinganService {
     } else if (s.include(nama), 'regu') {
       tipeSeni = 'regu'
     }
+
+    if (kategori.jenis == 'TUNGGAL') tipeSeni = "tunggal"
+    else if (kategori.jenis == 'GANDA') tipeSeni = "ganda"
+    else if (kategori.jenis == 'REGU') tipe = 'regu'
 
     return tipeSeni
   }

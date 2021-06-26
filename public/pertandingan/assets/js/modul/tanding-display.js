@@ -74,7 +74,7 @@
             socket.emit('get-data-pertandingan', { pertandinganId: pertandinganId })
         });
 
-        var socket = DigiSilat.createSocket("Tanding Display", pertandinganId);
+        var socket = DigiSilat.createSocket("tanding", "Tanding Display", pertandinganId);
         socket.on('data-pertandingan', function(data) {
             setDataPertandingan(data)
             state.dewanJuri = data.dewanJuri;
