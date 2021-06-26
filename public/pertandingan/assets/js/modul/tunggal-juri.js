@@ -9,6 +9,111 @@
         var stateDis = 0;
         var stateWaktu = 0;
 
+        var pertandinganId = $('input[name="pertandingan_id"]').val();
+        var state = new DigiSilat.Seni.State.Juri();
+        var socket = DigiSilat.createSocket("tunggal", "Tunggal Juri", pertandinganId)
+        var $modalJuri = $("#modalAwal");
+        socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
+        $(document).ready(function () {
+            currentJurus = 1;
+            highlightCurrentJurus(currentJurus);
+            $modalJuri.modal("show");
+        });
+
+        $('.js-tunggal-juri__connect').click(function () {
+            var nomorJuri = parseInt($(".js-tunggal-juri__select-nomor-juri").val());
+            $(".js-tunggal-juri__nomor-juri").text(nomorJuri);
+            state.nomorJuri = nomorJuri
+            socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
+        });
+
+        socket.on('data-pertandingan-seni', function(data) {
+            var nomorJuri = state.nomorJuri
+            var dataJuri = data.dewanJuri[nomorJuri];
+            if (!dataJuri) return false;
+
+            console.log(data)
+            if (dataJuri.diskualifikasi) {
+                stateDis = 1;
+                $("#modalDis").modal();
+            }
+            renderPertandingan(dataJuri)
+        })
+
+        function renderPertandingan(juri) {
+            for (var jurus of juri.daftarNilai) {
+                $('.js-tunggal-juri__skor-jurus[data-jurus="' + jurus.nomorJurus + '"]').text(getNilaiJurus(juri, jurus.nomorJurus));
+            }
+            $('.js-tunggal-juri__nilai-kebenaran').text(getTotalNilaiJurus(juri));
+            $('.js-tunggal-juri__nilai-total').text(getTotalNilai(juri));
+            $(".js-tunggal-juri__nilai-kemantapan").text(juri.kemantapan);
+            renderNilaiHukuman(juri)
+            $('.js-tunggal-juri__nilai-hukuman').text(getTotalNilaiHukuman(juri));
+        }
+
+        function renderNilaiHukuman(juri) {
+
+            if (juri.hukuman.length == 0) {
+                stateWaktu = 0;
+                $('.js-tunggal-juri__display-hukuman').text(0)
+                $('.js-tunggal-juri__display-hukuman[data-hukuman="salah-pakaian"]').text("Tidak")
+                $(".js-tunggal-juri__nilai-hukuman").text(0);
+            }
+
+            _.each(juri.hukuman, function(hukuman) {
+                var isHukumanWaktu = hukuman.kategori == 'w-5' || hukuman.kategori == 'w-10'
+                if (isHukumanWaktu) {
+                    stateWaktu = 1
+                    $('.js-tunggal-juri__display-hukuman[data-hukuman="faktor-waktu"]').text(hukuman.nilai)
+                }
+                var countHukuman = _.filter(juri.hukuman, function (params) {
+                    return params.kategori === hukuman.kategori
+                }).length
+    
+                if (hukuman.kategori === 'salah-pakaian') {
+                    countHukuman = "Iya"
+                }
+    
+                $('.js-tunggal-juri__display-hukuman[data-hukuman="' + hukuman.kategori + '"]').text(countHukuman)
+            })
+        }
+
+        function getNilaiJurus(juri, nomorJurus) {
+            var jurus = _.filter(juri.daftarNilai, function(n) {
+                return n.nomorJurus.toString() === nomorJurus.toString()
+            })
+            var jumlahNilai = jurus[0].jumlahNilai;
+            var penguranganJurus = _.filter(juri.pengurangan, function(n) {
+                return n.nomorJurus.toString() === nomorJurus.toString()
+            })
+            _.each(penguranganJurus, function(n) {
+                jumlahNilai += n.nilai;
+            })
+            return jumlahNilai
+        }
+
+        function getTotalNilaiJurus(juri) {
+            var totalNilai = 0;
+            _.each(juri.daftarNilai, function(jurus) {
+                totalNilai += getNilaiJurus(juri, jurus.nomorJurus);
+            })
+            return totalNilai
+        }
+
+        function getTotalNilaiHukuman(juri) {
+            var nilaiHukuman = 0
+            _.each(juri.hukuman, function(n) {
+                nilaiHukuman += n.nilai
+            })
+            return nilaiHukuman;
+        }
+
+        function getTotalNilai(juri) {
+            var totalNilaiJurus = getTotalNilaiJurus(juri)
+            var totalNilaiHukuman = getTotalNilaiHukuman(juri)
+            return totalNilaiJurus + totalNilaiHukuman + juri.kemantapan
+        }
+
         function NilaiJurus(nomorJurus, jumlahNilai) {
             this.nomorJurus = nomorJurus;
             this.jumlahNilai = jumlahNilai;
@@ -80,14 +185,6 @@
 
         var juri = new JuriTunggal(1);
 
-        function displayNilaiKebenaran() {
-            $('.js-tunggal-juri__nilai-kebenaran').text(juri.getTotalNilaiJurus());
-        }
-
-        function displayNilaiTotal() {
-            $('.js-tunggal-juri__nilai-total').text(juri.getTotalNilai());
-        }
-
         function highlightCurrentJurus(jurus) {
             $('.js-tunggal-juri__display-jurus[data-jurus="' + jurus + '"]').css({
                 "background-color": "red",
@@ -124,18 +221,6 @@
             }
         }
 
-        var $modalJuri = $("#modalAwal");
-        $(document).ready(function () {
-            currentJurus = 1;
-            highlightCurrentJurus(currentJurus);
-            _.each(juri.daftarNilai, function (jurus) {
-                $('.js-tunggal-juri__skor-jurus[data-jurus="' + jurus.nomorJurus + '"]').text(jurus.jumlahNilai);
-            })
-            displayNilaiKebenaran();
-            displayNilaiTotal();
-            $modalJuri.modal("show");
-        });
-
         $('.js-tunggal-juri__up-jurus').click(function () {
             currentJurus += 1;
             if (currentJurus > 14) {
@@ -144,12 +229,11 @@
             highlightCurrentJurus(currentJurus);
         });
         $('.js-tunggal-juri__minus').click(function () {
-            if (juri.getNilaiJurus(currentJurus) < 1) return false;
-            juri.pengurangan.push(new PenguranganJurus(currentJurus, -1))
-            $('.js-tunggal-juri__skor-jurus[data-jurus="' + currentJurus + '"]').text(juri.getNilaiJurus(currentJurus));
-            displayNilaiKebenaran();
-            displayNilaiTotal();
-            inputSkorMinus(String(juri.nomorJuri), String(currentJurus));
+            socket.emit('input-skor-pengurangan', {
+                pertandinganId: pertandinganId,
+                nomorJuri: state.nomorJuri,
+                nilai: new PenguranganJurus(currentJurus, -1)
+            });
         });
 
         $('.js-tunggal-juri__input-hukuman').click(function () {
@@ -171,23 +255,20 @@
             }
 
             juri.hukuman.push(hukuman);
-            var countHukuman = _.filter(juri.hukuman, function (params) {
-                return params.kategori === kategori
-            }).length
 
             if (kategori === 'salah-pakaian') {
                 countHukuman = "Iya"
             }
             if (isHukumanWaktu) {
                 stateWaktu = 1
-                $('.js-tunggal-juri__display-hukuman[data-hukuman="faktor-waktu"]').text(hukuman.nilai)
             }
 
-            $('.js-tunggal-juri__display-hukuman[data-hukuman="' + kategori + '"]').text(countHukuman)
-            $('.js-tunggal-juri__nilai-hukuman').text(juri.getTotalNilaiHukuman());
-            displayNilaiTotal();
             var stringKategori = toStringKategori(kategori)
-            inputSkorHukuman(juri.nomorJuri, stringKategori);
+            socket.emit('input-skor-hukuman', {
+                pertandinganId: pertandinganId,
+                nomorJuri: state.nomorJuri,
+                hukuman: hukuman
+            });
         })
 
         function getTempSkor() {
@@ -224,66 +305,40 @@
             tempSkor = "";
             $(".js-tunggal-juri__nilai-kemantapan").text(0);
         });
+        
         $('.js-tunggal-juri__input-enter').click(function () {
             if (isStateKemantapan() && getTempSkor() !== "") {
                 nilaiKemantapan = parseInt(tempSkor);
-                juri.kemantapan = nilaiKemantapan;
-                displayNilaiTotal();
-                inputSkorKemantapan(juri.nomorJuri, nilaiKemantapan);
-                $(".js-tunggal-juri__nilai-kemantapan").text(tempSkor);
+                state.juri.kemantapan = nilaiKemantapan;
+                socket.emit('input-skor-kemantapan', {
+                    pertandinganId: pertandinganId,
+                    nomorJuri: state.nomorJuri,
+                    nilai: nilaiKemantapan
+                });
             }
         });
+
         $('.js-tunggal-juri__input-dis').click(function () {
             $('#konfirmDis').modal("show");
         });
         $('.btn-konfirm-dis').click(function () {
             $('#konfirmDis').modal('hide');
             stateDis = 1;
-            inputDis(juri.nomorJuri);
+            socket.emit('set-diskualifikasi', { 
+                pertandinganId: pertandinganId,
+                nomorJuri: state.nomorJuri
+            });
             $("#modalDis").modal();
         });
-        $('.js-tunggal-juri__finish').click(function () {
-            window.location.reload(true);
-        });
+     
         $('.js-tunggal-juri__hapus-hukuman').click(function () {
             stateWaktu = 0;
-            $('.js-tunggal-juri__display-hukuman').text(0)
-            $('.js-tunggal-juri__display-hukuman[data-hukuman="salah-pakaian"]').text("Tidak")
-            $(".js-tunggal-juri__nilai-hukuman").text(nilaiHukuman);
-            displayNilaiTotal();
             juri.hukuman = [];
-            socket.emit('hapus_hukuman', juri.nomorJuri);
+            socket.emit('hapus-skor-hukuman', { 
+                pertandinganId: pertandinganId,
+                nomorJuri: state.nomorJuri
+            });
         });
-        $('.js-tunggal-juri__connect').click(function () {
-            var nomorJuri = parseInt($(".js-tunggal-juri__select-nomor-juri").val());
-            socket.emit('detilkoneksijuri', nomorJuri);
-            $(".js-tunggal-juri__nomor-juri").text(nomorJuri);
-            juri = new JuriTunggal(nomorJuri);
-        });
-
-        var socket = io("/tunggal");
-        socket.on('connect', function () {
-            socket.emit('koneksi', {name: "Juri Tunggal"});
-        });
-        socket.on('doRefreshTunggal', function () {
-            window.location.reload();
-        });
-
-        function inputSkorMinus(nJuri, nJurus) {
-            socket.emit('inputSkorMinus', {nJurus: nJurus, nJuri: nJuri});
-        }
-
-        function inputSkorKemantapan(nJuri, nilai) {
-            socket.emit('inputSkorKemantapan', {nJuri: nJuri, nilai: nilai});
-        }
-
-        function inputSkorHukuman(nJuri, nKategori) {
-            socket.emit('inputSkorHukuman', {nJuri: nJuri, nKategori: nKategori});
-        }
-
-        function inputDis(nJuri) {
-            socket.emit('inputDis', nJuri);
-        }
 
     })
 })(jQuery);

@@ -61,4 +61,44 @@ io.on('connection', async function(socket){
         sendPertandinganSeniData(data.pertandinganId, io)
     });
 
+    socket.on('input-skor-pengurangan', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.inputSkorPengurangan(data.pertandinganId, pertandingan_data, data.nomorJuri, data.nilai);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
+    socket.on('input-skor-kemantapan', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.inputSkorKemantapan(data.pertandinganId, pertandingan_data, data.nomorJuri, data.nilai);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
+    socket.on('input-skor-hukuman', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.inputSkorHukuman(data.pertandinganId, pertandingan_data, data.nomorJuri, data.hukuman);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
+    socket.on('hapus-skor-hukuman', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.hapusSkorHukuman(data.pertandinganId, pertandingan_data, data.nomorJuri);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
+    socket.on('set-diskualifikasi', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.setDiskualifikasi(data.pertandinganId, pertandingan_data, data.nomorJuri);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
 });

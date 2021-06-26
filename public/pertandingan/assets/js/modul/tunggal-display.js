@@ -14,18 +14,25 @@
             renderPertandingan(data)
         })
 
-
         function renderPertandingan(data) {
             for (var nomorJuri in data.dewanJuri) {
                 var juri = data.dewanJuri[nomorJuri]
-                renderNilaiJurus(juri)
-                renderNilaiHukuman(juri)
-                renderTotalNilai(juri)
-                renderNilaiKemantapan(juri)
+                if (juri.diskualifikasi) {
+                    $('.js-tunggal-display__nilai-kebenaran[data-juri="' + nomorJuri + '"]').text("DIS")
+                    $('.js-tunggal-display__nilai-kemantapan[data-juri="' + nomorJuri + '"]').text("DIS")
+                    $('.js-tunggal-display__nilai-hukuman[data-juri="' + nomorJuri + '"]').text("DIS")
+                    $('.js-tunggal-display__nilai-total[data-juri="' + nomorJuri + '"]').text("DIS")
+                   
+                } else {
+                    renderNilaiJurus(juri)
+                    renderNilaiHukuman(juri)
+                    renderTotalNilai(juri)
+                    renderNilaiKemantapan(juri)
+                }
+            
             }
         }
         
-
         function getNilaiJurus(juri, nomorJurus) {
             var jurus = _.filter(juri.daftarNilai, function(n) {
                 return n.nomorJurus.toString() === nomorJurus.toString()
@@ -78,7 +85,6 @@
             var totalNilai = getTotalNilai(juri);
             $('.js-tunggal-display__nilai-total[data-juri="' + juri.nomorJuri + '"]').text(totalNilai);
         }
-  
 
         function getMaxOfArray(numArray) {
             return Math.max.apply(null, numArray);

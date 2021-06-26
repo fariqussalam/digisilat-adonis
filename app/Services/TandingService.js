@@ -3,16 +3,11 @@ const _ = require('underscore')
 const s = require('underscore.string')
 const PertandinganService = use('App/Services/PertandinganService')
 const Kelas = use('App/Models/Kelas')
-const KategoriSeni = use('App/Models/KategoriSeni')
-const Pesilat = use('App/Models/Pesilat')
-const Kontingen = use('App/Models/Kontingen')
-const PesilatSeni = use('App/Models/PesilatSeni')
 const Pertandingan = use('App/Models/Pertandingan')
 const Kualifikasi = use('App/Models/Kualifikasi')
 const Eliminasi = use('App/Models/Eliminasi')
 const PesilatService = use('App/Services/PesilatService')
 const Setting = use ('App/Models/Setting')
-const SeniInterface = use('App/DTO/SeniInterface')
 
 class TandingService {
     constructor() {

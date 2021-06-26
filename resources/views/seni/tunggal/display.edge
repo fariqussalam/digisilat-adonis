@@ -15,10 +15,10 @@
                     </thead>
                     <tbody style="background-color:green;color:white">
                     <tr>
-                        <td class="text-center bg-primary js-tunggal-display__pool">POOL</td>
+                        <td class="text-center bg-primary js-tunggal-display__pool">Pool {{pertandingan.nomor_pool}} / Penampil {{pertandingan.nomor_penampil}}</td>
                     </tr>
                     <tr>
-                        <td class="text-center bg-primary js-tunggal-display__kontingen">KONTINGEN</td>
+                        <td class="text-center bg-primary js-tunggal-display__kontingen">{{pertandingan.kontingen.nama}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -27,7 +27,7 @@
                 <table class="table table-bordered" style="font-size:25px">
                     <tbody>
                     <tr>
-                        <td class="text-left js-tunggal-display__nama-pesilat">Pesilat 1</td>
+                        <td class="text-left js-tunggal-display__nama-pesilat">{{pertandingan.pesilat.nama}}</td>
                     </tr>
                     </tbody>
                 </table>

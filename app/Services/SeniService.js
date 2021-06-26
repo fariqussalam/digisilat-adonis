@@ -2,17 +2,8 @@
 const _ = require('underscore')
 const s = require('underscore.string')
 const PertandinganService = use('App/Services/PertandinganService')
-const Kelas = use('App/Models/Kelas')
 const KategoriSeni = use('App/Models/KategoriSeni')
-const Pesilat = use('App/Models/Pesilat')
-const Kontingen = use('App/Models/Kontingen')
-const PesilatSeni = use('App/Models/PesilatSeni')
-const Pertandingan = use('App/Models/Pertandingan')
-const Kualifikasi = use('App/Models/Kualifikasi')
-const Eliminasi = use('App/Models/Eliminasi')
 const PesilatService = use('App/Services/PesilatService')
-const Setting = use ('App/Models/Setting')
-const SeniInterface = use('App/DTO/SeniInterface')
 const PertandinganSeni = use('App/Models/PertandinganSeni')
 
 class SeniService {
@@ -35,6 +26,62 @@ class SeniService {
         data_pertandingan.nomor_penampil = pertandingan.nomor_penampil
 
         return data_pertandingan
+    }
+
+    async setPertandinganData(pertandinganId, data) {
+        let stringData = JSON.stringify(data);
+        const pertandingan = await PertandinganSeni.find(pertandinganId)
+        pertandingan.data_pertandingan = stringData
+        await pertandingan.save()
+
+        return true
+    }
+
+    async inputSkorPengurangan(pertandinganId, pertandinganData, nomorJuri, nilai) {
+        var juri = pertandinganData.dewanJuri[nomorJuri]
+        var currentNilai = this.getNilaiJurus(juri, nilai.nomorJurus)
+        if (currentNilai < 1) return false;
+        pertandinganData.dewanJuri[nomorJuri].pengurangan.push(nilai);
+        await this.setPertandinganData(pertandinganId, pertandinganData);
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async inputSkorKemantapan(pertandinganId, pertandinganData, nomorJuri, nilai) {
+        pertandinganData.dewanJuri[nomorJuri].kemantapan = nilai
+        await this.setPertandinganData(pertandinganId, pertandinganData);
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async inputSkorHukuman(pertandinganId, pertandinganData, nomorJuri, hukuman) {
+        pertandinganData.dewanJuri[nomorJuri].hukuman.push(hukuman)
+        await this.setPertandinganData(pertandinganId, pertandinganData);
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async hapusSkorHukuman(pertandinganId, pertandinganData, nomorJuri) {
+        pertandinganData.dewanJuri[nomorJuri].hukuman = []
+        await this.setPertandinganData(pertandinganId, pertandinganData);
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async setDiskualifikasi(pertandinganId, pertandinganData, nomorJuri) {
+        pertandinganData.dewanJuri[nomorJuri].diskualifikasi = true
+        await this.setPertandinganData(pertandinganId, pertandinganData);
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    getNilaiJurus(juri, nomorJurus) {
+        var jurus = _.filter(juri.daftarNilai, function(n) {
+            return n.nomorJurus.toString() === nomorJurus.toString()
+        })
+        var jumlahNilai = jurus[0].jumlahNilai;
+        var penguranganJurus = _.filter(juri.pengurangan, function(n) {
+            return n.nomorJurus.toString() === nomorJurus.toString()
+        })
+        _.each(penguranganJurus, function(n) {
+            jumlahNilai += n.nilai;
+        })
+        return jumlahNilai
     }
 
   
