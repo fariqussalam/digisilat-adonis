@@ -21,14 +21,14 @@ class UndianController {
 
     async tanding({request, view}) {
         const params = request.only(['kelas'])
-        if (!params.kelas) return view.render('undian.tanding', viewData)
-    
         const viewData = {}
         const kelas = params.kelas
         const tournament = request.activeTournament
         const kelasList = await Kelas.query().where({tournament_id: tournament.id}).fetch().then(result => result.toJSON())
-        var pesilatList = await Pesilat.query().where({ tournament_id: tournament.id, kelas_id: kelas}).fetch().then(result => result.toJSON())
 
+        if (!params.kelas) return view.render('undian.tanding', {kelasList: kelasList})
+
+        var pesilatList = await Pesilat.query().where({ tournament_id: tournament.id, kelas_id: kelas}).fetch().then(result => result.toJSON())
         for (var pesilat of pesilatList) {
             pesilat.kelas = await Kelas.find(pesilat.kelas_id)
             pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id)
