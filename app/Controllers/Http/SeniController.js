@@ -67,7 +67,7 @@ class SeniController {
       await pertandingan.save()
     }
 
-    return response.route('JadwalController.jadwalSeni')
+    return response.route('JadwalSeniController.jadwalSeni')
   }
 
 }

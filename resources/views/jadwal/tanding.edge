@@ -9,7 +9,7 @@
     </div>
     <div class="row mb-1 pb-2">
         <div class="col-5">
-            <form method="get" action="{{ route('JadwalController.jadwalTanding') }}">
+            <form method="get" action="{{ route('JadwalTandingController.jadwalTanding') }}">
                 <div class="row">
                     <label class="col-form-label col-sm-2">Kelas</label>
                     <div class="col-sm-4 pl-0">
@@ -73,7 +73,7 @@
                             <td>{{ pertandingan.alasan_kemenangan ? pertandingan.alasan_kemenangan : '-' }}</td>
                             <td>
                                 @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan" data-url="{{ route('JadwalController.updatePartai') }}" data-id="{{pertandingan.id}}" >Atur</button>
+                                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan" data-url="{{ route('JadwalTandingController.updatePartai') }}" data-id="{{pertandingan.id}}" >Atur</button>
                                 @else
                                 -
                                 @endif
@@ -92,7 +92,7 @@
             <h3>Jadwal Tanding</h3>
         </div>
         <div class="col-10">
-            <a class="float-end btn btn-info" href="{{route('JadwalController.resetGelanggang')}}">Reset Gelanggang</a>
+            <a class="float-end btn btn-info" href="{{route('JadwalTandingController.resetGelanggang')}}">Reset Gelanggang</a>
         </div>
         @include('partials/flash')
     </div>
@@ -172,7 +172,7 @@
     <div class="row">
         <div class="col-8">
             <div style="padding-top: 20px;">
-                <form method="POST" action="{{ route('JadwalController.updateGelanggang') }}">
+                <form method="POST" action="{{ route('JadwalTandingController.updateGelanggang') }}">
                     {{ csrfField() }}
                     <h4>Setup Gelanggang</h4>
                     <div class="mb-3 row">

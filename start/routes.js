@@ -66,32 +66,34 @@ Route.post('undian/undi', 'UndianController.undi')
 Route.post('undian/export', 'UndianController.exportExcel')
 
 /**
-* Pertandingan
+* Jadwal Tanding
 */
-Route.get('pertandingan/generate-jadwal', 'JadwalController.generateJadwal')
-Route.get('pertandingan/generate-jadwal-seni', 'JadwalController.generateJadwalSeni')
-Route.get('pertandingan/jadwal/tanding', 'JadwalController.jadwalTanding')
-Route.get('pertandingan/jadwal/seni', 'JadwalController.jadwalSeni')
-Route.post('pertandingan/jadwal/update-gelanggang', 'JadwalController.updateGelanggang')
-Route.post('pertandingan/jadwal/update-partai', 'JadwalController.updatePartai')
-Route.post('pertandingan/jadwal/update-pool', 'JadwalController.updatePool')
-Route.post('pertandingan/jadwal/update-partai-seni', 'JadwalController.updatePartaiSeni')
-Route.get('pertandingan/jadwal/reset-gelanggang', 'JadwalController.resetGelanggang')
-Route.get('pertandingan/jadwal/reset-pool', 'JadwalController.resetPool')
+Route.get('pertandingan/generate-jadwal', 'JadwalTandingController.generateJadwal')
+Route.get('pertandingan/jadwal/tanding', 'JadwalTandingController.jadwalTanding')
+Route.post('pertandingan/jadwal/update-gelanggang', 'JadwalTandingController.updateGelanggang')
+Route.post('pertandingan/jadwal/update-partai', 'JadwalTandingController.updatePartai')
+/**
+* Jadwal Seni
+*/
+Route.get('pertandingan/generate-jadwal-seni', 'JadwalSeniController.generateJadwalSeni')
+Route.get('pertandingan/jadwal/seni', 'JadwalSeniController.jadwalSeni')
+Route.post('pertandingan/jadwal/update-pool', 'JadwalSeniController.updatePool')
+Route.post('pertandingan/jadwal/update-partai-seni', 'JadwalSeniController.updatePartaiSeni')
+Route.get('pertandingan/jadwal/reset-gelanggang', 'JadwalSeniController.resetGelanggang')
+Route.get('pertandingan/jadwal/reset-pool', 'JadwalSeniController.resetPool')
 
+/**
+* Tanding
+*/
 Route.post('pertandingan/jadwal/mulai-pertandingan', 'TandingController.mulaiPertandingan')
 Route.get('tanding/gelanggang/:nomor_gelanggang', 'TandingController.gelanggang')
 Route.get('tanding/gelanggang/:nomor_gelanggang/:halaman', 'TandingController.halaman')
 Route.post('tanding/pengumuman-pemenang', 'TandingController.pengumumanPemenang' )
+Route.post('pertandingan/export-pdf', 'TandingController.exportToPdf' )
 
 /**
- * Pool
+ * Seni
  */
  Route.post('seni/jadwal/mulai-pertandingan', 'SeniController.mulaiPertandingan')
  Route.get('seni/pool/:nomor_pool', 'SeniController.pool')
  Route.get('seni/pool/:nomor_pool/:halaman', 'SeniController.halaman')
-
-/**
- * Print PDF
- */
-Route.post('pertandingan/export-pdf', 'TandingController.exportToPdf' )

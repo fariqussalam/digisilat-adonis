@@ -21,39 +21,23 @@ class UndianController {
 
     async tanding({request, view}) {
         const params = request.only(['kelas'])
-        const kelas = params.kelas
+        if (!params.kelas) return view.render('undian.tanding', viewData)
+    
         const viewData = {}
+        const kelas = params.kelas
         const tournament = request.activeTournament
-        const kelasList = await Kelas.query()
-            .where({tournament_id: tournament.id})
-            .fetch()
-            .then(result => result.toJSON())
-        viewData.kelasList = kelasList
+        const kelasList = await Kelas.query().where({tournament_id: tournament.id}).fetch().then(result => result.toJSON())
+        var pesilatList = await Pesilat.query().where({ tournament_id: tournament.id, kelas_id: kelas}).fetch().then(result => result.toJSON())
 
-        if (!kelas) return view.render('undian.tanding', viewData)
-
-        let pesilatList = await Pesilat.query()
-            .where({
-                tournament_id: tournament.id,
-                kelas_id: kelas
-            })
-            .fetch()
-            .then(result => {
-                return result.toJSON()
-            })
-
-        for (let pesilat of pesilatList) {
+        for (var pesilat of pesilatList) {
             pesilat.kelas = await Kelas.find(pesilat.kelas_id)
             pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id)
         }
-
         const pesilatNamaList = _.pluck(pesilatList, 'nama')
-        const undian = await Undian.query().where({
-            kelas_id: kelas,
-            tournament_id: tournament.id
-        }).first()
+        const undian = await Undian.query().where({ kelas_id: kelas, tournament_id: tournament.id}).first()
         const jumlahPeserta = pesilatList ? pesilatList.length : null
 
+        viewData.kelasList = kelasList
         viewData.kelas = kelas
         viewData.pesilatList = pesilatList
         viewData.undian = undian
@@ -150,18 +134,14 @@ class UndianController {
     }
 
     async undi({request, response}) {
-        const tournament = request.activeTournament
         const params = request.only(['kategori', 'type'])
-        await this.undianService.undi(params, tournament)
+        await this.undianService.undi(params, request.activeTournament)
         response.route('UndianController.tanding')
     }
 
     async bagan({view}) {
         const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
-
-        return view.render('undian.bagan', {
-            templateBagan: templateBagan.setting_value
-        })
+        return view.render('undian.bagan', { templateBagan: templateBagan.setting_value })
     }
 
     async exportExcel({request, response}) {

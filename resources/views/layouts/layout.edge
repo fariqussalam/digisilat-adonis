@@ -70,7 +70,7 @@
           </li>
           @if(activeTournament.jadwal_generated)
           <li class="sidebar-item {{ url.includes('/pertandingan/jadwal/tanding') ? 'active' : '' }}">
-            <a class="sidebar-link" href="{{ route('JadwalController.jadwalTanding') }}">
+            <a class="sidebar-link" href="{{ route('JadwalTandingController.jadwalTanding') }}">
               <i class="align-middle" data-feather="users"></i> <span class="align-middle">Jadwal Tanding</span>
             </a>
           </li>
@@ -79,14 +79,14 @@
             <div class="sidebar-cta-content">
               <strong class="d-inline-block mb-2">Buat Jadwal Pertandingan</strong>
               <div class="d-grid">
-                <button class="btn btn-primary js-turnamen-generate-jadwal" data-url="{{ route('JadwalController.generateJadwal') }}">Buat</button>
+                <button class="btn btn-primary js-turnamen-generate-jadwal" data-url="{{ route('JadwalTandingController.generateJadwal') }}">Buat</button>
               </div>
             </div>
           </div>
           @endif
           @if(activeTournament.jadwal_seni_generated)
           <li class="sidebar-item {{ url.includes('/pertandingan/jadwal/seni') ? 'active' : '' }}">
-            <a class="sidebar-link" href="{{ route('JadwalController.jadwalSeni') }}">
+            <a class="sidebar-link" href="{{ route('JadwalSeniController.jadwalSeni') }}">
               <i class="align-middle" data-feather="wind"></i> <span class="align-middle">Jadwal Seni</span>
             </a>
           </li>
@@ -95,7 +95,7 @@
             <div class="sidebar-cta-content">
               <strong class="d-inline-block mb-2">Buat Jadwal Seni</strong>
               <div class="d-grid">
-                <button class="btn btn-primary js-turnamen-generate-jadwal" data-url="{{ route('JadwalController.generateJadwalSeni') }}">Buat</button>
+                <button class="btn btn-primary js-turnamen-generate-jadwal" data-url="{{ route('JadwalSeniController.generateJadwalSeni') }}">Buat</button>
               </div>
             </div>
           </div>

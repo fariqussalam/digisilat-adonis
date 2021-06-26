@@ -15,7 +15,7 @@
           <div class="row">
             <div class="col-5">
               <div style="padding-top: 20px;">
-                <form method="get" action="{{ route('JadwalController.jadwalSeni') }}">
+                <form method="get" action="{{ route('JadwalSeniController.jadwalSeni') }}">
                   <div class="row">
                     <label class="col-form-label col-sm-3">Kategori Seni</label>
                     <div class="col-sm-6 pl-0">
@@ -58,7 +58,7 @@
               <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
               <td>
                 @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalController.updatePartaiSeni') }}" data-id="{{pertandingan.id}}" >Atur</button>
+                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalSeniController.updatePartaiSeni') }}" data-id="{{pertandingan.id}}" >Atur</button>
                 @else
                 -
                 @endif
@@ -76,7 +76,7 @@
             <h3>Jadwal Seni</h3>
         </div>
         <div class="col-10">
-          <a class="float-end btn btn-info" href="{{route('JadwalController.resetPool')}}">Reset Pool</a>
+          <a class="float-end btn btn-info" href="{{route('JadwalSeniController.resetPool')}}">Reset Pool</a>
         </div>
         @include('partials/flash')
     </div>
@@ -145,7 +145,7 @@
 <div class="row">
   <div class="col-8">
       <div style="padding-top: 20px;">
-          <form method="POST" action="{{ route('JadwalController.updatePool') }}">
+          <form method="POST" action="{{ route('JadwalSeniController.updatePool') }}">
             {{ csrfField() }}
               <h4>Setup Pool</h4>
               <div class="mb-3 row">

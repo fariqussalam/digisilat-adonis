@@ -42,7 +42,7 @@ class TandingController {
       await pertandingan.save()
     }
 
-    return response.route('JadwalController.jadwalTanding')
+    return response.route('JadwalTandingController.jadwalTanding')
   }
 
   async gelanggang({request, params, response, view}) {
