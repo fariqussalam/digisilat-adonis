@@ -1,0 +1,41 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+
+    <div class="row mb-2 mb-xl-3">
+      <div class="col-auto d-none d-sm-block">
+        <h3>Edit Kategori Seni</h3>
+      </div>
+    </div>
+    <div class="row">
+    
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-body">
+                  <form method="POST" action="{{ route('KategoriController.updateSeni') }}">
+                    {{ csrfField() }}
+                    <input type="hidden" name="id" value="{{kategori.id}}" />
+                      <div class="row">
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="nama">Nama</label>
+                              <input type="text" class="form-control" id="nama" name="nama" value="{{kategori.nama}}" required>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="jenis">Jenis</label>
+                              <select class="form-control" name="jenis">
+                                <option value="TUNGGAL" {{kategori.jenis == 'TUNGGAL' ? 'selected' : ''}}>TUNGGAL</option>
+                                <option value="GANDA" {{kategori.jenis == 'GANDA' ? 'selected' : ''}}>GANDA</option>
+                                <option value="REGU" {{kategori.jenis == 'REGU' ? 'selected' : ''}}>REGU</option>
+                              </select>
+                          </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+  
+  </div>
+@endsection

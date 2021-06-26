@@ -1,7 +1,6 @@
 'use strict'
 const _ = require('underscore')
 const s = require('underscore.string')
-const moment = require('moment')
 const PertandinganService = use('App/Services/PertandinganService')
 const PertandinganSeni = use('App/Models/PertandinganSeni')
 const Halaman = use('App/Enums/SeniHalaman')
@@ -47,8 +46,7 @@ class SeniController {
 
     if (!params.status) {
       const otherPertandingan = await PertandinganSeni.query().where({
-        nomor_pool: params.nomor_pool,
-        status: "BERJALAN"
+        nomor_pool: params.nomor_pool
       }).fetch()
       for (let p of otherPertandingan.rows) {
         p.status = "BELUM_DIMULAI"

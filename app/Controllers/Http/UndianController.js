@@ -1,9 +1,5 @@
 'use strict'
 
-/** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
-
-const Helpers = use('Helpers')
 const ExcelJS = require('exceljs')
 const dayjs = require('dayjs')
 const _ = require('underscore')
@@ -19,212 +15,208 @@ const UndianService = use('App/Services/UndianService')
 const Tournament = use('App/Models/Tournament')
 
 class UndianController {
-  constructor () {
-    this.undianService = new UndianService()
-  }
-
-  async tanding ({ request, view }) {
-    const params = request.only(['kelas'])
-    const kelas = params.kelas
-    const viewData = {}
-    const tournament = request.activeTournament
-    const kelasList = await Kelas.query()
-      .where({ tournament_id: tournament.id })
-      .fetch()
-      .then(result => result.toJSON())
-    viewData.kelasList = kelasList
-
-    if (!kelas) return view.render('undian.tanding', viewData)
-
-    let pesilatList = await Pesilat.query()
-      .where({
-        tournament_id: tournament.id,
-        kelas_id: kelas
-      })
-      .fetch()
-      .then(result => {
-        return result.toJSON()
-      })
-
-    for (let pesilat of pesilatList) {
-      pesilat.kelas = await Kelas.find(pesilat.kelas_id)
-      pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id)
+    constructor() {
+        this.undianService = new UndianService()
     }
 
-    const pesilatNamaList = _.pluck(pesilatList, 'nama')
-    const undian = await Undian.query()
-      .where({
-        kelas_id: kelas,
-        tournament_id: tournament.id
-      })
-      .first()
-    const jumlahPeserta = pesilatList ? pesilatList.length : null
+    async tanding({request, view}) {
+        const params = request.only(['kelas'])
+        const kelas = params.kelas
+        const viewData = {}
+        const tournament = request.activeTournament
+        const kelasList = await Kelas.query()
+            .where({tournament_id: tournament.id})
+            .fetch()
+            .then(result => result.toJSON())
+        viewData.kelasList = kelasList
 
-    viewData.kelas = kelas
-    viewData.pesilatList = pesilatList
-    viewData.undian = undian
-    viewData.pesilatNamaList = pesilatNamaList
-    viewData.jumlahPeserta = jumlahPeserta
+        if (!kelas) return view.render('undian.tanding', viewData)
 
-    if (!undian) return view.render('undian.tanding', viewData)
+        let pesilatList = await Pesilat.query()
+            .where({
+                tournament_id: tournament.id,
+                kelas_id: kelas
+            })
+            .fetch()
+            .then(result => {
+                return result.toJSON()
+            })
 
-    const pesertaUndian = await PesertaUndian.query()
-      .where({ undian_id: undian.id })
-      .fetch()
-      .then(result => result.toJSON())
-    const pesertaMap = {}
-    for (let i = 0; i < pesertaUndian.length; i++) {
-      let peserta = pesertaUndian[i]
-      pesertaMap[peserta.pesilat_id] = peserta.nomor_undian
-    }
-    if (pesertaMap) {
-      for (let pesilat of pesilatList) {
-        let nomor_undian = pesertaMap[pesilat.id]
-        pesilat.nomor_undian = nomor_undian ? nomor_undian : '-'
-      }
-    }
+        for (let pesilat of pesilatList) {
+            pesilat.kelas = await Kelas.find(pesilat.kelas_id)
+            pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id)
+        }
 
-    const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
-    viewData.templateBagan = templateBagan.setting_value
+        const pesilatNamaList = _.pluck(pesilatList, 'nama')
+        const undian = await Undian.query().where({
+            kelas_id: kelas,
+            tournament_id: tournament.id
+        }).first()
+        const jumlahPeserta = pesilatList ? pesilatList.length : null
 
-    return view.render('undian.tanding', viewData)
-  }
+        viewData.kelas = kelas
+        viewData.pesilatList = pesilatList
+        viewData.undian = undian
+        viewData.pesilatNamaList = pesilatNamaList
+        viewData.jumlahPeserta = jumlahPeserta
 
-  async seni ({ request, view }) {
-    const params = request.only(['kategori'])
-    const kategori = params.kategori
-    const viewData = {}
-    const tournament = request.activeTournament
-    const kategoriSeniList = await KategoriSeni.query()
-      .where({ tournament_id: tournament.id })
-      .fetch()
-      .then(result => result.toJSON())
-    viewData.kategoriSeniList = kategoriSeniList
+        if (!undian) return view.render('undian.tanding', viewData)
 
-    if (!kategori) return view.render('undian.seni', viewData)
+        const pesertaUndian = await PesertaUndian.query().where({undian_id: undian.id}).fetch().then(result => result.toJSON())
+        const pesertaMap = {}
+        for (let i = 0; i < pesertaUndian.length; i++) {
+            let peserta = pesertaUndian[i]
+            pesertaMap[peserta.pesilat_id] = peserta.nomor_undian
+        }
 
-    let pesilatList = await PesilatSeni.query()
-      .where({
-        tournament_id: tournament.id,
-        kategori_seni_id: kategori
-      })
-      .fetch()
-      .then(result => {
-        return result.toJSON()
-      })
+        if (pesertaMap) {
+            for (let pesilat of pesilatList) {
+                let nomor_undian = pesertaMap[pesilat.id]
+                pesilat.nomor_undian = nomor_undian ? nomor_undian : '-'
+            }
+        }
 
-    for (let pesilat of pesilatList) {
-      pesilat.kategoriSeni = await KategoriSeni.find(pesilat.kategori_seni_id)
-      pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id)
+        const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
+        viewData.templateBagan = templateBagan.setting_value
+
+        return view.render('undian.tanding', viewData)
     }
 
-    const pesilatNamaList = _.pluck(pesilatList, 'nama')
-    const undian = await Undian.query()
-      .where({
-        kategori_seni_id: kategori,
-        tournament_id: tournament.id
-      })
-      .first()
-    const jumlahPeserta = pesilatList ? pesilatList.length : null
+    async seni({request, view}) {
+        const params = request.only(['kategori'])
+        const kategori = params.kategori
+        const viewData = {}
+        const tournament = request.activeTournament
+        const kategoriSeniList = await KategoriSeni.query()
+            .where({tournament_id: tournament.id})
+            .fetch()
+            .then(result => result.toJSON())
+        viewData.kategoriSeniList = kategoriSeniList
 
-    viewData.kategori = kategori
-    viewData.pesilatList = pesilatList
-    viewData.undian = undian
-    viewData.pesilatNamaList = pesilatNamaList
-    viewData.jumlahPeserta = jumlahPeserta
+        if (!kategori) return view.render('undian.seni', viewData)
 
-    if (!undian) return view.render('undian.seni', viewData)
+        let pesilatList = await PesilatSeni.query()
+            .where({
+                tournament_id: tournament.id,
+                kategori_seni_id: kategori
+            })
+            .fetch()
+            .then(result => {
+                return result.toJSON()
+            })
 
-    const pesertaUndian = await PesertaUndian.query()
-      .where({ undian_id: undian.id })
-      .fetch()
-      .then(result => result.toJSON())
-    const pesertaMap = {}
-    for (let i = 0; i < pesertaUndian.length; i++) {
-      let peserta = pesertaUndian[i]
-      pesertaMap[peserta.pesilat_seni_id] = peserta.nomor_undian
-    }
-    if (pesertaMap) {
-      for (let pesilat of pesilatList) {
-        let nomor_undian = pesertaMap[pesilat.id]
-        pesilat.nomor_undian = nomor_undian ? nomor_undian : '-'
-      }
-    }
+        for (let pesilat of pesilatList) {
+            pesilat.kategoriSeni = await KategoriSeni.find(pesilat.kategori_seni_id)
+            pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id)
+        }
 
-    const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
-    viewData.templateBagan = templateBagan.setting_value
+        const pesilatNamaList = _.pluck(pesilatList, 'nama')
+        const undian = await Undian.query()
+            .where({
+                kategori_seni_id: kategori,
+                tournament_id: tournament.id
+            })
+            .first()
+        const jumlahPeserta = pesilatList ? pesilatList.length : null
 
-    return view.render('undian.seni', viewData)
-  }
+        viewData.kategori = kategori
+        viewData.pesilatList = pesilatList
+        viewData.undian = undian
+        viewData.pesilatNamaList = pesilatNamaList
+        viewData.jumlahPeserta = jumlahPeserta
 
-  async undi ({ request, response }) {
-    const tournament = request.activeTournament
-    const params = request.only(['kategori', 'type'])
-    await this.undianService.undi(params, tournament)
-    response.route('UndianController.tanding')
-  }
+        if (!undian) return view.render('undian.seni', viewData)
 
-  async bagan ({ view }) {
-    const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
+        const pesertaUndian = await PesertaUndian.query()
+            .where({undian_id: undian.id})
+            .fetch()
+            .then(result => result.toJSON())
+        const pesertaMap = {}
+        for (let i = 0; i < pesertaUndian.length; i++) {
+            let peserta = pesertaUndian[i]
+            pesertaMap[peserta.pesilat_seni_id] = peserta.nomor_undian
+        }
+        if (pesertaMap) {
+            for (let pesilat of pesilatList) {
+                let nomor_undian = pesertaMap[pesilat.id]
+                pesilat.nomor_undian = nomor_undian ? nomor_undian : '-'
+            }
+        }
 
-    return view.render('undian.bagan', {
-      templateBagan: templateBagan.setting_value
-    })
-  }
+        const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
+        viewData.templateBagan = templateBagan.setting_value
 
-  async exportExcel ({ request, response }) {
-    console.log('Starting Export For Undian With Kelas ID :', request.only(['id']))
-
-    const { id } = request.only(['id'])
-    const undian = await Undian.find(id)
-    const kelas = await Kelas.find(undian.kelas_id)
-    const turnamen = await Tournament.find(undian.tournament_id)
-    const pesertaList = await this.undianService.collectPesertaUndian(id)
-    const jumlahPeserta = pesertaList.length
-
-    const workbook = new ExcelJS.Workbook()
-    const filename = 'templates/template-bagan-digisilat.xlsx'
-    await workbook.xlsx.readFile(filename)
-
-    const nameSheet = 'D_' + jumlahPeserta
-    const baganSheet = 'B_' + jumlahPeserta
-    const sheet = workbook.getWorksheet(nameSheet)
-    if (!sheet) {
-      console.log('No Sheet Found')
-      return null
+        return view.render('undian.seni', viewData)
     }
 
-    console.log(`Writing Data Start For Bagan ${kelas.nama}. Exporting...`)
-    sheet.eachRow(function (row, rowNumber) {
-      if (rowNumber > 2) {
-        const nomor_undian = row.getCell('A').value
-        const pesilat = _.find(pesertaList, p => p.nomor_undian == nomor_undian)
-        row.getCell('B').value = pesilat.nama
-        row.getCell('C').value = pesilat.kontingen
-      }
-    })
-
-    let deleted = []
-    workbook.eachSheet(function (worksheet, sheetId) {
-      if (worksheet.name != nameSheet && worksheet.name != baganSheet) {
-        deleted.push(sheetId)
-      }
-    })
-
-    for (var d of deleted) {
-        workbook.removeWorksheet(d)
+    async undi({request, response}) {
+        const tournament = request.activeTournament
+        const params = request.only(['kategori', 'type'])
+        await this.undianService.undi(params, tournament)
+        response.route('UndianController.tanding')
     }
 
-    console.log("Writing Data Done. Exporting...")
-    const timestamp = dayjs().format('YYYYMMDDHHmmss')
-    let exportedFilename = `exported/Bagan-${turnamen.nama}-${kelas.nama}-${timestamp}.xlsx`
-    await workbook.xlsx.writeFile(exportedFilename)
-    console.log(`File Exported ${exportedFilename}`)
+    async bagan({view}) {
+        const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
 
-    return response.json({
-        filename: exportedFilename
-    })
-  }
+        return view.render('undian.bagan', {
+            templateBagan: templateBagan.setting_value
+        })
+    }
+
+    async exportExcel({request, response}) {
+        console.log('Starting Export For Undian With Kelas ID :', request.only(['id']))
+
+        const {id} = request.only(['id'])
+        const undian = await Undian.find(id)
+        const kelas = await Kelas.find(undian.kelas_id)
+        const turnamen = await Tournament.find(undian.tournament_id)
+        const pesertaList = await this.undianService.collectPesertaUndian(id)
+        const jumlahPeserta = pesertaList.length
+
+        const workbook = new ExcelJS.Workbook()
+        const filename = 'templates/template-bagan-digisilat.xlsx'
+        await workbook.xlsx.readFile(filename)
+
+        const nameSheet = 'D_' + jumlahPeserta
+        const baganSheet = 'B_' + jumlahPeserta
+        const sheet = workbook.getWorksheet(nameSheet)
+        if (!sheet) {
+            console.log('No Sheet Found')
+            return null
+        }
+
+        console.log(`Writing Data Start For Bagan ${kelas.nama}. Exporting...`)
+        sheet.eachRow(function (row, rowNumber) {
+            if (rowNumber > 2) {
+                const nomor_undian = row.getCell('A').value
+                const pesilat = _.find(pesertaList, p => p.nomor_undian == nomor_undian)
+                row.getCell('B').value = pesilat.nama
+                row.getCell('C').value = pesilat.kontingen
+            }
+        })
+
+        let deleted = []
+        workbook.eachSheet(function (worksheet, sheetId) {
+            if (worksheet.name != nameSheet && worksheet.name != baganSheet) {
+                deleted.push(sheetId)
+            }
+        })
+
+        for (var d of deleted) {
+            workbook.removeWorksheet(d)
+        }
+
+        console.log("Writing Data Done. Exporting...")
+        const timestamp = dayjs().format('YYYYMMDDHHmmss')
+        let exportedFilename = `exported/Bagan-${turnamen.nama}-${kelas.nama}-${timestamp}.xlsx`
+        await workbook.xlsx.writeFile(exportedFilename)
+        console.log(`File Exported ${exportedFilename}`)
+
+        return response.json({
+            filename: exportedFilename
+        })
+    }
 }
 
 module.exports = UndianController

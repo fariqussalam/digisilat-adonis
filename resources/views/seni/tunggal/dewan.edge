@@ -4,9 +4,9 @@
     <div id="printed" class="printed-container-15" style="background-color:white;">
         <div class="text-center">
             <h4><b>
-                <span class="js-tunggal-admin__nama-turnamen">OPEN TOURNAMENT PIALA PANGDAM XIII/MERDEKA</span><br>
-                <span class="js-tunggal-admin__tempat-turnamen">Manado - Sulawesi Utara</span><br>
-                <span class="js-tunggal-admin__waktu-turnamen">11-14 Desember 2017</span></b></h4>
+                <span class="js-tunggal-admin__nama-turnamen">{{ tournament.nama }}</span><br>
+                <span class="js-tunggal-admin__tempat-turnamen">{{ tournament.tempat }}</span><br>
+                <span class="js-tunggal-admin__waktu-turnamen">{{ tournament.waktu }}</span></b></h4>
         </div>
         <div class="row">
             <div class="col-sm-5"></div>
@@ -20,12 +20,12 @@
                     <tr>
                         <td><b>POOL</b></td>
                         <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
-                        <td class="text-center js-admin-tunggal__pool" style="font-size:15px;"><b></b></td>
+                        <td class="text-center js-admin-tunggal__pool" style="font-size:15px;">{{nomor_pool}}</td>
                     </tr>
                     <tr>
                         <td><b>NOMOR PENAMPIL</b></td>
                         <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
-                        <td class="text-center js-admin-tunggal__nomor-penampil" style="font-size:15px;"><b></b></td>
+                        <td class="text-center js-admin-tunggal__nomor-penampil" style="font-size:15px;">{{pertandingan.nomor_penampil}}</td>
                     </tr>
                 </table>
             </div>
@@ -37,12 +37,12 @@
                     <tr>
                         <td><b>NAMA PESILAT</b></td>
                         <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
-                        <td style="font-size:15px;" class="js-admin-tunggal__nama-penampil"></td>
+                        <td style="font-size:15px;" class="js-admin-tunggal__nama-penampil">{{pertandingan.pesilat.nama}}</td>
                     </tr>
                     <tr>
                         <td><b>KONTINGEN</b></td>
                         <td class="text-center"><b>&nbsp;&nbsp;:&nbsp;</b></td>
-                        <td style="font-size:15px;" class="js-admin-tunggal__kontingen"></td>
+                        <td style="font-size:15px;" class="js-admin-tunggal__kontingen">{{pertandingan.kontingen.nama}}</td>
                     </tr>
                 </table>
             </div>
@@ -236,6 +236,13 @@
         </div>
         <div class="row">
             <div class="col-md-4">
+                <table>
+                    <tr>
+                        <td><b>Tanggal/Waktu</b></td>
+                        <td class="text-center p-r-5"><b>&nbsp;&nbsp;: </b></td>
+                        <td class="js-current-date"><b></b></td>
+                    </tr>
+                </table>
             </div>
             <div class="col-md-4" style="margin-top:-40px;">
                 <h4><b>HASIL PENAMPILAN</b></h4>
@@ -280,62 +287,19 @@
             KETUA PERTANDINGAN<br><br><br><br>
             ____________________
         </div>
-        <table style="font-size:15px;margin-bottom: 20px;">
-            <tr>
-                <td><b>Tanggal</b></td>
-                <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
-                <td class="js-current-date"></td>
-            </tr>
-            <tr>
-                <td><b>Waktu</b></td>
-                <td class="text-center"><b>&nbsp;&nbsp;:</b></td>
-                <td class="js-current-time"></td>
-            </tr>
-        </table>
     </div>
+    @if(!request_params.for_printed)
     <div class="row" style="margin-top:30px;">
-        <div class="col-md-8">
-            <a class="btn btn-primary js-admin-tunggal__simpan-data" href="#" style="margin:5px">Simpan Data </a>
-            <button class="btn btn-danger js-admin-tunggal__pengumuman-pemenang" style="margin:5px">Pengumuman Pemenang </button>
-            <button class="btn btn-success js-admin-tunggal__pertandingan-baru" style="margin:5px">Mulai Tunggal Baru </button>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-success js-gelanggang__pengumuman-pemenang" style="margin:5px" id="admin_pertandingan_baru" data-pertandingan="{{pertandingan.id}}" data-url="{{ route('TandingController.pengumumanPemenang') }}">Pengumuman Pemenang</button>
+            <button type="button" class="btn btn-white js-dewan-tanding__save-pdf" style="margin:5px">Export to PDF</button>
         </div>
     </div>
-    <div class="modal fade pg-show-modal" id="modalPertandingan" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Masukkan Data Pertandingan</h4>
-                </div>
-                <div class="modal-body">
-                    <form name="form-pertandingan">
-                        <div class="form-group">
-                            <label>
-                                <b>Pool</b>
-                            </label>
-                            <input type="text" class="form-control" name="pool">
-                        </div>
-                        <div class="form-group">
-                            <label>Nomor Penampil</label>
-                            <input type="text" class="form-control" name="nomor-penampil">
-                        </div>
-                        <div class="form-group">
-                            <label>Nama Penampil</label>
-                            <input type="text" class="form-control" name="nama-penampil">
-                        </div>
-                        <div class="form-group">
-                            <label>Kontingen</label>
-                            <input type="text" class="form-control" name="kontingen">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="input_tutup">Close</button>
-                    <button type="button" class="btn btn-primary js-admin-tunggal__submit-form">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <form hidden name="export-pdf-form" method="post" action="{{ route('TandingController.exportToPdf') }}">
+        {{ csrfField() }}
+        <input type="hidden" name="printed_url" value="{{ current_url }}?for_printed=1" />
+    </form>
+    @endif
 </div>
 @endsection
 @section('module_js')

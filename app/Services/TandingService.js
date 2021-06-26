@@ -12,6 +12,7 @@ const Kualifikasi = use('App/Models/Kualifikasi')
 const Eliminasi = use('App/Models/Eliminasi')
 const PesilatService = use('App/Services/PesilatService')
 const Setting = use ('App/Models/Setting')
+const SeniInterface = use('App/DTO/SeniInterface')
 
 class TandingService {
     constructor() {
@@ -145,9 +146,9 @@ class TandingService {
     }
 
     async getInitDataPertandinganSeni(pertandingan) {
-        const initData = await Setting.query().where( { setting_type: 'TEMPLATE_SENI' } ).first()
-        const initDataSetup = await this.setupInitData(pertandingan, initData.setting_value)
-        return {}
+        const pertandinganInstance = new SeniInterface()
+        const masterData = await this.pertandinganService.getMasterDataPertandingan()
+        return pertandinganInstance
     }
 
     async setupInitData(pertandingan, initData) {

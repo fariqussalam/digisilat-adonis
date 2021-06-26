@@ -319,6 +319,26 @@ class PertandinganService {
   }
 
   /**
+   * Master Data Seni :
+   - id, nomor_partai
+   - ronde
+   - pesilat merah
+   - pesilat biru
+   - kelas
+   */
+  async getMasterDataPertandingan(pertandingan) {
+    const rootPertandingan = await this.prosesPertandingan(pertandingan)
+    let masterData = {}
+    masterData.id = pertandingan.id
+    masterData.nomor_partai = pertandingan.nomor_partai
+    masterData.ronde = pertandingan.ronde
+    masterData.merah = rootPertandingan.merah
+    masterData.biru =  rootPertandingan.biru
+    masterData.kelas = await Kelas.find(pertandingan.kelas_id).then((k)  =>  k.toJSON())
+    return masterData
+  }
+
+  /**
    * Seni
    */
   async getPertandinganPool(nomor_pool, tournament) {

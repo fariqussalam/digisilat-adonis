@@ -37,6 +37,12 @@ Route.get('kategori', 'KategoriController.index')
 Route.post('kategori/save', 'KategoriController.save')
 Route.post('kategori/update', 'KategoriController.update')
 Route.post('kategori/delete', 'KategoriController.delete')
+Route.get('kategori-seni/create', 'KategoriController.createSeni')
+Route.post('kategori-seni/save', 'KategoriController.saveSeni')
+Route.get('kategori-seni/edit/:id', 'KategoriController.editSeni')
+Route.post('kategori-seni/update', 'KategoriController.updateSeni')
+Route.get('kategori-seni/delete/:id', 'KategoriController.deleteSeni')
+Route.get('kategori-seni/manual-update', 'KategoriController.manualUpdateKategori')
 
 /**
 * Peserta

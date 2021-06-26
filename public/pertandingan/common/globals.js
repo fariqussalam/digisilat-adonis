@@ -67,7 +67,7 @@
                     merah: nilaiMerah,
                     biru: nilaiBiru
                 }
-             }
+            }
             this.getNilai = function(sudut, ronde) {
                 var poin = this.getPoin(sudut, ronde),
                     minus = this.getMinus(sudut, ronde),
@@ -126,6 +126,79 @@
             this.setGlobalEvent(socket);
             return socket
         }
+    }
+
+    DigiSilat.Seni = {
+        getNilaiTunggalTemplate: function() {
+            var daftarNilai = [
+                7, 6, 5, 7, 6, 8, 11, 7, 6, 12, 6, 5, 5, 9
+            ]
+            var jurusTunggal = []
+            $.each(daftarNilai, function(idx, el) {
+                jurusTunggal.push(new this.NilaiJurus(idx + 1, el))
+            })
+            return jurusTunggal
+        },
+        NilaiJurus: function(nomorJurus, jumlahNilai) {
+            this.nomorJurus = nomorJurus;
+            this.jumlahNilai = jumlahNilai;
+        },
+        JuriTunggal: function(nomorJuri) {
+            this.nomorJuri = nomorJuri;
+            this.daftarNilai = this.getNilaiTunggalTemplate();
+            this.pengurangan = [];
+            this.hukuman = [];
+            this.kemantapan = 0;
+            this.getNilaiJurus = function(nomorJurus) {
+                var jurus = _.filter(this.daftarNilai, function(n) {
+                    return n.nomorJurus.toString() === nomorJurus.toString()
+                })
+                var jumlahNilai = jurus[0].jumlahNilai;
+                var penguranganJurus = _.filter(this.pengurangan, function(n) {
+                    return n.nomorJurus.toString() === nomorJurus.toString()
+                })
+                _.each(penguranganJurus, function(n) {
+                    jumlahNilai += n.nilai;
+                })
+                return jumlahNilai
+            }
+            this.getTotalNilaiJurus = function() {
+                var instance = this;
+                var totalNilai = 0;
+                _.each(this.daftarNilai, function(jurus) {
+                    totalNilai += instance.getNilaiJurus(jurus.nomorJurus);
+                })
+                return totalNilai
+            }
+            this.getTotalNilaiHukuman = function() {
+                var nilaiHukuman = 0
+                _.each(this.hukuman, function(n) {
+                    nilaiHukuman += n.nilai
+                })
+                return nilaiHukuman;
+            }
+            this.getTotalNilai = function() {
+                var totalNilaiJurus = this.getTotalNilaiJurus();
+                var totalNilaiHukuman = this.getTotalNilaiHukuman();
+                return totalNilaiJurus + totalNilaiHukuman + this.kemantapan;
+            }
+        },
+        State: {
+            Juri: function () {
+                this.nomorJuri = null
+                this.juri = {}
+            },
+            Display: function () {
+                this.dewanJuri = {}
+                this.countdown = 0
+            },
+            Dewan: function () {
+                this.dewanJuri = {}
+            },
+            Timer: function () {
+                this.countdown = 0
+            }
+        },
     }
 
     if ( typeof module === 'object' && module && typeof module.exports === 'object' ) {

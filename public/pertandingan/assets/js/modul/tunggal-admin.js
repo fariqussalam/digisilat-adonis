@@ -1,11 +1,17 @@
 (function () {
     $(function () {
 
-        var detil = {};
-        var $modal = $('#modalPertandingan');
-        $(document).ready(function() {
-            $modal.modal("show");
+        var pertandinganId = $('input[name="pertandingan_id"]').val();
+        var state = new DigiSilat.Seni.State.Dewan();
+        var socket = DigiSilat.createSocket("Tunggal Dewan", pertandinganId)
+
+        socket.on("connect", function() {
+            console.log(socket.connected)
+            socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
         });
+        socket.on('data-pertandingan-seni', function(data) {
+            console.log("Data Pertandingan Seni", data)
+        })
 
         function NilaiJurus(nomorJurus, jumlahNilai) {
             this.nomorJurus = nomorJurus;
@@ -138,11 +144,7 @@
                 }
             }
         }
-        var socket = io('/tunggal');
-        socket.on('connect', function() {
-            socket.emit('koneksi', { name: "Admin Tunggal" });
-            socket.emit('get_data_turnamen');
-        });
+
         socket.on('display_pengumuman', function(data) {
             var juriMax = getJuriMax();
             var juriMin = getJuriMin(juriMax);
@@ -214,14 +216,14 @@
             socket.emit('refreshTunggal');
         });
 
-        $(".js-admin-tunggal__simpan-data").click(function() {
-            var filename = "TUNGGAL";
-            if (detil.pool != null) filename += "-" + detil.pool + "-";
-            if (detil.nomorPenampil != null) filename += "-" + detil.nomorPenampil + "-";
-            if (detil.namaPesilat != null) filename += "-" + detil.nomorPenampil + "-";
-            filename += "-" + utils.getFormattedDateTime();
-            utils.simpanGambar(filename);
-        });
+        $('.js-dewan-tanding__save-pdf').click(function() {
+            var url = window.location.href + "?for_printed=1"
+            console.log(url)
+            $('input[name="printed_url"]').val(url)
+            $('form[name="export-pdf-form"]').submit()
+        })
+
+
 
     })
 })(jQuery);

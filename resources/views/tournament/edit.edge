@@ -49,8 +49,9 @@
                 <div class="mb-3 col-md-6" style="width:30%">
                   @if(tournament.logo_1)
                   <label class="form-label">Logo 1</label>
-                  <img src="/uploads/{{tournament.logo_1}}" class="img-thumbnail pe-2">
+                  <img src="{{tournament.logo_1}}" class="img-thumbnail pe-2">
                   <button class="btn btn-primary js-tournament-change-image btn-sm mt-1" data-name="logo_1" data-label="Logo 1"> X Ganti</button>
+                    <input type="hidden" name="url_logo_1" value="{{tournament.logo_1}}"  />
                   @else
                   <label class="form-label">Logo 1</label>
                   <input type="file" class="form-control" name="logo_1" >
@@ -59,8 +60,9 @@
                 <div class="mb-3 col-md-6" style="width:30%">
                   @if(tournament.logo_2)
                   <label class="form-label">Logo 2</label>
-                  <img src="/uploads/{{tournament.logo_2}}" class="img-thumbnail pe-2">
+                  <img src="{{tournament.logo_2}}" class="img-thumbnail pe-2">
                   <button class="btn btn-primary js-tournament-change-image btn-sm mt-1" data-name="logo_2" data-label="Logo 2"> X Ganti</button>
+                    <input type="hidden" name="url_logo_2" value="{{tournament.logo_2}}"  />
                   @else
                   <label class="form-label">Logo 2</label>
                   <input type="file" class="form-control" name="logo_2" >

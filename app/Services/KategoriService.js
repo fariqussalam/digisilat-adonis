@@ -63,16 +63,13 @@ class KategoriService {
       {
         type: "KELAS",
         name: "Kelas"
-      },
-      {
-        type: "SENI",
-        name: "Kategori Seni"
-      },
-      {
-        type: "JABATAN",
-        name: "Jabatan"
       }
     ]
+  }
+
+  async getKategoriSeniList(tournament_id) {
+    const kategoriSeniList = await KategoriSeni.query().where({tournament_id}).fetch()
+    return kategoriSeniList.rows
   }
 }
 
