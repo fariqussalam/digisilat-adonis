@@ -18,3 +18,12 @@
     margin-top:30px;
     margin-bottom:30px;
 }
+
+.table-noborder>thead>tr>th
+.table-noborder>thead>tr>td
+.table-noborder>tbody>tr>th
+.table-noborder>tbody>tr>td
+.table-noborder>tfoot>tr>th
+.table-noborder>tfoot>tr>td {
+    border: none;
+}
