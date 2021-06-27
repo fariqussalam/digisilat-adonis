@@ -706,3 +706,12 @@
     });
   })
 })(jQuery);
+
+/**
+ * Seni
+ */
+ (function () {
+  $(function () {
+
+  })
+})(jQuery);

@@ -105,7 +105,7 @@ class TandingController {
       // }
     }
     await pertandingan.save()
-
+    
     return response.json({success: true})
   }
 

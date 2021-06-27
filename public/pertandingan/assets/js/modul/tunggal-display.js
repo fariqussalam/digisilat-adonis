@@ -1,6 +1,16 @@
 (function () {
     $(function () {
 
+        var $tabelMax = $('.js-tunggal-display__tabel-max');
+        var $tabelMin = $('.js-tunggal-display__tabel-min');
+        var $tabelTotal = $('.js-tunggal-display__tabel-total');
+
+        $(document).ready(function() {
+            $tabelMax.hide();
+            $tabelMin.hide();
+            $tabelTotal.hide();
+        });     
+
         var pertandinganId = $('input[name="pertandingan_id"]').val();
         var state = new DigiSilat.Seni.State.Display();
 
@@ -15,21 +25,30 @@
         })
 
         function renderPertandingan(data) {
-            for (var nomorJuri in data.dewanJuri) {
-                var juri = data.dewanJuri[nomorJuri]
-                if (juri.diskualifikasi) {
+            var isDisqualified = _.find(_.values(data.dewanJuri), function(j) {
+                return j.diskualifikasi == true
+            })
+            if (isDisqualified) {
+                for (var nomorJuri in data.dewanJuri) {
+                    
                     $('.js-tunggal-display__nilai-kebenaran[data-juri="' + nomorJuri + '"]').text("DIS")
                     $('.js-tunggal-display__nilai-kemantapan[data-juri="' + nomorJuri + '"]').text("DIS")
                     $('.js-tunggal-display__nilai-hukuman[data-juri="' + nomorJuri + '"]').text("DIS")
                     $('.js-tunggal-display__nilai-total[data-juri="' + nomorJuri + '"]').text("DIS")
-                   
-                } else {
+                }
+                return;
+            }
+            for (var nomorJuri in data.dewanJuri) {
+                var juri = data.dewanJuri[nomorJuri]
+                
                     renderNilaiJurus(juri)
                     renderNilaiHukuman(juri)
                     renderTotalNilai(juri)
                     renderNilaiKemantapan(juri)
-                }
-            
+
+                    if (data.skor_akhir != null) {
+                        renderSkorAkhir(data.skor_akhir)
+                    }
             }
         }
         
@@ -86,63 +105,19 @@
             $('.js-tunggal-display__nilai-total[data-juri="' + juri.nomorJuri + '"]').text(totalNilai);
         }
 
-        function getMaxOfArray(numArray) {
-            return Math.max.apply(null, numArray);
+        function renderSkorAkhir(skor_akhir) {
+            $tabelMax.css("background-color", "red").css("color","white")
+            $tabelMin.css("background-color", "blue").css("color","white")
+            $tabelMax.find('.max-nomor-juri').text(skor_akhir.juriTeratas.nomorJuri);
+            $tabelMax.find('.max-skor').text(getTotalNilai(skor_akhir.juriTeratas));
+            $tabelMin.find('.min-nomor-juri').text(skor_akhir.juriTerendah.nomorJuri);
+            $tabelMin.find('.min-skor').text(getTotalNilai(skor_akhir.juriTerendah));
+            $tabelTotal.find('.total-skor').text(skor_akhir.totalNilai)
+            $tabelMax.show();
+            $tabelMin.show();
+            $tabelTotal.show();
         }
-        function getMinOfArray(numArray) {
-            return Math.min.apply(null, numArray);
-        }
-
-        function getJuriMax() {
-            var totalNilaiArray = []
-            for (var i = 1; i <= 5; i++) {
-                totalNilaiArray.push(dewanJuri[i].getTotalNilai());
-            }
-            var totalNilai = getMaxOfArray(totalNilaiArray);
-            var juriMax;
-            for (var x = 1; x <= 5; x++) {
-                var nilai = dewanJuri[x].getTotalNilai();
-                if (totalNilai === nilai) {
-                    juriMax = dewanJuri[x];
-                    return juriMax;
-                }
-            }
-        }
-        function getJuriMin(excluded) {
-            var totalNilaiArray = []
-            for (var i = 1; i <= 5; i++) {
-                totalNilaiArray.push(dewanJuri[i].getTotalNilai());
-            }
-            var totalNilai = getMinOfArray(totalNilaiArray);
-            var juriMin;
-            for (var x = 1; x <= 5; x++) {
-                var isExcluded = excluded != null && excluded.nomorJuri === dewanJuri[x].nomorJuri
-                if (!isExcluded) {
-                    var nilai = dewanJuri[x].getTotalNilai();
-                    if (totalNilai === nilai) {
-                        juriMin = dewanJuri[x];
-                        return juriMin;
-                    }
-                }
-            }
-        }
-
-        var $tabelMax = $('.js-tunggal-display__tabel-max');
-        var $tabelMin = $('.js-tunggal-display__tabel-min');
-        var $tabelTotal = $('.js-tunggal-display__tabel-total');
-
-        $(document).ready(function() {
-            $tabelMax.hide();
-            $tabelMin.hide();
-            $tabelTotal.hide();
-            for (var i = 1; i <= 5; i++) {
-                renderNilaiJurus(i)
-                renderNilaiHukuman(i)
-                renderTotalNilai(i)
-                renderNilaiKemantapan(i)
-            }
-        });       
-
+  
         function resetCountdown() {
             state.countdown = 0
         }

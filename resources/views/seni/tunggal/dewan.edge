@@ -247,14 +247,16 @@
             <div class="col-md-4" style="margin-top:-40px;">
                 <h4><b>HASIL PENAMPILAN</b></h4>
                 <table>
-                    <tr>
+                    {{-- 
+                         <tr>
                         <td><b>WAKTU DIGUNAKAN</b></td>
                         <td class="text-center"><b>&nbsp;&nbsp;: </b></td>
                         <td id="viewWaktuDigunakan" style="font-size:15px;"></td>
-                    </tr>
+                    </tr> 
+                     --}}
                     <tr>
                         <td><b>TOTAL NILAI</b></td>
-                        <td class="text-center"><b>&nbsp;&nbsp;: </b></td>
+                        <td class="text-center"><b> &nbsp;: </b></td>
                         <td class="js-tunggal-admin__total-nilai" style="font-size:15px;"></td>
                     </tr>
                 </table>
@@ -291,7 +293,7 @@
     @if(!request_params.for_printed)
     <div class="row" style="margin-top:30px;">
         <div class="col-md-4">
-            <button type="button" class="btn btn-success js-gelanggang__pengumuman-pemenang" style="margin:5px" id="admin_pertandingan_baru" data-pertandingan="{{pertandingan.id}}" data-url="{{ route('TandingController.pengumumanPemenang') }}">Pengumuman Pemenang</button>
+            <button type="button" class="btn btn-success js-seni-pengumuman-skor" style="margin:5px">Pengumuman Skor</button>
             <button type="button" class="btn btn-white js-dewan-tanding__save-pdf" style="margin:5px">Export to PDF</button>
         </div>
     </div>

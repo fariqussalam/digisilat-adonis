@@ -10,12 +10,9 @@ const seniService = new SeniService()
 io.on('connection', async function(socket){
     var query = socket.handshake.query
     var room = `${query.type}-${query.pertandinganId}`
+    
     socket.join(room)
-    console.log(socket.rooms)
-
-    socket.on('disconnect', function() {
-       // console.log(`${socketQuery.name} Disconnected`)
-    });
+    socket.on('disconnect', function() {});
 
     socket.on('get-data-pertandingan', async function(data) {
         if (!data.pertandinganId) return;
@@ -97,6 +94,12 @@ io.on('connection', async function(socket){
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.setDiskualifikasi(data.pertandinganId, pertandingan_data, data.nomorJuri);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
+    socket.on("seni-pengumuman-skor", async function(data) {
+        var latestData = await seniService.setPengumumanSkor(data.pertandinganId);
         if (!latestData) return false;
         io.to(room).emit('data-pertandingan-seni', latestData);
     })

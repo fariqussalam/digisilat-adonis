@@ -124,6 +124,7 @@
         createSocket: function(type, name, pertandinganId) {
             var socket = io({ query: { type: type, name : name, pertandinganId: pertandinganId } });
             this.setGlobalEvent(socket);
+            setSeniEvent(socket, pertandinganId)
             return socket
         }
     }
@@ -199,6 +200,12 @@
                 this.countdown = 0
             }
         },
+    }
+
+    function setSeniEvent(socket, pertandinganId) {
+        $('.js-seni-pengumuman-skor').click(function() {
+            socket.emit("seni-pengumuman-skor", {pertandinganId: pertandinganId})
+        })
     }
 
     if ( typeof module === 'object' && module && typeof module.exports === 'object' ) {
