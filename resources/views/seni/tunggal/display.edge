@@ -23,13 +23,31 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-8 col-sm-8 col-md-8" style="margin-top:10px">
-                <table class="table table-bordered" style="font-size:25px">
+            <div class="col-sm-4" style="margin-top:10px">
+                <table class="table table-bordered" style="font-size:20px">
                     <tbody>
                     <tr>
                         <td class="text-left js-tunggal-display__nama-pesilat">{{pertandingan.pesilat.nama}}</td>
                     </tr>
                     </tbody>
+                </table>
+            </div>
+            <div class="col-sm-4">
+                <table class="table text-center table-borderless">
+                    <thead>
+                    <tr style="padding-left:10%;padding-right:10%">
+                        @if(tournament.logo_1)
+                        <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                            <img style="width:130px;height:130px;" src="{{tournament.logo_1}}" alt="">
+                        </th>
+                        @endif
+                        @if(tournament.logo_2)
+                        <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                            <img style="width:130px;height:130px;" src="{{tournament.logo_2}}" alt="">
+                        </th>
+                        @endif
+                    </tr>
+                    </thead>
                 </table>
             </div>
         </div>
@@ -91,9 +109,7 @@
             <div class="col-sm-1 col-md-1">
             </div>
             <div class="col-sm-4 col-md-4">
-                    <div class="text-center">
-                        <div class="lead js-timer-clock text-center" style="font-size:80px;"></div>
-                    </div>
+                        <div class="lead js-timer-clock" style="font-size:90px;">00:00</div>
             </div>
             <div class="col-sm-7">
                 <div class="row" style="margin-top:-30px;">

@@ -2,11 +2,26 @@
 @section('content')
 <div class="container" id="container">
     <div id="printed" class="printed-container-15" style="background-color:white;">
-        <div class="text-center">
-            <h4><b>
-                <span class="js-tunggal-admin__nama-turnamen">{{ tournament.nama }}</span><br>
-                <span class="js-tunggal-admin__tempat-turnamen">{{ tournament.tempat }}</span><br>
-                <span class="js-tunggal-admin__waktu-turnamen">{{ tournament.waktu }}</span></b></h4>
+        <div class="text-center row">
+            <div class="col-sm-4">
+                @if(tournament.logo_1)
+                <img style="width:150px;height:150px;" src="{{tournament.logo_1}}">
+                @endif
+            </div>
+            <div class="col-sm-4">
+                <h4>
+                    <b>
+                        <span id="nama-turnamen" class="f-16">{{ tournament.nama }}</span><br>
+                        <span id="tempat-turnamen" class="f-16">{{ tournament.tempat }}</span><br>
+                        <span id="waktu-turnamen" class="f-16">{{ tournament.waktu }}</span>
+                    </b>
+                </h4>
+            </div>
+            <div class="col-sm-4">
+                @if(tournament.logo_2)
+                <img style="width:150px;height:150px;" src="{{tournament.logo_2}}">
+                @endif
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-5"></div>
