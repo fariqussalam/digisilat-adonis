@@ -6,6 +6,7 @@
     <div class="row mb-2 mb-xl-3">
         <div class="col-auto d-none d-sm-block">
             <h3>Gelanggang {{ nomor_gelanggang }}</h3>
+            <a href="{{route('JadwalTandingController.jadwalTanding')}}">Kembali Ke Jadwal</a>
         </div>
 
     </div>
@@ -23,7 +24,7 @@
                             <th>Kelas</th>
                             <th>Sudut Merah</th>
                             <th>Sudut Biru</th>
-                            <th>Skor</th>
+                            {{--  <th>Skor</th>  --}}
                             <th></th>
                           </tr>
                         </thead>
@@ -46,7 +47,7 @@
                            BYE
                            @endif
                           </td>
-                          <td>-- Skor Pertandingan --</td>
+                          {{--  <td>-- Skor Pertandingan --</td>  --}}
                           <td>
                             @if(pertandingan.status.name == 'BELUM_DIMULAI')
                             <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomor_gelanggang}}" >Mulai</button>

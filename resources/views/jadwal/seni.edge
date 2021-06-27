@@ -55,7 +55,7 @@
               <td>{{ pertandingan.kontingen.nama }}</td>
               <td>{{ pertandingan.nomor_penampil ? pertandingan.nomor_penampil : "-" }}</td>
               <td>{{ pertandingan.status.value }}</td>
-              <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
+              <td>{{ pertandingan.skor_akhir ? pertandingan.skor_akhir : "-"  }}</td>
               <td>
                 @if(pertandingan.status.name == 'BELUM_DIMULAI')
                 <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalSeniController.updatePartaiSeni') }}" data-id="{{pertandingan.id}}" >Atur</button>
@@ -124,7 +124,7 @@
               <td>{{ pertandingan.kontingen.nama }}</td>
               <td>{{ pertandingan.nomor_penampil ? pertandingan.nomor_penampil : "-" }}</td>
               <td>{{ pertandingan.status.value }}</td>
-              <td>{{ pertandingan.nilai_akhir ? pertandingan.nilai_akhir : "-"  }}</td>
+              <td>{{ pertandingan.skor_akhir ? pertandingan.skor_akhir : "-"  }}</td>
               <td>   
                 @if(pertandingan.status.name == 'BELUM_DIMULAI')
                 <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" >Mulai</button>
