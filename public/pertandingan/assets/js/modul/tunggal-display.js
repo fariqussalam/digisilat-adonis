@@ -106,8 +106,8 @@
         }
 
         function renderSkorAkhir(skor_akhir) {
-            $tabelMax.css("background-color", "red").css("color","white")
-            $tabelMin.css("background-color", "blue").css("color","white")
+            $tabelMax.css("background-color", "blue").css("color","white")
+            $tabelMin.css("background-color", "red").css("color","white")
             $tabelMax.find('.max-nomor-juri').text(skor_akhir.juriTeratas.nomorJuri);
             $tabelMax.find('.max-skor').text(getTotalNilai(skor_akhir.juriTeratas));
             $tabelMin.find('.min-nomor-juri').text(skor_akhir.juriTerendah.nomorJuri);
