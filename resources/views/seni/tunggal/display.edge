@@ -23,7 +23,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-sm-4" style="margin-top:10px">
+            <div class="col-sm-5" style="margin-top:10px">
                 <table class="table table-bordered" style="font-size:20px">
                     <tbody>
                     <tr>
@@ -32,23 +32,13 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-sm-4">
-                <table class="table text-center table-borderless">
-                    <thead>
-                    <tr style="padding-left:10%;padding-right:10%">
-                        @if(tournament.logo_1)
-                        <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
-                            <img style="width:130px;height:130px;" src="{{tournament.logo_1}}" alt="">
-                        </th>
-                        @endif
-                        @if(tournament.logo_2)
-                        <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
-                            <img style="width:130px;height:130px;" src="{{tournament.logo_2}}" alt="">
-                        </th>
-                        @endif
-                    </tr>
-                    </thead>
-                </table>
+            <div class="col-sm-3 text-right">
+            @if(tournament.logo_1) 
+                <img style="width:150px;height:150px;" src="{{tournament.logo_1}}" alt="">
+            @endif
+            @if(tournament.logo_2)           
+                <img style="width:150px;height:150px;" src="{{tournament.logo_2}}" alt="">
+            @endif
             </div>
         </div>
     </div>
