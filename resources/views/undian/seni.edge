@@ -35,13 +35,18 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <button class="btn btn-primary float-end js-undian-undi"
-                                data-kategori="{{ kategori }}"
-                                data-type="seni"
-                                data-peserta-undian="{{ pesilatNamaList.join(',') }}"
-                                data-url="{{ route('UndianController.undi') }}">
-                            Undi
+                      <div class="float-end">
+                        @if(undian.is_locked == false)
+                        <a href="{{ route('UndianController.kunciUndian') }}?tipe=seni&id={{undian.id}}" class="btn btn-danger">Kunci Undian</a>
+                        <button class="btn btn-primary js-undian-undi"
+                        data-kategori="{{ kategori }}"
+                        data-type="seni"
+                        data-peserta-undian="{{ pesilatNamaList.join(',') }}"
+                        data-url="{{ route('UndianController.undi') }}">
+                        Undi
                         </button>
+                        @endif
+                      </div>
                         <h5 class="card-title">Daftar Pesilat</h5>
                     </div>
                     <div class="card-body">

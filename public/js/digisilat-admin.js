@@ -254,7 +254,7 @@
         },
         contentClassName: 'vex-undian-wrapper',
         unsafeMessage: '<div class="undian-box-wrapper">' +
-            '<div class="undian-box text-center">UNDI</div>' +
+            '<div class="undian-box text-center btn btn-success">UNDI</div>' +
             '</div>',
         afterOpen: function () {
           var undianList = pesertaList,

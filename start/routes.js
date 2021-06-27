@@ -64,6 +64,7 @@ Route.get('undian/seni', 'UndianController.seni')
 Route.get('undian/bagan', 'UndianController.bagan')
 Route.post('undian/undi', 'UndianController.undi')
 Route.post('undian/export', 'UndianController.exportExcel')
+Route.get('undian/lock', 'UndianController.kunciUndian')
 
 /**
 * Jadwal Tanding

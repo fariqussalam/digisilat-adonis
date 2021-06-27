@@ -111,7 +111,7 @@
                           @each(h in halaman)
                           @set('h_lower', lowerCase(h.name))
                           <tr>
-                              <td><a href="{{ route('TandingController.halaman', {nomor_gelanggang:nomor_gelanggang ,halaman: h_lower}) }}">{{ h.label }}</a></td>
+                              <td><a target="_blank" href="{{ route('TandingController.halaman', {nomor_gelanggang:nomor_gelanggang ,halaman: h_lower}) }}">{{ h.label }}</a></td>
                           </tr>
                           @endeach
                       </tbody>

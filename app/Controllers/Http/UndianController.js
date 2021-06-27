@@ -197,6 +197,22 @@ class UndianController {
             filename: exportedFilename
         })
     }
+
+    async kunciUndian({request, response}) {
+        const params = request.get()
+
+        const undian = await Undian.findOrFail(params.id)
+        if (undian) {
+            undian.is_locked = true
+            await undian.save()
+        }
+
+        if (params.tipe == 'tanding') {
+            response.route("UndianController.tanding", {kategori: undian.kelas_id})
+        } else {
+            response.route("UndianController.seni", {kategori: undian.kategori_seni_id})
+        }       
+    }
 }
 
 module.exports = UndianController

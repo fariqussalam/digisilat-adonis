@@ -10,12 +10,11 @@
 }
 
 .undian-box-wrapper {
-    min-height: 200px;
+    min-height: 100px;
 }
 
 .undian-box {
     font-size:40px;
     margin-top:30px;
     margin-bottom:30px;
-    padding-top:80px
 }
