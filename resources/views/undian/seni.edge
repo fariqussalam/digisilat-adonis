@@ -36,7 +36,7 @@
                 <div class="card">
                     <div class="card-header">
                       <div class="float-end">
-                        @if(undian.is_locked == false)
+                      
                         <a href="{{ route('UndianController.kunciUndian') }}?tipe=seni&id={{undian.id}}" class="btn btn-danger">Kunci Undian</a>
                         <button class="btn btn-primary js-undian-undi"
                         data-kategori="{{ kategori }}"
@@ -45,7 +45,7 @@
                         data-url="{{ route('UndianController.undi') }}">
                         Undi
                         </button>
-                        @endif
+                        
                       </div>
                         <h5 class="card-title">Daftar Pesilat</h5>
                     </div>

@@ -382,9 +382,9 @@
       loadJSON(function(response) {
         var brackets = JSON.parse(response);
         var $bracketWrapper = $('.js-contoh-bagan');
-        for (var i = 2; i<=20;i++) {
+        for (var i = 2; i<=50;i++) {
           var bracketTemplate = "<div>" +
-              "<div class='row mb-1 mt-1 js-bracket-name'></div>" +
+              "<div class='row mb-1 mt-1 js-bracket-name' style='width:100%'></div>" +
               "<div class='js-bracket'></div>" +
               "</div>";
           var $template = $(bracketTemplate);

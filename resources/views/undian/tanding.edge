@@ -38,7 +38,6 @@
                             @if(undian)
                             <button class="btn btn-success js-undian-export-to-excel" data-undian="{{undian.id}}" data-url="{{route('UndianController.exportExcel')}}">Export To Excel</button>
                             @endif
-                            @if(undian.is_locked == false)
                             @if(undian)
                             <a href="{{ route('UndianController.kunciUndian') }}?tipe=tanding&id={{undian.id}}" class="btn btn-danger">Kunci Undian</a>
                             @endif
@@ -48,8 +47,7 @@
                             data-peserta-undian="{{ pesilatNamaList.join(',') }}"
                             data-url="{{ route('UndianController.undi') }}">
                                 Undi
-                            </button>
-                            @endif
+                            </button>                         
                           
                         </div>
                         <h5 class="card-title">Daftar Pesilat</h5>
