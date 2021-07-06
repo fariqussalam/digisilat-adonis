@@ -5,10 +5,12 @@ const PesertaUndian = use('App/Models/PesertaUndian')
 const Kelas = use('App/Models/Kelas')
 const PertandinganService = use('App/Services/PertandinganService')
 const Pertandingan = use('App/Models/Pertandingan')
+const TandingService = use('App/Services/TandingService')
 
 class JadwalTandingController {
   constructor() {
     this.pertandinganService = new PertandinganService
+    this.tandingService = new TandingService
   }
 
   async generateJadwal({ request, params, response }) {
@@ -23,42 +25,47 @@ class JadwalTandingController {
       tournament_id: tournament.id
     }).fetch().then((result) => result.toJSON())
 
-    for (let i = 0; i < kelasList.length; i++) {
-      const kelas = kelasList[i];
-      let undian = await Undian.query().where({
-        kelas_id: kelas.id,
-        tournament_id: tournament.id
-      }).first()
-
-      if (undian) {
-        let jsonUndian = undian.toJSON()
-        let pesertaUndian = await PesertaUndian.query().where({ undian_id: undian.id }).fetch().then(result => result.toJSON())
-        let undianMap = {}
-        for (let i = 0; i < pesertaUndian.length; i++) {
-          let peserta = pesertaUndian[i];
-          undianMap[peserta.pesilat_id] = peserta.nomor_undian;
+    try {
+      for (let i = 0; i < kelasList.length; i++) {
+        const kelas = kelasList[i];
+        let undian = await Undian.query().where({
+          kelas_id: kelas.id,
+          tournament_id: tournament.id
+        }).first()
+  
+        if (undian) {
+          let jsonUndian = undian.toJSON()
+          let pesertaUndian = await PesertaUndian.query().where({ undian_id: undian.id }).fetch().then(result => result.toJSON())
+          let undianMap = {}
+          for (let i = 0; i < pesertaUndian.length; i++) {
+            let peserta = pesertaUndian[i];
+            undianMap[peserta.pesilat_id] = peserta.nomor_undian;
+          }
+          jsonUndian.peserta = undianMap
+          jsonUndian.jumlahPeserta = _.size(pesertaUndian)
+          undianList.push(jsonUndian)
         }
-        jsonUndian.peserta = undianMap
-        jsonUndian.jumlahPeserta = _.size(pesertaUndian)
-        undianList.push(jsonUndian)
       }
+  
+      const resp = []
+  
+      for (let i = 0; i < undianList.length; i++) {
+        const undian = undianList[i]
+        const pertandinganList = await this.pertandinganService.generateJadwal({ undian: undian }, tournament)
+        resp.push({
+          undian,
+          pertandinganList
+        })
+      } 
+    } catch (error) {
+      return response.route('TournamentController.index')
     }
 
-    const resp = []
-
-    for (let i = 0; i < undianList.length; i++) {
-      const undian = undianList[i]
-      const pertandinganList = await this.pertandinganService.generateJadwal({ undian: undian }, tournament)
-      resp.push({
-        undian,
-        pertandinganList
-      })
-    }
-
-    response.json({ resp })
+    return response.route('JadwalTandingController.jadwalTanding')
   }
 
   async jadwalTanding({ request, view, response }) {
+    await this.tandingService.getInfoRonde(request.activeTournament.id)
     const params = request.only(['kelas'])
     const kelas = params.kelas
     const tournament_id = request.activeTournament.id

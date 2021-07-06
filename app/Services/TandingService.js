@@ -178,6 +178,21 @@ class TandingService {
         }
         return jurusTunggal
     }
+
+    async getInfoRonde(tournament_id) {
+        const rondeList = await Pertandingan.query().select('ronde').where({tournament_id}).orderBy('ronde', 'desc').distinct("ronde").fetch().then(r => r.toJSON())
+        if (!rondeList.length < 1) return null
+
+        var info = {}
+        if (rondeList.length >= 2) {
+            info.final = rondeList[0].ronde
+        }
+        if (rondeList.length >= 3) {
+            info.semiFinal = rondeList[1].ronde
+        }
+        info.kualifikasi = rondeList[rondeList.length - 1]
+        return info
+    }
 }
 
 module.exports = TandingService
