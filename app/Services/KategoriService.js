@@ -71,6 +71,18 @@ class KategoriService {
     const kategoriSeniList = await KategoriSeni.query().where({tournament_id}).fetch()
     return kategoriSeniList.rows
   }
+
+  async getKelasList(tournament_id) {
+    const kelasList = await Kelas.query().where({tournament_id}).fetch().then((res) => {
+      return res.toJSON()
+    })
+    return kelasList
+  }
+
+  async getKontingenList(tournament_id) {
+    const kontingenList = await Kontingen.query().where({tournament_id}).fetch().then(res => res.toJSON())
+    return kontingenList
+  }
 }
 
 module.exports = KategoriService

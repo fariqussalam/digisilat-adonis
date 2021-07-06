@@ -1,0 +1,51 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+  <div class="row mb-2 mb-xl-3">
+    <div class="col-auto d-none d-sm-block">
+      <h3>Formulir Peserta</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <form method="POST" action="{{ route('PesertaController.saveSeniGroup') }}">
+            {{ csrfField() }}
+            <input type="hidden" name="type" value="{{type}}" />
+            <div class="row mb-4">
+                <div class="mb-3 col-md-8">
+                    <label class="form-label" for="kontingen">Kontingen</label>
+                    <select class="form-control" name="kontingen">
+                      <option value="">Pilih Kontingen</option>
+                      @each(kontingen in kontingenList)
+                      <option value="{{kontingen.id}}">{{kontingen.nama}}</option>
+                      @endeach
+                    </select>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                  <label class="form-label" for="nama">Nama</label>
+                  <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="Nama Peserta" required>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="form-label" for="kelas">Kategori Seni</label>
+                    <select class="form-control" name="kategori">
+                      <option selected value="">Pilih Kategori</option>
+                      @each(kategori in kategoriList)
+                      <option value="{{kategori.id}}">{{kategori.nama}}</option>
+                      @endeach
+                    </select>
+                </div>
+            </div>
+          </form>
+          <button type="button" class="btn btn-sm btn-dark js-peserta-seni-add-group-item">Tambah</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary float-end js-peserta-add-group-submit">Simpan</button>
+    </div>
+  </div>
+</div>
+@endsection

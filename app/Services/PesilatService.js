@@ -1,6 +1,4 @@
 'use strict'
-const Undian = use('App/Models/Undian')
-const PesertaUndian = use('App/Models/PesertaUndian')
 const Kelas = use('App/Models/Kelas')
 const KategoriSeni = use('App/Models/KategoriSeni')
 const Pesilat = use('App/Models/Pesilat')
@@ -85,6 +83,24 @@ class PesilatService {
     pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id).then((result) => result.toJSON())
 
     return pesilat
+  }
+
+  async createPesilat({nama, kontingen_id, kelas_id, tournament_id}) {
+    const pesilat = new Pesilat()
+    pesilat.nama = nama
+    pesilat.kontingen_id = kontingen_id
+    pesilat.kelas_id = kelas_id
+    pesilat.tournament_id = tournament_id
+    await pesilat.save()
+  }
+
+  async createPesilatSeni({nama, kontingen_id, kategori_id, tournament_id}) {
+    const pesilat = new PesilatSeni()
+    pesilat.nama = nama
+    pesilat.kontingen_id = kontingen_id
+    pesilat.kategori_seni_id = kategori_id
+    pesilat.tournament_id = tournament_id
+    await pesilat.save()
   }
 }
 

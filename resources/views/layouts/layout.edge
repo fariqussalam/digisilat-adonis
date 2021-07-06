@@ -159,10 +159,12 @@
   {{ script('lib/jquery.bracket.min.js') }}
   {{ script('lib/underscore-min.js') }}
   {{ script('lib/socket.io.js') }}
+  {{ script('lib/mustache.min.js') }}
   {{ script('js/digisilat-admin.js') }}
   <script type="text/javascript">
     vex.defaultOptions.className = 'vex-theme-plain'
   </script>
+  @include('partials/mustache')
 </body>
 
 </html>

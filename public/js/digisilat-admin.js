@@ -206,12 +206,12 @@
       });
     }
 
-    $('.js-turnamen-activate').on('click', confirmActivate);
-    $('.js-turnamen-delete').on('click', confirmDelete);
-    $('.js-kategori-create').on('click', addKategori);
-    $('.js-kategori-edit').on('click', editKategori);
-    $('.js-kategori-delete').on('click', confirmDeleteKategori);
-    $('.js-peserta-delete').on('click', confirmDeletePeserta);
+    $(document).on('click', '.js-turnamen-activate', confirmActivate);
+    $(document).on('click', '.js-turnamen-delete', confirmDelete);
+    $(document).on('click', '.js-kategori-create', addKategori);
+    $(document).on('click', '.js-kategori-edit', editKategori);
+    $(document).on('click', '.js-kategori-delete', confirmDeleteKategori);
+    $(document).on('click', '.js-peserta-delete', confirmDeletePeserta);
 
     $('.js-tournament-change-image').click(function() {
       var $closestDiv = $(this).closest("div");
@@ -712,6 +712,31 @@
  */
  (function () {
   $(function () {
+
+  })
+})(jQuery);
+
+/**
+ * Tambah Peseta Massal
+ */
+ (function () {
+  $(function () {
+
+    $('.js-peserta-add-group-item').click(function() {
+      var template = $('#template-peserta-tanding-massal').html()
+      var rendered = Mustache.render(template)
+      $(this).closest('div').find('form').append(rendered);
+    })
+
+    $('.js-peserta-seni-add-group-item').click(function() {
+      var template = $('#template-peserta-seni-massal').html()
+      var rendered = Mustache.render(template)
+      $(this).closest('div').find('form').append(rendered);
+    })
+
+    $('.js-peserta-add-group-submit').click(function() {
+      $(this).closest('div').find('form').submit()
+    })
 
   })
 })(jQuery);

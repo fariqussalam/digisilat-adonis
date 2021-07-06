@@ -1,0 +1,35 @@
+<script id="template-peserta-tanding-massal" type="x-tmpl-mustache">
+    <div class="row">
+        <div class="mb-3 col-md-4">
+          <label class="form-label" for="nama">Nama</label>
+          <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="Nama Peserta" required>
+        </div>
+        <div class="mb-3 col-md-6">
+            <label class="form-label" for="kelas">Kelas</label>
+            <select class="form-control" name="kelas">
+              <option selected value="">Pilih Kelas</option>
+              @each(kelas in kelasList)
+              <option value="{{kelas.id}}">{{kelas.nama}}</option>
+              @endeach    
+            </select>
+        </div>
+    </div>
+</script>
+
+<script id="template-peserta-seni-massal" type="x-tmpl-mustache">
+  <div class="row">
+    <div class="mb-3 col-md-4">
+      <label class="form-label" for="nama">Nama</label>
+      <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="Nama Peserta" required>
+    </div>
+    <div class="mb-3 col-md-6">
+        <label class="form-label" for="kelas">Kategori Seni</label>
+        <select class="form-control" name="kategori">
+          <option selected value="">Pilih Kategori</option>
+          @each(kategori in kategoriList)
+          <option value="{{kategori.id}}">{{kategori.nama}}</option>
+          @endeach
+        </select>
+    </div>
+</div>
+</script>

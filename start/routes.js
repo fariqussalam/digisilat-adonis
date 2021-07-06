@@ -55,6 +55,10 @@ Route.get('peserta/edit/:type/:id', 'PesertaController.edit')
 Route.post('peserta/save/:type', 'PesertaController.save')
 Route.post('peserta/update/:type', 'PesertaController.update')
 Route.post('peserta/delete/:type', 'PesertaController.delete')
+Route.get('peserta/create-group/:type', 'PesertaController.createGroup')
+Route.post('peserta/save-group/:type', 'PesertaController.saveGroup')
+Route.get('peserta/create-group-seni', 'PesertaController.createSeniGroup')
+Route.post('peserta/save-group-seni', 'PesertaController.saveSeniGroup')
 
 /**
 * Undian

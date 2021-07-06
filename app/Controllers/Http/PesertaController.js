@@ -1,4 +1,5 @@
 'use strict'
+const _ = require('underscore')
 const Pesilat = use('App/Models/Pesilat')
 const PesilatSeni = use('App/Models/PesilatSeni')
 const Official = use('App/Models/Official')
@@ -170,7 +171,6 @@ class PesertaController {
     }
   }
 
-
   async delete({request, response}) {
 
     const params = request.only(['id', 'type'])
@@ -188,6 +188,99 @@ class PesertaController {
       await pesilat.delete()
       return response.route('PesertaController.official')
     }
+  }
+
+  async createGroup({request, params, view}) {
+    const tournament_id = request.activeTournament.id
+    const type = params.type
+    const kelasList = await this.kategoriService.getKelasList(tournament_id)
+    const kontingenList = await this.kategoriService.getKontingenList(tournament_id)
+
+    return view.render('peserta.create-group-tanding.edge', {
+      type,
+      kelasList,
+      kontingenList
+    })
+  }
+
+  async saveGroup({request, params, response}) {
+    const tournament_id = request.activeTournament.id
+    const type = params.type
+    const form = request.only(['kontingen', 'nama', 'kelas'])
+    const kontingen = await Kontingen.find(form.kontingen)
+    
+    if (!kontingen) {
+      response.route('PesertaController.createGroup', {type: type})
+    }
+
+    const pesertaList = []
+    const kelasParams = form.kelas
+    const namaParams = form.nama
+    _.each(namaParams, (nama, idx) => {
+      if (kelasParams[idx] != null) {
+        pesertaList.push({
+          nama: nama,
+          kelas_id: kelasParams[idx]
+        })
+      }
+    })
+
+    _.each(pesertaList, async (p) => {
+      await this.pesilatService.createPesilat({
+        nama: p.nama, 
+        kelas_id:p.kelas_id, 
+        kontingen_id: kontingen.id, 
+        tournament_id: tournament_id
+      })
+    })
+
+    response.route('PesertaController.tanding')
+  }
+
+  async createSeniGroup({request, params, view}) {
+    const tournament_id = request.activeTournament.id
+    const type = params.type
+    const kategoriList = await this.kategoriService.getKategoriListByType("SENI", tournament_id)
+    const kontingenList = await this.kategoriService.getKontingenList(tournament_id)
+
+    return view.render('peserta.create-group-seni.edge', {
+      type,
+      kategoriList,
+      kontingenList
+    })
+  }
+
+  async saveSeniGroup({request, response}) {
+    const tournament_id = request.activeTournament.id
+    const form = request.only(['kontingen', 'nama', 'kategori'])
+    const kontingen = await Kontingen.find(form.kontingen)
+    
+    if (!kontingen) {
+      response.route('PesertaController.createSeniGroup')
+    }
+
+    const pesertaList = []
+    const kategoriParams = form.kategori
+    const namaParams = form.nama
+    _.each(namaParams, (nama, idx) => {
+      if (kategoriParams[idx] != null) {
+        pesertaList.push({
+          nama: nama,
+          kategori_id: kategoriParams[idx]
+        })
+      }
+    })
+
+    _.each(pesertaList, async (p) => {
+      await this.pesilatService.createPesilatSeni({
+        nama: p.nama, 
+        kategori_id:p.kategori_id, 
+        kontingen_id: kontingen.id, 
+        tournament_id: tournament_id
+      })
+    })
+
+    response.route('PesertaController.seni')
   }
 
 }
