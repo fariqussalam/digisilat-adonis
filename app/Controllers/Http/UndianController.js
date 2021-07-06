@@ -208,9 +208,9 @@ class UndianController {
         }
 
         if (params.tipe == 'tanding') {
-            response.route("UndianController.tanding", {kategori: undian.kelas_id})
+            response.redirect('/undian/tanding?kelas=' + undian.kelas_id)
         } else {
-            response.route("UndianController.seni", {kategori: undian.kategori_seni_id})
+            response.redirect('/undian/seni?kategori=' + undian.kategori_seni_id)
         }       
     }
 }

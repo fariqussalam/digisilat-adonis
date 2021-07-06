@@ -54,8 +54,13 @@ class TournamentController {
 
     async delete({ request, response }) {
         const params = request.only(["id"])
-        await this.tournamentService.deleteTournament(params.id)
-
+       
+        try {
+            await this.tournamentService.deleteTournamentData(params.id)
+            await this.tournamentService.deleteTournament(params.id)
+        } catch (error) {
+            console.log(error)
+        }
         response.route('TournamentController.index')
     }
 
@@ -123,6 +128,17 @@ class TournamentController {
       
 
         return response.json({success: true})
+    }
+
+    async deleteData({request, response}) {
+        const params = request.only(['id'])
+
+        try {
+            await this.tournamentService.deleteTournamentData(params.id)
+            return response.json({success: true})
+        } catch (error) {
+            return response.json({success: false})    
+        }
     }
 
 }

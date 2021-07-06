@@ -24,6 +24,9 @@
                         @endeach
                       </select>
                     </div>
+                    @if(undian.is_locked == true)
+                    <label class="col-form-label col-sm-4"><b>Undian Dikunci</b></label>
+                    @endif
                   </div>
                 </form>
               </div>
@@ -36,7 +39,7 @@
                 <div class="card">
                     <div class="card-header">
                       <div class="float-end">
-                      
+                        @if(undian != null && undian.is_locked != true)
                         <a href="{{ route('UndianController.kunciUndian') }}?tipe=seni&id={{undian.id}}" class="btn btn-danger">Kunci Undian</a>
                         <button class="btn btn-primary js-undian-undi"
                         data-kategori="{{ kategori }}"
@@ -45,7 +48,7 @@
                         data-url="{{ route('UndianController.undi') }}">
                         Undi
                         </button>
-                        
+                        @endif
                       </div>
                         <h5 class="card-title">Daftar Pesilat</h5>
                     </div>

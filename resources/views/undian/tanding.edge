@@ -23,6 +23,9 @@
                           @endeach
                         </select>
                       </div>
+                      @if(undian.is_locked == true)
+                      <label class="col-form-label col-sm-4"><b>Undian Dikunci</b></label>
+                      @endif
                     </div>
                   </form>
                 </div>
@@ -38,17 +41,16 @@
                             @if(undian)
                             <button class="btn btn-success js-undian-export-to-excel" data-undian="{{undian.id}}" data-url="{{route('UndianController.exportExcel')}}">Export To Excel</button>
                             @endif
-                            @if(undian)
+                            @if(undian != null && undian.is_locked != true)
                             <a href="{{ route('UndianController.kunciUndian') }}?tipe=tanding&id={{undian.id}}" class="btn btn-danger">Kunci Undian</a>
-                            @endif
                             <button class="btn btn-primary js-undian-undi"
                             data-kategori="{{ kelas }}"
                             data-type="tanding"
                             data-peserta-undian="{{ pesilatNamaList.join(',') }}"
                             data-url="{{ route('UndianController.undi') }}">
                                 Undi
-                            </button>                         
-                          
+                            </button>               
+                            @endif
                         </div>
                         <h5 class="card-title">Daftar Pesilat</h5>
                     </div>

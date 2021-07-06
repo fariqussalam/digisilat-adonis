@@ -47,7 +47,9 @@
                     </td>
                     <td>
                       <a href="{{ route('TournamentController.edit', { id: tournament.id }) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+                      @if(tournament.is_active != true)
                       <button class="btn btn-sm btn-danger js-turnamen-delete" data-id="{{tournament.id}}" data-url={{ route('TournamentController.delete') }}><i class="fas fa-trash"></i></button>
+                      @endif
                     </td>
                 </tr>
               @endeach
