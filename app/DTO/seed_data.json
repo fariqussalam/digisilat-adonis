@@ -1,0 +1,229 @@
+{
+  "kontingen": [
+    "Aceh",
+    "Bali",
+    "Banten",
+    "Bengkulu",
+    "DKI Jakarta",
+    "DKI Yogyakarta",
+    "Gorontalo",
+    "Jambi",
+    "Jawa Barat",
+    "Jawa Tengah",
+    "Jawa Timur",
+    "Kalimantan Barat",
+    "Kalimantan Selatan",
+    "Kalimantan Tengah",
+    "Kalimantan Timur",
+    "Kalimantan Utara",
+    "Kepulauan Bangka Belitung",
+    "Kepulauan Riau",
+    "Lampung",
+    "Maluku",
+    "Maluku Utara",
+    "Nusa Tenggara Barat",
+    "Nusa Tenggara Timur",
+    "Papua",
+    "Papua Barat",
+    "Riau",
+    "Sulawesi Barat",
+    "Sulawesi Selatan",
+    "Sulawesi Tengah",
+    "Sulawesi Tenggara",
+    "Sulawesi Utara",
+    "Sumatera Barat",
+    "Sumatera Selatan",
+    "Sumatera Utara"
+  ],
+  "kelas": [
+    "A Putra",
+    "B Putra",
+    "C Putra",
+    "D Putra",
+    "E Putra",
+    "F Putra",
+    "G Putra",
+    "H Putra",
+    "I Putra",
+    "J Putra",
+    "K Putra",
+    "A Putri",
+    "B Putri",
+    "C Putri",
+    "D Putri",
+    "E Putri",
+    "F Putri",
+    "G Putri",
+    "H Putri",
+    "I Putri",
+    "J Putri",
+    "K Putri"
+  ],
+  "kategori_seni": [
+    "Tunggal Putra",
+    "Ganda Putra",
+    "Regu Putra",
+    "Tunggal Putri",
+    "Ganda Putri",
+    "Regu Putri"
+  ],
+  "peserta": [
+    {
+      "nama": "Okky Muharia",
+      "kelas": "A Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Akbar Riahdita",
+      "kelas": "A Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Sutrisno Zakia",
+      "kelas": "A Putra",
+      "kontingen": "Aceh"
+    },
+    {
+      "nama": "Fikri Syahrul",
+      "kelas": "A Putra",
+      "kontingen": "Jawa Barat"
+    },
+    {
+      "nama": "Okky Muharia 2",
+      "kelas": "A Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Akbar Riahdita 2",
+      "kelas": "A Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Sutrisno Zakia 2",
+      "kelas": "A Putra",
+      "kontingen": "Aceh"
+    },
+    {
+      "nama": "Fikri Syahrul 2",
+      "kelas": "A Putra",
+      "kontingen": "Jawa Barat"
+    },
+    {
+      "nama": "Surya Widian",
+      "kelas": "B Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Azrul Jaya",
+      "kelas": "B Putra",
+      "kontingen": "Aceh"
+    },
+    {
+      "nama": "Deka Junaidi",
+      "kelas": "B Putra",
+      "kontingen": "Jawa Barat"
+    },
+    {
+      "nama": "Ferhat Gibran",
+      "kelas": "B Putra",
+      "kontingen": "Jawa Tengah"
+    },
+    {
+      "nama": "Abdullah Hosea",
+      "kelas": "B Putra",
+      "kontingen": "Sumatera Utara"
+    }
+  ],
+  "peserta_seni": [
+    {
+      "nama": "Hafizh Anjani",
+      "kategori_seni": "Tunggal Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Hafizh Anjani 2",
+      "kategori_seni": "Tunggal Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Hafizh Anjani 3",
+      "kategori_seni": "Tunggal Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Hafizh Anjani 4",
+      "kategori_seni": "Tunggal Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Hafizh Anjani 5",
+      "kategori_seni": "Tunggal Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Hafizh Anjani 6",
+      "kategori_seni": "Tunggal Putra",
+      "kontingen": "Sulawesi Selatan"
+    },
+    {
+      "nama": "Farizi Hamada",
+      "kategori_seni": "Ganda Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Farizi Hamada 2",
+      "kategori_seni": "Ganda Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Farizi Hamada 3",
+      "kategori_seni": "Ganda Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Farizi Hamada 4",
+      "kategori_seni": "Ganda Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Farizi Hamada 5",
+      "kategori_seni": "Ganda Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Yusuf Wildani",
+      "kategori_seni": "Regu Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Yusuf Wildani 2",
+      "kategori_seni": "Regu Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Yusuf Wildani 3",
+      "kategori_seni": "Regu Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Yusuf Wildani 4",
+      "kategori_seni": "Regu Putra",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Dikposa Rahmawati",
+      "kategori_seni": "Tunggal Putri",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Radja Agustiana",
+      "kategori_seni": "Ganda Putri",
+      "kontingen": "DKI Jakarta"
+    },
+    {
+      "nama": "Aldi Kahfi",
+      "kategori_seni": "Regu Putri",
+      "kontingen": "DKI Jakarta"
+    }
+  ]
+}

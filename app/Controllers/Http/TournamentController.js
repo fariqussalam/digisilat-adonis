@@ -1,7 +1,15 @@
 'use strict'
+const _ = require('underscore')
+const Database = use('Database')
 const TournamentService = use('App/Services/TournamentService');
 const KategoriService = use('App/Services/KategoriService');
 const Tournament = use('App/Models/Tournament');
+const Kontingen = use('App/Models/Kontingen');
+const Kelas = use('App/Models/Kelas');
+const KategoriSeni = use('App/Models/KategoriSeni');
+const Pesilat = use('App/Models/Pesilat');
+const PesilatSeni = use('App/Models/PesilatSeni');
+const seed_data = use('App/DTO/seed_data.json');
 
 class TournamentController {
 
@@ -56,6 +64,65 @@ class TournamentController {
         await this.tournamentService.activateTournament(params.id)
 
         response.route('TournamentController.index')
+    }
+
+    async seed({request, params, response}) {
+        const tournament = await Tournament.find(params.id)
+        if (!tournament || !seed_data) {
+            return response.route('TournamentController.index')
+        }
+
+        const kontingenList = _.map(seed_data.kontingen, (kontingen) => {
+            return {tournament_id: tournament.id, nama: kontingen}
+        })
+        const kelasList = _.map(seed_data.kelas, (kelas) => {
+            return {tournament_id: tournament.id, nama: kelas}
+        })
+        const seniList = _.map(seed_data.kategori_seni, (kat) => {
+            return {tournament_id: tournament.id, nama: kat}
+        })
+
+     
+        const trx = await Database.beginTransaction()
+        try {
+            await Kontingen.createMany(kontingenList, trx)
+            await Kelas.createMany(kelasList, trx)
+            await KategoriSeni.createMany(seniList, trx)
+            trx.commit()
+    
+            _.each(seed_data.peserta, async (p) => {
+                const kontingen = await Kontingen.query().where({tournament_id: tournament.id, nama: p.kontingen}).first()
+                const kelas = await Kelas.query().where({tournament_id: tournament.id, nama: p.kelas}).first()
+                if (kontingen && kelas) {
+                    const pesilat = new Pesilat()
+                    pesilat.nama = p.nama
+                    pesilat.kelas_id = kelas.id
+                    pesilat.kontingen_id = kontingen.id
+                    pesilat.tournament_id = tournament.id
+                    await pesilat.save()
+                }            
+            })
+    
+            _.each(seed_data.peserta_seni, async (p) => {
+                const kontingen = await Kontingen.query().where({tournament_id: tournament.id, nama: p.kontingen}).first()
+                const kategori_seni = await KategoriSeni.query().where({tournament_id: tournament.id, nama: p.kategori_seni}).first()
+                if (kontingen && kategori_seni) {
+                    const pesilat = new PesilatSeni()
+                    pesilat.nama = p.nama
+                    pesilat.kategori_seni_id = kategori_seni.id
+                    pesilat.kontingen_id = kontingen.id
+                    pesilat.tournament_id = tournament.id
+                    await pesilat.save()
+                }            
+            })
+           
+        } catch (error) {
+            console.log("Error Seed", e)
+            trx.rollback()
+        }
+      
+
+        return response.json({success: true})
     }
 
 }

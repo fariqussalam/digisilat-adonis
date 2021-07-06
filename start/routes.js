@@ -29,6 +29,7 @@ Route.get('tournament/edit/:id', 'TournamentController.edit')
 Route.post('tournament/update', 'TournamentController.update')
 Route.post('tournament/delete', 'TournamentController.delete')
 Route.post('tournament/activate', 'TournamentController.activate')
+Route.get('tournament/seed/:id', 'TournamentController.seed')
 
 /**
  * Kategori
