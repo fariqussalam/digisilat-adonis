@@ -32,7 +32,7 @@
 
         function renderSkorAkhir(skor_akhir) {
             $('.js-tunggal-admin__display-nilai-total[data-juri="' + skor_akhir.juriTeratas.nomorJuri + '"]').text("JURI " + skor_akhir.juriTeratas.nomorJuri + " (TERTINGGI)")
-            $('.js-tunggal-admin__display-nilai-total[data-juri="' + skor_akhir.juriTerendah.nomorJuri + '"]').text("JURI " + skor_akhir.juriTerendah.nomorJuri + " (TERTINGGI)")
+            $('.js-tunggal-admin__display-nilai-total[data-juri="' + skor_akhir.juriTerendah.nomorJuri + '"]').text("JURI " + skor_akhir.juriTerendah.nomorJuri + " (TERENDAH)")
             $('.js-tunggal-admin__nilai-total[data-juri="' + skor_akhir.juriTeratas.nomorJuri + '"]').css("background-color", "red").css("color","white")
             $('.js-tunggal-admin__nilai-total[data-juri="' + skor_akhir.juriTerendah.nomorJuri + '"]').css("background-color", "blue").css("color","white")
             $(".js-tunggal-admin__total-nilai").text(skor_akhir.totalNilai);

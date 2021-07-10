@@ -1,23 +1,6 @@
+
 (function () {
     $(function () {
-        function hitungNilaiHukuman(nilaiHukuman) {
-            var total = 0;
-            $.each(nilaiHukuman, function(nama, jumlah) {
-                var nilai = nama === "w-10" ? 10 : 5;
-                var jumlahNilai = jumlah * nilai;
-                total += jumlahNilai;
-            })
-            return total;
-        }
-
-
-        var socket = io("/ganda");
-        socket.on('connect', function() {
-            socket.emit('koneksi', {name: "Ganda Juri"});
-        });
-        socket.on("doRefreshGanda", function(data) {
-            window.location.reload();
-        })
 
         var GandaState = {
             TEKNIK_SERANG_BELA: "teknik-serang-bela",
@@ -78,6 +61,80 @@
                 this.state = 1
             }
         }
+
+        var stateDis = 0;
+        var remot = new RemotGanda();
+        var juri = new JuriGanda(1);
+        var stateWaktu = new StateWaktu();
+
+        function NilaiHukuman(kategori) {
+            this.kategori = kategori;
+            if (kategori === "w-10") this.nilai = -10;
+            else this.nilai = -5;
+        }
+
+        var pertandinganId = $('input[name="pertandingan_id"]').val();
+        var state = new DigiSilat.Seni.State.Juri();
+        var socket = DigiSilat.createSocket("ganda", "Ganda Juri", pertandinganId)
+        socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
+
+        socket.on('data-pertandingan-seni', function(data) {
+            var nomorJuri = state.nomorJuri
+            var dataJuri = data.dewanJuri[nomorJuri];
+            if (!dataJuri) return false;
+
+            if (dataJuri.diskualifikasi) {
+                stateDis = 1;
+                $("#modalDis").modal();
+            }
+            renderPertandingan(dataJuri)
+        })
+
+        function renderPertandingan(juri) {
+            $('.js-ganda-juri__display-skor[data-tipe="teknik-serang-bela"]').text(juri.nilaiSerangBela);
+            $('.js-ganda-juri__display-skor[data-tipe="kekompakan"]').text(juri.nilaiKemantapan);
+            $('.js-ganda-juri__display-skor[data-tipe="penghayatan"]').text(juri.nilaiPenghayatan);
+            $('.js-ganda-juri__display-skor[data-tipe="total"]').text(getTotalNilai(juri));
+            renderHukuman(juri)
+        }
+        
+        function renderHukuman(juri) {
+
+            for (var jenisHukuman in juri.nilaiHukuman) {
+                var isHukumanWaktu = (jenisHukuman == 'w-10' || jenisHukuman == 'w-5') && (juri.nilaiHukuman[jenisHukuman] > 0);
+                if (isHukumanWaktu && !stateWaktu.isStateWaktu()) {
+                    stateWaktu.setStateWaktu();
+                    $('.js-ganda-juri__nilai-hukuman[data-hukuman="faktor-waktu"]').text(jenisHukuman);
+                } else {
+                    $('.js-ganda-juri__nilai-hukuman[data-hukuman="' + jenisHukuman + '"]').text(juri.nilaiHukuman[jenisHukuman]);
+                }
+            }
+           
+            $('.js-ganda-juri__display-skor[data-tipe="hukuman"]').text(-1 * getTotalNilaiHukuman(juri));
+        }
+
+        function getTotalNilai(juri) {
+            var totalNilaiHukuman = getTotalNilaiHukuman(juri)
+            var totalNilai = juri.nilaiSerangBela + juri.nilaiKemantapan + juri.nilaiPenghayatan - totalNilaiHukuman
+            return totalNilai
+        }
+
+        function getTotalNilaiHukuman(juri) {
+            var nilaiHukuman = hitungNilaiHukuman(juri.nilaiHukuman)
+            return nilaiHukuman;
+        }
+
+        function hitungNilaiHukuman(nilaiHukuman) {
+            var total = 0;
+            $.each(nilaiHukuman, function(nama, jumlah) {
+                var nilai = nama === "w-10" ? 10 : 5;
+                var jumlahNilai = jumlah * nilai;
+                total += jumlahNilai;
+            })
+            return total;
+        }
+
+       
         function highlightCurrentState(state) {
             $('.js-ganda-juri__display, .js-ganda-juri__display-skor').css({"background-color": "", "color": ""});
             var $displayColumn = $('.js-ganda-juri__display[data-tipe="' + state + '"] , .js-ganda-juri__display-skor[data-tipe="' + state + '"]')
@@ -87,21 +144,18 @@
             })
         }
 
-        var stateDis = 0;
-        var remot = new RemotGanda();
-        var juri = new JuriGanda(1);
-        var stateWaktu = new StateWaktu();
-
         $(document).ready(function() {
             $("#modalAwal").modal();
         });
 
         $('.js-ganda-juri__connect').click(function() {
             var nomorJuri = parseInt($(".js-ganda-juri__select-nomor-juri").val());
-            socket.emit('detilkoneksijuri', nomorJuri);
             $(".js-ganda-juri__nomor-juri").text(nomorJuri);
+            state.nomorJuri = nomorJuri
+            socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
             juri = new JuriGanda(nomorJuri);
         });
+
         $('.js-ganda-juri__set-state').click(function() {
             remot.currentState = $(this).data("state");
             highlightCurrentState(remot.currentState);
@@ -117,9 +171,7 @@
             } else {
                 $('.js-ganda-juri__nilai-hukuman[data-hukuman="' + kategori + '"]').text(juri.nilaiHukuman[kategori]);
             }
-            $('.js-ganda-juri__display-skor[data-tipe="hukuman"]').text(juri.totalNilaiHukuman());
-            $('.js-ganda-juri__display-skor[data-tipe="total"]').text(juri.totalNilai());
-            inputSkorHukuman(juri.nomorJuri, kategori);
+            inputSkorHukuman(juri.nomor, kategori);
         })
 
         $('.js-ganda-juri__input').click(function() {
@@ -140,7 +192,6 @@
             } else if (remot.currentState === GandaState.KEKOMPAKAN) {
                 juri.niaiKemantapan = skor;
             }
-            console.log(juri);
             $('.js-ganda-juri__display-skor[data-tipe="' + remot.currentState  + '"]').text(skor);
             $('.js-ganda-juri__display-skor[data-tipe="total"]').text(juri.totalNilai());
             inputSkor(remot.currentState, juri.nomor, skor)
@@ -155,32 +206,37 @@
             inputDis(juri.nomor);
             $("#modalDis").modal();
         });
+
         $('.js-ganda-juri__hapus-hukuman').click(function() {
             stateWaktu.state = 0;
             $('.js-ganda-juri__display-skor[data-tipe="hukuman"]').text(0);
             $('.js-ganda-juri__nilai-hukuman').text(0)
-            socket.emit('hapus_hukuman', juri.nomor);
+            socket.emit('hapus-skor-hukuman-ganda', { 
+                pertandinganId: pertandinganId,
+                nomorJuri: state.nomorJuri
+            });
         });
 
-        function getInputName(currentState) {
-            switch (currentState) {
-                case GandaState.TEKNIK_SERANG_BELA:
-                    return "inputSkorTSB"
-                case GandaState.KEKOMPAKAN:
-                    return 'inputSkorNKM'
-                case GandaState.PENGHAYATAN:
-                    return "inputSkorPGN"
-            }
+        function inputSkor(state, nomorJuri, nilai) {
+            socket.emit('input-skor-ganda', { 
+                pertandinganId: pertandinganId,
+                nomorJuri: nomorJuri,
+                nilai: nilai,
+                kategoriNilai: state
+            });
         }
-        function inputSkor(state, nJuri, nilai) {
-            var inputName = getInputName(state);
-            socket.emit(inputName, { nJuri: nJuri, nilai: nilai })
+        function inputSkorHukuman(nomorJuri, kategori) {
+            socket.emit('input-skor-hukuman-ganda', {
+                pertandinganId: pertandinganId,
+                nomorJuri: state.nomorJuri,
+                kategori: kategori
+            });
         }
-        function inputSkorHukuman(nJuri, nKategori) {
-            socket.emit('inputSkorHukuman', { nJuri: nJuri, nKategori: nKategori });
-        }
-        function inputDis(nJuri) {
-            socket.emit('inputDis', nJuri);
+        function inputDis(nomorJuri) {
+            socket.emit('set-diskualifikasi', { 
+                pertandinganId: pertandinganId,
+                nomorJuri: nomorJuri
+            });
         }
 
     })

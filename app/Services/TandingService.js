@@ -9,6 +9,9 @@ const Eliminasi = use('App/Models/Eliminasi')
 const PesilatService = use('App/Services/PesilatService')
 const Setting = use ('App/Models/Setting')
 
+const template_tunggal = use('App/DTO/pertandingan_seni.json')
+const template_ganda = use('App/DTO/pertandingan_ganda.json')
+
 class TandingService {
     constructor() {
         this.pesilatService = new PesilatService
@@ -140,18 +143,6 @@ class TandingService {
         return initDataSetup
     }
 
-    async getInitDataPertandinganSeni(pertandingan) {
-        var init_data = await Setting.query().where( { setting_type: 'TEMPLATE_SENI' } ).first()
-        const master_data = await this.pertandinganService.getMasterDataPertandinganSeni(pertandingan.toJSON())
-        const jsonPertandingan = JSON.parse(init_data.setting_value)
-        master_data.dewanJuri = jsonPertandingan.dewanJuri
-
-        for (var juri in master_data.dewanJuri) {
-            master_data.dewanJuri[juri].daftarNilai = this.nilaiTunggalTemplate()
-        }
-        return master_data
-    }
-
     async setupInitData(pertandingan, initData) {
         const jsonPertandingan = JSON.parse(initData)
         const masterData = await this.pertandinganService.getMasterDataPertandingan(pertandingan.toJSON())
@@ -163,20 +154,6 @@ class TandingService {
         jsonPertandingan.kelas = masterData.kelas
 
         return jsonPertandingan
-    }
-
-    nilaiTunggalTemplate() {
-        var daftarNilai = [
-            7, 6, 5, 7, 6, 8, 11, 7, 6, 12, 6, 5, 5, 9
-        ]
-        var jurusTunggal = []
-        for (var i = 0; i < daftarNilai.length; i++) {
-            jurusTunggal.push({
-                nomorJurus: i+1,
-                jumlahNilai: daftarNilai[i]
-            })
-        }
-        return jurusTunggal
     }
 
     async getInfoRonde(tournament_id) {

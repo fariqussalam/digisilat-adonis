@@ -18,7 +18,7 @@ class SeniService {
         if (!pertandingan) return null
 
         var data_pertandingan = JSON.parse(pertandingan.data_pertandingan)
-        const pesilat = await this.pesilatService.getPesilatSeni(id)
+        const pesilat = await this.pesilatService.getPesilatSeni(pertandingan.pesilat_seni_id)
         const kategori = await KategoriSeni.find(pertandingan.kategori_id).then(r => r.toJSON())
 
         data_pertandingan.pesilat = pesilat
@@ -37,6 +37,38 @@ class SeniService {
         await pertandingan.save()
 
         return true
+    }
+
+    async getInitDataPertandinganSeni(pertandingan) {
+        const tipeSeni = await this.pertandinganService.getTipeSeni(pertandingan.kategori_id)
+        var init_data
+        if (tipeSeni == 'tunggal') init_data = template_tunggal
+        else if (tipeSeni == 'ganda') init_data = template_ganda
+
+        const master_data = await this.pertandinganService.getMasterDataPertandinganSeni(pertandingan.toJSON())
+        master_data.dewanJuri = init_data.dewanJuri
+
+        if (tipeSeni == 'tunggal') {
+            for (var juri in master_data.dewanJuri) {
+                master_data.dewanJuri[juri].daftarNilai = this.nilaiTunggalTemplate()
+            }
+        }
+     
+        return master_data
+    }
+
+    nilaiTunggalTemplate() {
+        var daftarNilai = [
+            7, 6, 5, 7, 6, 8, 11, 7, 6, 12, 6, 5, 5, 9
+        ]
+        var jurusTunggal = []
+        for (var i = 0; i < daftarNilai.length; i++) {
+            jurusTunggal.push({
+                nomorJurus: i+1,
+                jumlahNilai: daftarNilai[i]
+            })
+        }
+        return jurusTunggal
     }
 
     async inputSkorPengurangan(pertandinganId, pertandinganData, nomorJuri, nilai) {
@@ -72,11 +104,52 @@ class SeniService {
         return await this.getPertandinganData(pertandinganId);
     }
 
-    async setPengumumanSkor(pertandinganId) {
+    async setPengumumanSkor(pertandinganId, type) {
+        if (type == 'tunggal') {
+            return await this.setPengumumanSkorTunggal(pertandinganId)
+        } else if (type == 'ganda') {
+            return await this.setPengumumanSkorGanda(pertandinganId)
+        } else if (type == 'regu') {
+            return await this.setPengumumanSkorRegu(pertandinganId)
+        }
+        return null
+    }
+
+    async setPengumumanSkorTunggal(pertandinganId, type) {
         var data_pertandingan = await this.getPertandinganData(pertandinganId)
         if (!data_pertandingan) return null
 
         var skor_seni = this.getSkorSeni(data_pertandingan)
+        data_pertandingan.skor_akhir = skor_seni
+        
+        await this.setPertandinganData(pertandinganId, data_pertandingan)
+        const pertandingan = await PertandinganSeni.find(pertandinganId)
+        pertandingan.skor_akhir = skor_seni.totalNilai
+        pertandingan.tanggal_pertandingan = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        await pertandingan.save()
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async setPengumumanSkorRegu(pertandinganId, type) {
+        var data_pertandingan = await this.getPertandinganData(pertandinganId)
+        if (!data_pertandingan) return null
+
+        var skor_seni = this.getSkorSeni(data_pertandingan)
+        data_pertandingan.skor_akhir = skor_seni
+        
+        await this.setPertandinganData(pertandinganId, data_pertandingan)
+        const pertandingan = await PertandinganSeni.find(pertandinganId)
+        pertandingan.skor_akhir = skor_seni.totalNilai
+        pertandingan.tanggal_pertandingan = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        await pertandingan.save()
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async setPengumumanSkorGanda(pertandinganId, type) {
+        var data_pertandingan = await this.getPertandinganData(pertandinganId)
+        if (!data_pertandingan) return null
+
+        var skor_seni = this.getSkorGanda(data_pertandingan)
         data_pertandingan.skor_akhir = skor_seni
         
         await this.setPertandinganData(pertandinganId, data_pertandingan)
@@ -187,6 +260,116 @@ class SeniService {
         var totalNilaiJurus = this.getTotalNilaiJurus(juri)
         var totalNilaiHukuman = this.getTotalNilaiHukuman(juri)
         return totalNilaiJurus + totalNilaiHukuman + juri.kemantapan
+    }
+
+    /*
+    Ganda
+     */
+    async inputSkorGanda(pertandinganId, pertandinganData, nomorJuri, nilai, kategoriNilai) {
+        if (kategoriNilai == 'teknik-serang-bela') {
+            pertandinganData.dewanJuri[nomorJuri].nilaiSerangBela = nilai
+        } else if (kategoriNilai == 'kekompakan') {
+            pertandinganData.dewanJuri[nomorJuri].nilaiKemantapan = nilai
+        } else if (kategoriNilai == 'penghayatan') {
+            pertandinganData.dewanJuri[nomorJuri].nilaiPenghayatan = nilai
+        }
+        
+        await this.setPertandinganData(pertandinganId, pertandinganData);
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async inputSkorHukumanGanda(pertandinganId, pertandinganData, nomorJuri, kategori) {
+        try {
+            pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[kategori] +=1
+            await this.setPertandinganData(pertandinganId, pertandinganData);
+        }catch(e){
+            console.log(e)
+        }
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    async hapusHukumanGanda(pertandinganId, pertandinganData, nomorJuri) {
+        try {
+            for (var jenisHukuman in pertandinganData.dewanJuri[nomorJuri].nilaiHukuman) {
+                pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[jenisHukuman] = 0
+            }
+            await this.setPertandinganData(pertandinganId, pertandinganData);
+        }catch(e){
+            console.log(e)
+        }
+        return await this.getPertandinganData(pertandinganId);
+    }
+
+    getSkorGanda(data_pertandingan) {
+        var dewanJuri = data_pertandingan.dewanJuri
+        var juriMax = this.getJuriMaxGanda(dewanJuri);
+        var juriMin = this.getJuriMinGanda(juriMax, dewanJuri);
+        var totalNilai = 0
+        for (var i = 1; i <= 5; i++) {
+            totalNilai += this.getTotalNilaiGanda(dewanJuri[i.toString()])
+        }
+        var nilaiTeratas = this.getTotalNilaiGanda(juriMax);
+        var nilaiTerendah = this.getTotalNilaiGanda(juriMin);
+        totalNilai = totalNilai - this.getTotalNilaiGanda(juriMax);
+        totalNilai = totalNilai - this.getTotalNilaiGanda(juriMin);
+
+        return {
+            juriTeratas: juriMax,
+            juriTerendah: juriMin,
+            totalNilai: totalNilai,
+            nilaiTeratas: nilaiTeratas,
+            nilaiTerendah: nilaiTerendah
+        }
+    }
+
+    getTotalNilaiGanda(juri) {
+        var totalNilaiHukuman = this.hitungNilaiHukuman(juri.nilaiHukuman)
+        return juri.nilaiSerangBela + juri.nilaiKemantapan + juri.nilaiPenghayatan - totalNilaiHukuman
+    }
+
+    hitungNilaiHukuman(nilaiHukuman) {
+        var total = 0;
+        _.each(nilaiHukuman, function(jumlah, nama) {
+            var nilai = nama === "w-10" ? 10 : 5;
+            var jumlahNilai = jumlah * nilai;
+            total += jumlahNilai;
+        })
+        return total;
+    }
+
+    getJuriMaxGanda(dewanJuri) {
+        var totalNilaiArray = []
+        for (var i = 1; i <= 5; i++) {
+            totalNilaiArray.push(this.getTotalNilaiGanda(dewanJuri[i.toString()]));
+        }
+        var totalNilai = this.getMaxOfArray(totalNilaiArray);
+        var juriMax;
+        for (var x = 1; x <= 5; x++) {
+            var nilai = this.getTotalNilaiGanda(dewanJuri[x.toString()]);
+            if (totalNilai === nilai) {
+                juriMax = dewanJuri[x.toString()];
+                return juriMax;
+            }
+        }
+    }
+
+    getJuriMinGanda(excluded, dewanJuri) {
+        var totalNilaiArray = []
+        for (var i = 1; i <= 5; i++) {
+            totalNilaiArray.push(this.getTotalNilaiGanda(dewanJuri[i.toString()]));
+        }
+        var totalNilai = this.getMinOfArray(totalNilaiArray);
+        var juriMin;
+        for (var x = 1; x <= 5; x++) {
+            var isExcluded = excluded != null && excluded.nomorJuri === dewanJuri[x.toString()].nomorJuri
+            if (!isExcluded) {
+                var nilai = this.getTotalNilaiGanda(dewanJuri[x.toString()]);
+                if (totalNilai === nilai) {
+                    juriMin = dewanJuri[x.toString()];
+                    return juriMin;
+                }
+            }
+        }
     }
 
   

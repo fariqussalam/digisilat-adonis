@@ -1,15 +1,15 @@
 'use strict'
 const _ = require('underscore')
 const s = require('underscore.string')
+const SeniService = use('App/Services/SeniService')
 const PertandinganService = use('App/Services/PertandinganService')
-const TandingService = use('App/Services/TandingService')
 const PertandinganSeni = use('App/Models/PertandinganSeni')
 const Halaman = use('App/Enums/SeniHalaman')
 
 class SeniController {
   constructor() {
     this.pertandinganService = new PertandinganService
-    this.tandingService = new TandingService
+    this.seniService = new SeniService
   }
 
   async pool({request, params, response, view}) {
@@ -64,7 +64,8 @@ class SeniController {
 
     //init data pertandingan
     if (pertandingan.data_pertandingan == null || s.isBlank(pertandingan.data_pertandingan)) {
-      let data_pertandingan = await this.tandingService.getInitDataPertandinganSeni(pertandingan)
+      let data_pertandingan = await this.seniService.getInitDataPertandinganSeni(pertandingan)
+      
       pertandingan.data_pertandingan = JSON.stringify(data_pertandingan)
       await pertandingan.save()
     }

@@ -1,6 +1,55 @@
 (function () {
     $(function () {
 
+        var $tabelMax = $('.js-ganda-display__tabel-max');
+        var $tabelMin = $('.js-ganda-display__tabel-min');
+        var $tabelTotal = $('.js-ganda-display__tabel-total');
+
+        
+        var pertandinganId = $('input[name="pertandingan_id"]').val();
+        var state = new DigiSilat.Seni.State.Display();
+        var socket = DigiSilat.createSocket("ganda", "Ganda Display", pertandinganId)
+
+        socket.on("connect", function() {
+            socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
+        });
+        socket.on('data-pertandingan-seni', function(data) {
+            console.log("Data Pertandingan Seni", data)
+            renderPertandingan(data)
+        })
+
+        function renderPertandingan(data) {
+            $('.daftar-nama-pesilat').text(data.pesilat.nama)
+            $('.kontingen').text(data.pesilat.kontingen.nama)
+            state.dewanJuri = data.dewanJuri
+            for (var nomorJuri in data.dewanJuri) {
+                var juri = data.dewanJuri[nomorJuri] 
+                if (juri.diskualifikasi) {
+                    renderDiskualifikasi(juri)
+                } else {
+                    $('.js-ganda-display__nilai[data-nilai="teknik-serang-bela"][data-juri="' + nomorJuri + '"]').text(juri.nilaiSerangBela);
+                    $('.js-ganda-display__nilai[data-nilai="kekompakan"][data-juri="' + nomorJuri + '"]').text(juri.nilaiKemantapan);
+                    $('.js-ganda-display__nilai[data-nilai="penghayatan"][data-juri="' + nomorJuri + '"]').text(juri.nilaiPenghayatan);
+                    $('.js-ganda-display__nilai-hukuman[data-juri="' + nomorJuri + '"]').text(getTotalNilaiHukuman(juri))
+                    $('.js-ganda-display__nilai-total[data-juri="' + nomorJuri + '"]').text(getTotalNilai(juri));
+                }
+            }
+            if (data.skor_akhir != null) {
+                renderSkorAkhir(data.skor_akhir)
+            }
+        }
+
+        function getTotalNilai(juri) {
+            var totalNilaiHukuman = hitungNilaiHukuman(juri.nilaiHukuman);
+            return juri.nilaiSerangBela + juri.nilaiKemantapan + juri.nilaiPenghayatan - totalNilaiHukuman;
+        }
+
+        function getTotalNilaiHukuman(juri) {
+            var total = hitungNilaiHukuman(juri.nilaiHukuman);
+            if (total === 0) return 0
+            else return "-" + total.toString()
+        }
+
         function hitungNilaiHukuman(nilaiHukuman) {
             var total = 0;
             $.each(nilaiHukuman, function(nama, jumlah) {
@@ -10,166 +59,75 @@
             })
             return total;
         }
-        function prosesNamaKategori(dataKategori) {
-            var namaKategori = "";
-            switch (dataKategori) {
-                case "W10":
-                    namaKategori = "w-10";
-                    break;
-                default:
-                    namaKategori = dataKategori;
-                    break;
-            }
-            return namaKategori;
+
+        function renderSkorAkhir(skor_akhir) {
+            $tabelMax.css("background-color", "blue").css("color","white")
+            $tabelMin.css("background-color", "red").css("color","white")
+            $tabelMax.find('.nomor-juri').text(skor_akhir.juriTeratas.nomorJuri);
+            $tabelMax.find('.skor').text(getTotalNilai(skor_akhir.juriTeratas));
+            $tabelMin.find('.nomor-juri').text(skor_akhir.juriTerendah.nomorJuri);
+            $tabelMin.find('.skor').text(getTotalNilai(skor_akhir.juriTerendah));
+            $tabelTotal.find('.skor').text(skor_akhir.totalNilai)
+            $tabelMax.show();
+            $tabelMin.show();
+            $tabelTotal.show();
+        }
+        
+        function renderDiskualifikasi(juri) {
+            var nomorJuri = juri.nomorJuri
+            var labelDiskualifikasi = "DIS"
+            $('.js-ganda-display__nilai[data-nilai="teknik-serang-bela"][data-juri="' + nomorJuri + '"]').text(labelDiskualifikasi);
+            $('.js-ganda-display__nilai[data-nilai="kekompakan"][data-juri="' + nomorJuri + '"]').text(labelDiskualifikasi);
+            $('.js-ganda-display__nilai[data-nilai="penghayatan"][data-juri="' + nomorJuri + '"]').text(labelDiskualifikasi);
+            $('.js-ganda-display__nilai-hukuman[data-juri="' + nomorJuri + '"]').text(labelDiskualifikasi)
+            $('.js-ganda-display__nilai-total[data-juri="' + nomorJuri + '"]').text(labelDiskualifikasi);
         }
 
-        function JuriGanda(nomor) {
-            this.name = nomor.toString();
-            this.nomor = nomor;
-            this.nilaiHukuman = {
-                "keluar-garis": 0,
-                "senjata-jatuh": 0,
-                "senjata-tidak-jatuh": 0,
-                "senjata-diluar-arena": 0,
-                "senjata-tidak-sesuai": 0,
-                "w-5": 0,
-                "w-10": 0
-            };
-            this.nilaiSerangBela = 0;
-            this.niaiKemantapan = 0;
-            this.nilaiPenghayatan = 0;
-            this.tambahHukuman = function(namaKategori) {
-                this.nilaiHukuman[namaKategori] += 1;
-            };
-            this.hapusHukuman = function() {
-                for (var jenisHukuman in this.nilaiHukuman) {
-                    this.nilaiHukuman[jenisHukuman] = 0;
-                }
-            };
-            this.totalNilaiHukuman = function() {
-                var total = hitungNilaiHukuman(this.nilaiHukuman);
-                if (total === 0) return 0
-                else return "-" + total.toString()
-            };
-            this.totalNilai = function() {
-                var totalNilaiHukuman = hitungNilaiHukuman(this.nilaiHukuman);
-                return this.nilaiSerangBela + this.niaiKemantapan + this.nilaiPenghayatan - totalNilaiHukuman;
-            };
-        }
-
-        function DewanJuri(jumlah) {
-            var instance = this
-            for (var i = 1; i <= jumlah; i++) {
-                instance[i] = new JuriGanda(i)
-            }
-        }
-
-        var dewanJuri = new DewanJuri(5);
-
-        function getNomorJuriTertinggiDanTerendah() {
-            var listNilaiTotal = [];
-            $.each(dewanJuri, function(nomorJuri, juri) {
-                listNilaiTotal.push(juri.totalNilai());
-            })
-            var nilaiTertinggi = Math.max(...listNilaiTotal);
-            var nilaiTerendah = Math.min(...listNilaiTotal);
-            var nomorJuriTertinggi, nomorJuriTerendah;
-            for (var nomorJuri in daftarJuri) {
-                if (dewanJuri[nomorJuri].totalNilai() === nilaiTertinggi) {
-                    nomorJuriTertinggi = nomorJuri;
-                    break;
-                }
-            }
-            for (var i in daftarJuri) {
-                if (daftarJuri[i].totalNilai() === nilaiTerendah && i !== nomorJuriTertinggi) {
-                    nomorJuriTerendah = i;
-                    break;
-                }
-            }
-            return {
-                tertinggi: nomorJuriTertinggi,
-                terendah: nomorJuriTerendah
-            };
-        }
         $(document).ready(function() {
             $(".js-ganda-display__tabel-max").hide();
             $(".js-ganda-display__tabel-min").hide();
             $(".js-ganda-display__tabel-total").hide();
         });
 
-        var socket = io('/ganda');
-        socket.on('connect', function() {
-            socket.emit('koneksi', { name: "Display Ganda" });
+        function resetCountdown() {
+            state.countdown = 0
+        }
+        var $clock = $('.js-timer-clock');
+        var timer = new easytimer.Timer({precision:"secondTenths", countdown: false})
+        timer.addEventListener('secondTenthsUpdated', function (e) {
+            state.countdown = timer.getTotalTimeValues().seconds;
+            $clock.html(timer.getTimeValues().toString().substring(3));
         });
-        socket.on('display_pengumuman', function() {
-            var hasil = getNomorJuriTertinggiDanTerendah();
-            var nilaiFinal = 0;
-            for (var nomorJuri in dewanJuri) {
-                nilaiFinal += daftarJuri[nomorJuri].totalNilai();
-            }
-            nilaiFinal -= daftarJuri[hasil.tertinggi].totalNilai();
-            nilaiFinal -= daftarJuri[hasil.terendah].totalNilai();
-            $('.js-ganda-display__tabel-max.nomor-juri').text(hasil.tertinggi);
-            $('.js-ganda-display__tabel-max.skor').text(dewanJuri[hasil.tertinggi].totalNilai());
-            $('.js-ganda-display__tabel-min.nomor-juri').text(hasil.terendah);
-            $('.js-ganda-display__tabel-min.skor').text(dewanJuri[hasil.terendah].totalNilai());
-            $('.js-ganda-display__tabel-total.skor').text(nilaiFinal);
-            $(".js-ganda-display__tabel-max").show();
-            $(".js-ganda-display__tabel-min").show();
-            $(".js-ganda-display__tabel-total").show();
+        timer.addEventListener('started', function (e) {
+            $clock.html(timer.getTimeValues().toString().substring(3));
         });
-        socket.on('display_inputSkorTSB', function(data) {
-            dewanJuri[data.nJuri].nilaiSerangBela = data.nilai;
-            $('.js-ganda-display__nilai[data-nilai="teknik-serang-bela"][data-juri="' + data.nJuri + '"]').text(data.nilai);
-            $('.js-ganda-display__nilai-total[data-juri="' + data.nJuri + '"]').text(dewanJuri[data.nJuri].totalNilai());
+        timer.addEventListener('reset', function (e) {
+            $clock.html(timer.getTimeValues().toString().substring(3));
         });
-        socket.on('display_inputSkorNKM', function(data) {
-            dewanJuri[data.nJuri].niaiKemantapan = data.nilai;
-            $('.js-ganda-display__nilai[data-nilai="kekompakan"][data-juri="' + data.nJuri + '"]').text(data.nilai);
-            $('.js-ganda-display__nilai-total[data-juri="' + data.nJuri + '"]').text(dewanJuri[data.nJuri].totalNilai());
-        });
-        socket.on('display_inputSkorPGN', function(data) {
-            dewanJuri[data.nJuri].nilaiPenghayatan = data.nilai;
-            $('.js-ganda-display__nilai[data-nilai="penghayatan"][data-juri="' + data.nJuri + '"]').text(data.nilai);
-            $('.js-ganda-display__nilai-total[data-juri="' + data.nJuri + '"]').text(dewanJuri[data.nJuri].totalNilai());
-        });
-        socket.on('display_hapusHukuman', function(data) {
-            dewanJuri[data.nJuri].hapusHukuman();
-            $('.js-ganda-display__nilai-hukuman[data-juri="' + data.nJuri + '"]').text(0);
-            $('.js-ganda-display__nilai-total[data-juri="' + data.nJuri + '"]').text(dewanJuri[data.nJuri].totalNilai());
-        });
-        socket.on('display_inputSkorHukuman', function(data) {
-            var namaKategori = prosesNamaKategori(data.nKategori);
-            dewanJuri[data.nJuri].tambahHukuman(namaKategori);
-            $('.js-ganda-display__nilai-hukuman[data-juri="' + data.nJuri + '"]').text(dewanJuri[data.nJuri].totalNilaiHukuman());
-            $('.js-ganda-display__nilai-total[data-juri="' + data.nJuri + '"]').text(dewanJuri[data.nJuri].totalNilai());
-        });
-        socket.on('display_inputDis', function(data) {
-            $('.js-ganda-display__nilai[data-juri="' + data + '"]').text("DIS");
-            $('.js-ganda-display__nilai-hukuman[data-juri="' + data + '"]').text("DIS");
-            $('.js-ganda-display__nilai-total[data-juri="' + data + '"]').text("DIS");
-        });
-        socket.on('display_ControlTimer', function(data) {
-            switch (data) {
-                case "start":
-                    clock.start();
-                    break;
-                case "stop":
-                    clock.stop();
-                    break;
-                case "reset":
-                    clock.reset();
-                    break;
+
+        socket.on('timer-command', function(data) {
+            if (data.command == 'start') {
+                timer.start({startValues: {seconds: state.countdown}});
+            } else if (data.command == 'stop') {
+                var waktu = parseInt(data.countdown);
+                state.countdown = waktu
+                timer.stop();
+                timer.start({startValues: {seconds: state.countdown}});
+                timer.stop();
+            } else if (data.command == 'reset') {
+                resetCountdown();
+                timer.stop();
+                timer.start({startValues: {seconds: state.countdown}});
+                timer.stop();
+            } else if (data.command == 'set') {
+                var waktu = parseInt(data.countdown);
+                resetCountdown();
+                state.countdown = waktu
+                timer.start({startValues: {seconds: state.countdown}});
+                timer.stop();
+                state.countdown = waktu
             }
         });
-        socket.on("doRefreshGanda", function(data) {
-            window.location.reload();
-        })
-        socket.on('dataPenampil', function(penampil) {
-            $('.pool').text(penampil.pool + " / " + penampil.nomor);
-            $('.kontingen').text(penampil.kontingen);
-            $('.pesilat-1').text(penampil.pesilat[0].nama);
-            $('.pesilat-2').text(penampil.pesilat[1].nama);
-        });
+        
     })
 })(jQuery);

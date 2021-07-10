@@ -1,0 +1,95 @@
+{
+    "id": 1,
+    "kategori": {},
+    "pesilat": {},
+    "dewanJuri":
+    {
+        "1":
+        {
+            "nama": "",
+            "nomorJuri": 1,
+            "nilaiHukuman": {
+                "keluar-garis": 0,
+                "senjata-jatuh": 0,
+                "senjata-tidak-jatuh": 0,
+                "senjata-diluar-arena": 0,
+                "senjata-tidak-sesuai": 0,
+                "w-5": 0,
+                "w-10": 0
+            },
+            "nilaiSerangBela": 0,
+            "nilaiKemantapan": 0,
+            "nilaiPenghayatan": 0
+        },
+        "2":
+        {
+            "nama": "",
+            "nomorJuri": 2,
+            "nilaiHukuman": {
+                "keluar-garis": 0,
+                "senjata-jatuh": 0,
+                "senjata-tidak-jatuh": 0,
+                "senjata-diluar-arena": 0,
+                "senjata-tidak-sesuai": 0,
+                "w-5": 0,
+                "w-10": 0
+            },
+            "nilaiSerangBela": 0,
+            "nilaiKemantapan": 0,
+            "nilaiPenghayatan": 0
+        },
+        "3":
+        {
+            "nama": "",
+            "nomorJuri": 3,
+            "nilaiHukuman": {
+                "keluar-garis": 0,
+                "senjata-jatuh": 0,
+                "senjata-tidak-jatuh": 0,
+                "senjata-diluar-arena": 0,
+                "senjata-tidak-sesuai": 0,
+                "w-5": 0,
+                "w-10": 0
+            },
+            "nilaiSerangBela": 0,
+            "nilaiKemantapan": 0,
+            "nilaiPenghayatan": 0
+        },
+       "4":
+        {
+            "nama": "",
+            "nomorJuri": 4,
+            "nilaiHukuman": {
+                "keluar-garis": 0,
+                "senjata-jatuh": 0,
+                "senjata-tidak-jatuh": 0,
+                "senjata-diluar-arena": 0,
+                "senjata-tidak-sesuai": 0,
+                "w-5": 0,
+                "w-10": 0
+            },
+            "nilaiSerangBela": 0,
+            "nilaiKemantapan": 0,
+            "nilaiPenghayatan": 0
+        },
+        "5":
+        {
+            "nama": "",
+            "nomorJuri": 5,
+            "nilaiHukuman": {
+                "keluar-garis": 0,
+                "senjata-jatuh": 0,
+                "senjata-tidak-jatuh": 0,
+                "senjata-diluar-arena": 0,
+                "senjata-tidak-sesuai": 0,
+                "w-5": 0,
+                "w-10": 0
+            },
+            "nilaiSerangBela": 0,
+            "nilaiKemantapan": 0,
+            "nilaiPenghayatan": 0
+        }
+    },
+    "nomor_pool": "1",
+    "nomor_penampil": "1"
+}

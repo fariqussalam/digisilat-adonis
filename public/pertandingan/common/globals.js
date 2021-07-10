@@ -204,6 +204,7 @@
 
     function setSeniEvent(socket, pertandinganId) {
         $('.js-seni-pengumuman-skor').click(function() {
+            console.log("pegumuman skor")
             socket.emit("seni-pengumuman-skor", {pertandinganId: pertandinganId})
         })
     }

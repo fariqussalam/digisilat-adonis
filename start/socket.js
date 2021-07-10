@@ -99,9 +99,37 @@ io.on('connection', async function(socket){
     })
 
     socket.on("seni-pengumuman-skor", async function(data) {
-        var latestData = await seniService.setPengumumanSkor(data.pertandinganId);
+        var latestData = await seniService.setPengumumanSkor(data.pertandinganId, query.type);
         if (!latestData) return false;
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
+
+    /**
+     * Ganda
+     */
+     socket.on('input-skor-ganda', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.inputSkorGanda(data.pertandinganId, pertandingan_data, data.nomorJuri, data.nilai, data.kategoriNilai);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
+    socket.on('input-skor-hukuman-ganda', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.inputSkorHukumanGanda(data.pertandinganId, pertandingan_data, data.nomorJuri, data.kategori);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
+    socket.on('hapus-skor-hukuman-ganda', async function(data) {
+        var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
+        if (!pertandingan_data) return false;
+        var latestData = await seniService.hapusHukumanGanda(data.pertandinganId, pertandingan_data, data.nomorJuri);
+        if (!latestData) return false;
+        io.to(room).emit('data-pertandingan-seni', latestData);
+    })
+
 
 });
