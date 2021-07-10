@@ -382,7 +382,7 @@ class PertandinganService {
 
     if (kategori.jenis == 'TUNGGAL') tipeSeni = "tunggal"
     else if (kategori.jenis == 'GANDA') tipeSeni = "ganda"
-    else if (kategori.jenis == 'REGU') tipe = 'regu'
+    else if (kategori.jenis == 'REGU') tipeSeni = 'regu'
 
     return tipeSeni
   }

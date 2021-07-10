@@ -1,0 +1,55 @@
+{
+    "id": 1,
+    "kategori": {},
+    "pesilat": {},
+    "dewanJuri":
+    {
+        "1":
+        {
+            "nama": "",
+            "nomorJuri": 1,
+            "daftarNilai": [],
+            "pengurangan": [],
+            "hukuman": [],
+            "kemantapan": 0
+        },
+        "2":
+        {
+            "nama": "",
+            "nomorJuri": 2,
+            "daftarNilai": [],
+            "pengurangan": [],
+            "hukuman": [],
+            "kemantapan": 0
+        },
+        "3":
+        {
+            "nama": "",
+            "nomorJuri": 3,
+            "daftarNilai": [],
+            "pengurangan": [],
+            "hukuman": [],
+            "kemantapan": 0
+        },
+       "4":
+        {
+            "nama": "",
+            "nomorJuri": 4,
+            "daftarNilai": [],
+            "pengurangan": [],
+            "hukuman": [],
+            "kemantapan": 0
+        },
+        "5":
+        {
+            "nama": "",
+            "nomorJuri": 5,
+            "daftarNilai": [],
+            "pengurangan": [],
+            "hukuman": [],
+            "kemantapan": 0
+        }
+    },
+    "nomor_pool": "1",
+    "nomor_penampil": "1"
+}

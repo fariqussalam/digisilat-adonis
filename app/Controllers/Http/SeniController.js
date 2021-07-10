@@ -62,7 +62,6 @@ class SeniController {
       await pertandingan.save()
     }
 
-    //init data pertandingan
     if (pertandingan.data_pertandingan == null || s.isBlank(pertandingan.data_pertandingan)) {
       let data_pertandingan = await this.seniService.getInitDataPertandinganSeni(pertandingan)
       

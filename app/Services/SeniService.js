@@ -7,6 +7,10 @@ const PesilatService = use('App/Services/PesilatService')
 const PertandinganSeni = use('App/Models/PertandinganSeni')
 const moment = require('moment')
 
+const template_tunggal = use('App/DTO/pertandingan_seni.json')
+const template_ganda = use('App/DTO/pertandingan_ganda.json')
+const template_regu = use('App/DTO/pertandingan_regu.json')
+
 class SeniService {
     constructor() {
         this.pesilatService = new PesilatService
@@ -44,6 +48,7 @@ class SeniService {
         var init_data
         if (tipeSeni == 'tunggal') init_data = template_tunggal
         else if (tipeSeni == 'ganda') init_data = template_ganda
+        else if (tipeSeni == 'regu') init_data = template_regu
 
         const master_data = await this.pertandinganService.getMasterDataPertandinganSeni(pertandingan.toJSON())
         master_data.dewanJuri = init_data.dewanJuri
@@ -53,6 +58,12 @@ class SeniService {
                 master_data.dewanJuri[juri].daftarNilai = this.nilaiTunggalTemplate()
             }
         }
+
+        if (tipeSeni == 'regu') {
+            for (var juri in master_data.dewanJuri) {
+                master_data.dewanJuri[juri].daftarNilai = this.nilaiReguTemplate()
+            }
+        }
      
         return master_data
     }
@@ -60,6 +71,20 @@ class SeniService {
     nilaiTunggalTemplate() {
         var daftarNilai = [
             7, 6, 5, 7, 6, 8, 11, 7, 6, 12, 6, 5, 5, 9
+        ]
+        var jurusTunggal = []
+        for (var i = 0; i < daftarNilai.length; i++) {
+            jurusTunggal.push({
+                nomorJurus: i+1,
+                jumlahNilai: daftarNilai[i]
+            })
+        }
+        return jurusTunggal
+    }
+
+    nilaiReguTemplate() {
+        var daftarNilai = [
+            9, 9, 10, 9, 7, 8, 9, 11, 9, 4, 8, 7
         ]
         var jurusTunggal = []
         for (var i = 0; i < daftarNilai.length; i++) {
