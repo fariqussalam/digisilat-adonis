@@ -88,6 +88,8 @@ Route.post('pertandingan/jadwal/update-pool', 'JadwalSeniController.updatePool')
 Route.post('pertandingan/jadwal/update-partai-seni', 'JadwalSeniController.updatePartaiSeni')
 Route.get('pertandingan/jadwal/reset-gelanggang', 'JadwalSeniController.resetGelanggang')
 Route.get('pertandingan/jadwal/reset-pool', 'JadwalSeniController.resetPool')
+Route.get('pertandingan/cetak-jadwal/pool/:nomor_pool', 'JadwalSeniController.cetakJadwal')
+Route.get('pertandingan/lihat-jadwal/pool/:nomor_pool', 'JadwalSeniController.lihatJadwal')
 
 /**
 * Tanding

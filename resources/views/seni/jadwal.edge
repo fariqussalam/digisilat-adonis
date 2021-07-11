@@ -1,0 +1,32 @@
+@layout('layouts/pertandingan')
+@section('content')
+<div class="container" id="container">
+    <div id="printed" class="printed-container-15" style="background-color:white;margin-left:10px;">
+        <div class="row" style=" word-wrap: break-word;overflow-wrap: break-word;width: 100%;margin-top:10px;margin-bottom:30px">
+            <h5 style="margin-left:30px;">Pool {{ nomor_pool }}</h5>
+            <table class="table table-bordered" style="font-size:10px;table-layout: fixed;width: 100%;">
+                <thead>
+                <tr class="text-center f-13">
+                  <th>Kategori</th>
+                   <th>Nama</th>
+                   <th>Kontingen</th>
+                   <th>Nomor Penampil</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @each(pertandingan in pertandinganList)
+                    <tr class="f-13">
+                        <td>{{pertandingan.kategori}}</td>
+                        <td>{{pertandingan.pesilat}}</td>
+                        <td>{{pertandingan.kontingen}}</td>
+                        <td>{{pertandingan.nomor_penampil}}</td>
+                     </tr>
+                    @endeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+@endsection

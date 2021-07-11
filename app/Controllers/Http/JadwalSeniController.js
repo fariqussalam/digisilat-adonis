@@ -7,6 +7,8 @@ const PertandinganService = use('App/Services/PertandinganService')
 const PertandinganSeni = use('App/Models/PertandinganSeni')
 const PertandinganStatus = use('App/Enums/PertandinganStatus')
 const Tournament = use('App/Models/Tournament')
+const fs = require('fs')
+const TemplateHandler = require('easy-template-x').TemplateHandler
 
 class JadwalSeniController {
   constructor () {
@@ -126,6 +128,63 @@ class JadwalSeniController {
       .where({ tournament_id: tournament.id })
       .update({ nomor_pool: null })
     return response.route('JadwalSeniController.jadwalSeni')
+  }
+
+  async cetakJadwal({ request, params, response}) {
+    const param = request.only(['kategori'])
+    const pertandinganList = await this.pertandinganService.getPertandinganSeniList(
+      {kategori: param.kategori, nomor_pool: params.nomor_pool},
+      request.activeTournament.id
+    )
+
+    let orderedList = _.map(pertandinganList, (p) => {
+      return {
+        id: p.id,
+        kategori: p.kategori.nama,
+        kontingen: p.kontingen.nama,
+        nomor_penampil: p.nomor_penampil,
+        pesilat: p.pesilat.nama,
+        kategori_id: p.kategori.id
+      }
+    })
+    orderedList = _.sortBy(orderedList, 'nomor_penampil')
+    orderedList = _.sortBy(orderedList, 'kategori_id')
+
+    const templateFile = fs.readFileSync('templates/template-pool-list.docx');
+    const handler = new TemplateHandler();
+    const doc = await handler.process(templateFile, {
+      nomor_pool: params.nomor_pool,
+      pertandinganList: orderedList
+    });
+    
+    response.response.setHeader('Content-disposition', 'attachment; filename=' + 'pool-' + params.nomor_pool + '.docx');
+    response.type('application/octet-stream')
+    response.send(doc)
+  }
+
+  async lihatJadwal({ request, params, view, response}) {
+    const pertandinganList = await this.pertandinganService.getPertandinganSeniList(
+      {nomor_pool: params.nomor_pool},
+      request.activeTournament.id
+    )
+
+    let orderedList = _.map(pertandinganList, (p) => {
+      return {
+        id: p.id,
+        kategori: p.kategori.nama,
+        kontingen: p.kontingen.nama,
+        nomor_penampil: p.nomor_penampil,
+        pesilat: p.pesilat.nama,
+        kategori_id: p.kategori.id
+      }
+    })
+    orderedList = _.sortBy(orderedList, 'nomor_penampil')
+    orderedList = _.sortBy(orderedList, 'kategori_id')
+    return view.render('seni.jadwal', {
+      nomor_pool: params.nomor_pool,
+      pertandinganList: orderedList
+    })
+
   }
 }
 

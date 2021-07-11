@@ -102,6 +102,9 @@
         <a href="{{ route('SeniController.pool', {nomor_pool: nomorPool}) }}" class="mb-1 btn btn-sm btn-success">
           Luncurkan Pool
         </a>
+        <a href="{{ route('JadwalSeniController.cetakJadwal', {nomor_pool: nomorPool}) }}?kategori={{kategori}}" class="mb-1 btn btn-sm btn-info">
+          Cetak Jadwal
+        </a>
       </div>
       <div class="card-body">
         <table class="table table-striped datatables-kategori" style="width:100%">
