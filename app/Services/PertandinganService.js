@@ -87,15 +87,23 @@ class PertandinganService {
 
   async getPertandinganSeniList({kategori, nomor_pool}, tournament_id) {
     const queryParams = {tournament_id}
-    if (kategori != "all" && kategori != null) {
+    if (kategori != "all" && kategori != null && kategori != '') {
       queryParams.kategori_id = kategori
     }
-    if (nomor_pool) {
+    if (nomor_pool && nomor_pool != "not_null") {
       queryParams.nomor_pool = nomor_pool
     }
 
     const responseList = []
-    const pertandinganList = await PertandinganSeni.query().where(queryParams).fetch().then((result) => result.toJSON())
+
+    let pertandinganList;
+    if (nomor_pool === "not_null") {
+      pertandinganList = await PertandinganSeni.query().where(queryParams).whereNotNull("nomor_pool").fetch().then((result) => result.toJSON())
+    } else {
+      pertandinganList = await PertandinganSeni.query().where(queryParams).fetch().then((result) => result.toJSON())
+    }
+    
+    
     for (const pertandingan of pertandinganList) {
       const resp = await this.prosesPertandinganSeni(pertandingan)
       if (resp) {

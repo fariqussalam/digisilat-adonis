@@ -162,6 +162,39 @@ class JadwalSeniController {
     response.send(doc)
   }
 
+  async cetakSemuaJadwal({ request, params, response}) {
+    const param = request.only(['kategori'])
+    const pertandinganList = await this.pertandinganService.getPertandinganSeniList(
+      {kategori: param.kategori, nomor_pool: "not_null"},
+      request.activeTournament.id
+    )
+
+    let orderedList = _.map(pertandinganList, (p) => {
+      return {
+        id: p.id,
+        kategori: p.kategori.nama,
+        kontingen: p.kontingen.nama,
+        nomor_penampil: p.nomor_penampil,
+        pesilat: p.pesilat.nama,
+        kategori_id: p.kategori.id,
+        nomor_pool: p.nomor_pool
+      }
+    })
+    orderedList = _.sortBy(orderedList, 'nomor_penampil')
+    orderedList = _.sortBy(orderedList, 'nomor_pool')
+    orderedList = _.sortBy(orderedList, 'kategori_id')
+
+    const templateFile = fs.readFileSync('templates/template-pool-list-all.docx');
+    const handler = new TemplateHandler();
+    const doc = await handler.process(templateFile, {
+      pertandinganList: orderedList
+    });
+    
+    response.response.setHeader('Content-disposition', 'attachment; filename=' + 'jadwal-seni.docx');
+    response.type('application/octet-stream')
+    response.send(doc)
+  }
+
   async lihatJadwal({ request, params, view, response}) {
     const pertandinganList = await this.pertandinganService.getPertandinganSeniList(
       {nomor_pool: params.nomor_pool},

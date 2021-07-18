@@ -45,7 +45,8 @@
             $('.js-tanding-display-poin-biru').text(poinBiru)
         }
 
-        function renderPemenang(data) {
+        function renderPemenang(data, pemberiPoin) {
+            console.log(pemberiPoin)
             var $indikatorMerah = $('[data-indikator-merah="true"], .js-tanding-display__nilai[data-sudut="merah"]')
             var $indikatorBiru = $('[data-indikator-biru="true"], .js-tanding-display__nilai[data-sudut="biru"]')
             $('.js-tanding-display-merah-nama').text(data.merah.nama)
@@ -54,19 +55,26 @@
             $indikatorBiru.removeClass("glow-img-primary").css("background-color", "")
             if (data.pemenang === 'MERAH') {
                 $('.js-tanding-display-merah-nama').text(data.merah.nama + " (Pemenang)")
-                $('[data-indikator-merah="true"]').addClass("glow-img-danger")
-                $('.js-tanding-display__nilai[data-sudut="merah"]').addClass("glow-img-danger")
-
-                $('[data-indikator-biru="true"]').css("background-color", "dimgrey")
-                $('.js-tanding-display__nilai[data-sudut="biru"]').css("background-color", "dimgrey")
+                $('.sisi-biru.display-name').css("background-color", "dimgrey")
+                $('.sisi-merah.display-name').addClass("glow-img-danger")
             } else if (data.pemenang === 'BIRU') {
                 $('.js-tanding-display-biru-nama').text(data.biru.nama + " (Pemenang)")
-                $('[data-indikator-biru="true"]').addClass("glow-img-primary")
-                $('.js-tanding-display__nilai[data-sudut="biru"]').addClass("glow-img-primary")
-
-                $('[data-indikator-merah="true"]').css("background-color", "dimgrey")
-                $('.js-tanding-display__nilai[data-sudut="merah"]').css("background-color", "dimgrey")
+                $('.sisi-merah.display-name').css("background-color", "dimgrey")
+                $('.sisi-biru.display-name').addClass("glow-img-primary")
             }
+
+            _.each(pemberiPoin.merah, function(m) {
+                $('[data-indikator-merah="true"][data-juri="' + m + '"]').addClass("glow-img-danger")
+                $('.js-tanding-display__nilai[data-sudut="merah"][data-juri="'+ m +'"]').addClass("glow-img-danger")
+                $('.js-tanding-display__nilai[data-sudut="biru"][data-juri="'+ m +'"]').css("background-color", "dimgrey")
+                $('[data-indikator-biru="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
+            })
+            _.each(pemberiPoin.biru, function(m) {
+                $('[data-indikator-biru="true"][data-juri="' + m + '"]').addClass("glow-img-primary")
+                $('.js-tanding-display__nilai[data-sudut="biru"][data-juri="'+ m +'"]').addClass("glow-img-primary")
+                $('.js-tanding-display__nilai[data-sudut="merah"][data-juri="'+ m +'"]').css("background-color", "dimgrey")
+                $('[data-indikator-merah="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
+            })
         }
 
         $(document).ready(function() {
@@ -82,6 +90,10 @@
 
             var juriList = _.keys(state.dewanJuri);
             var poinMerah = 0, poinBiru = 0;
+            var pemberiPoin = {
+                merah: [],
+                biru: []
+            }
             _.each(juriList, function(nomorJuri) {
                 var juri = new DigiSilat.Juri(nomorJuri);
                 juri.penilaian = state.dewanJuri[nomorJuri].penilaian
@@ -90,11 +102,16 @@
                 var poin = juri.getRingkasanNilai()
                 poinMerah = poinMerah + poin.merah
                 poinBiru = poinBiru + poin.biru
+                if (poin.merah == 1) {
+                    pemberiPoin.merah.push(juri.nomorJuri)
+                } else if (poin.biru == 1) {
+                    pemberiPoin.biru.push(juri.nomorJuri)
+                }
                 renderPoin(poinMerah, poinBiru)
             }) ;
             setWarnaRonde(state.ronde)
             if (data.pemenang) {
-                renderPemenang(data)
+                renderPemenang(data, pemberiPoin)
             }
         })
         socket.on('kontrol-ronde', function(currentRonde) {
