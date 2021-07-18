@@ -26,6 +26,15 @@
       });
     });
 
+    $('.datatables-undian').each(function () {
+      var table = $(this);
+      table.DataTable({
+        responsive: true,
+        lengthChange: !1,
+        "pageLength": 50
+      });
+    });
+
     $('.datatables-pertandingan').each(function () {
       var table = $(this);
       table.DataTable({
