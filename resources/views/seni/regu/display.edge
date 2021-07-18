@@ -4,34 +4,35 @@
 @endsection
 @section('content')
 <div class="container" style="width:100%">
-    <div style="margin:20px">
-        <div class="row" style="margin-top: -45px">
-            <div class="col-md-4 col-sm-4 col-lg-4">
-                <table class="table" style="font-size:20px">
-                    <thead>
-                    <tr>
-                        <th class="text-center bg-primary">REGU</th>
-                    </tr>
-                    </thead>
-                    <tbody style="background-color:green;color:white">
-                    <tr>
-                        <td class="text-center bg-primary pool">Pool {{pertandingan.nomor_pool}} / Penampil {{pertandingan.nomor_penampil}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center bg-primary kontingen">{{pertandingan.kontingen.nama}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-lg-8 col-sm-8 col-md-8" style="margin-top:10px">
-                <table class="table table-bordered" style="font-size:25px">
-                    <tbody>
-                    <tr>
-                        <td class="text-left pesilat-1">{{pertandingan.pesilat.nama}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="row">
+        <table class="table text-center table-borderless">
+            <thead>
+            <tr style="padding-left:10%;padding-right:10%">
+                <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                    @if(tournament.logo_1)
+                    <img style="width:150px;height:150px;" src="{{tournament.logo_1}}" alt="">  
+                    @endif
+                </th>
+                <th class="text-center" style="width:60%;font-size:50px;vertical-align:middle">
+                    <h1>{{tournament.nama}}</h1>
+                    <h3>{{pertandingan.kategori.nama}}</h3>
+                </th>
+                <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                    @if(tournament.logo_2)
+                    <img style="width:150px;height:150px;" src="{{tournament.logo_2}}" alt="">  
+                    @endif
+                </th>
+            </tr>
+            </thead>
+        </table>
+        <div class="col-sm-5" style="margin-top:10px">
+            <table class="table table-bordered" style="font-size:20px">
+                <tbody>
+                <tr>
+                    <td class="text-left js-tunggal-display__nama-pesilat">{{pertandingan.pesilat.nama}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="row" style="margin-left:10px;margin-right:10px;margin-top:-20px;">
@@ -40,11 +41,11 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th class="text-center">JURI 1</th>
-                    <th class="text-center">JURI 2</th>
-                    <th class="text-center">JURI 3</th>
-                    <th class="text-center">JURI 4</th>
-                    <th class="text-center">JURI 5</th>
+                    <th class="text-center js-regu-display__nomor-juri" data-juri="1">JURI 1</th>
+                    <th class="text-center js-regu-display__nomor-juri" data-juri="2">JURI 2</th>
+                    <th class="text-center js-regu-display__nomor-juri" data-juri="3">JURI 3</th>
+                    <th class="text-center js-regu-display__nomor-juri" data-juri="4">JURI 4</th>
+                    <th class="text-center js-regu-display__nomor-juri" data-juri="5">JURI 5</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -80,6 +81,14 @@
                     <td class="js-regu-display__nilai" data-tipe="total" data-juri="4">0</td>
                     <td class="js-regu-display__nilai" data-tipe="total" data-juri="5">0</td>
                 </tr>
+                <tr class="text-center js-regu-display__pengumuman" hidden>
+                    <td class="text-left"></td>
+                    <td class="js-regu-display__pengumuman-juri" data-juri="1"></td>
+                    <td class="js-regu-display__pengumuman-juri" data-juri="2"></td>
+                    <td class="js-regu-display__pengumuman-juri" data-juri="3"></td>
+                    <td class="js-regu-display__pengumuman-juri" data-juri="4"></td>
+                    <td class="js-regu-display__pengumuman-juri" data-juri="5"></td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -88,54 +97,37 @@
     </div>
     <div>
         <div class="row">
-            <div class="col-sm-1 col-md-1">
+            <div class="col-sm-4">
+                <table class="table" style="font-size:20px">
+                    <thead>
+                    <tr>
+                        <th class="text-center bg-primary">REGU</th>
+                    </tr>
+                    </thead>
+                    <tbody style="background-color:green;color:white">
+                    <tr>
+                        <td class="text-center bg-primary pool">Pool {{pertandingan.nomor_pool}} / Penampil {{pertandingan.nomor_penampil}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center bg-primary kontingen">{{pertandingan.kontingen.nama}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="col-sm-4 col-md-4">
                 <div class="lead js-timer-clock" style="font-size:110px;">00:00</div>
             </div>
-            <div class="col-sm-7">
-                <div class="row" style="margin-top:-30px;">
-                    <div class="col-sm-6">
-                        <table class="js-regu-display__tabel-max table table-striped table-bordered table-condensed" style="font-size:20px;">
-                            <thead>
-                            <tr>
-                                <th class="text-center">JURI SKOR TERTINGGI</th>
-                                <th class="text-center">SKOR TERTINGGI</th>
-                            </tr>
-                            </thead>
-                            <tbody style="background-color:green;color:white">
-                            <td class="text-center nomor-juri" style="background-color:blue;color:white">100</td>
-                            <td class="text-center skor" style="background-color:blue;color:white">100</td>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-sm-6">
-                        <table class="js-regu-display__tabel-min table table-striped table-bordered table-condensed" style="font-size:20px;">
-                            <thead>
-                            <tr>
-                                <th class="text-center">JURI SKOR TERENDAH</th>
-                                <th class="text-center">SKOR TERENDAH</th>
-                            </tr>
-                            </thead>
-                            <tbody style="background-color:green;color:white">
-                            <td class="text-center nomor-juri" style="background-color:red;color:white">100</td>
-                            <td class="text-center skor" style="background-color:red;color:white">100</td>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <table class="js-regu-display__tabel-total table table-striped table-bordered table-condensed" style="font-size:35px;">
-                        <thead>
-                        <tr>
-                            <th>TOTAL SKOR :</th>
-                            <th class="text-center skor" style="background-color:green;color:white">100</th>
-                        </tr>
-                        </thead>
-                        <tbody style="background-color:green;color:white">
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-sm-4">
+                <table class="js-regu-display__tabel-total table table-striped table-bordered table-condensed" style="font-size:60px;">
+                    <thead>
+                    <tr>
+                        <th>SKOR</th>
+                        <th class="text-center skor" style="background-color:green;color:white">100</th>
+                    </tr>
+                    </thead>
+                    <tbody style="background-color:green;color:white">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

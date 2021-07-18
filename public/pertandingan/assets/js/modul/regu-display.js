@@ -111,6 +111,27 @@
             $tabelMax.show();
             $tabelMin.show();
             $tabelTotal.show();
+
+            var nomorJuriTertinggi = skor_akhir.juriTeratas.nomorJuri
+            var nomorJuriTerendah = skor_akhir.juriTerendah.nomorJuri
+
+            $('.js-regu-display__nomor-juri[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="kebenaran"][data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="kekompakan"][data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="hukuman"][data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="total"][data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+             $('.js-regu-display__pengumuman-juri[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-regu-display__pengumuman-juri[data-juri="' + nomorJuriTertinggi + '"]').text("Tertinggi")
+            
+            $('.js-regu-display__nomor-juri[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="kebenaran"][data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="kekompakan"][data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="hukuman"][data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-regu-display__nilai[data-tipe="total"][data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-regu-display__pengumuman-juri[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-regu-display__pengumuman-juri[data-juri="' + nomorJuriTerendah + '"]').text("Terendah")
+            
+            $('.js-regu-display__pengumuman').removeAttr("hidden")
         }
   
 

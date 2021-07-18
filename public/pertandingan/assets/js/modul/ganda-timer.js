@@ -46,11 +46,20 @@
             socket.emit('timer-command', {command: 'stop', countdown: state.countdown});
         });
         $timerReset.click(function() {
-            resetCountdown();
-            timer.stop();
-            timer.start({startValues: {seconds: state.countdown}});
-            timer.stop();
-            socket.emit('timer-command', {command: 'reset'});
+            $.confirm({
+                title: 'Konfirmasi Reset',
+                content: 'Yakin Ingin Mereset Waktu ?',
+                buttons: {
+                    confirm: function () {
+                        resetCountdown();
+                        timer.stop();
+                        timer.start({startValues: {seconds: state.countdown}});
+                        timer.stop();
+                        socket.emit('timer-command', {command: 'reset'});
+                    },
+                    cancel: function () {}
+                }
+            });
         })
         $timerAdd.click(function() {
             state.countdown = $(this).data("time");

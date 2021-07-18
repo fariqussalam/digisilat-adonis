@@ -71,6 +71,30 @@
             $tabelMax.show();
             $tabelMin.show();
             $tabelTotal.show();
+
+
+            var nomorJuriTertinggi = skor_akhir.juriTeratas.nomorJuri
+            var nomorJuriTerendah = skor_akhir.juriTerendah.nomorJuri
+
+            $('.js-ganda-display__nomor-juri[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-ganda-display__nilai[data-nilai="teknik-serang-bela"][data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-ganda-display__nilai[data-nilai="kekompakan"][data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-ganda-display__nilai[data-nilai="penghayatan"][data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-ganda-display__nilai-hukuman[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-ganda-display__nilai-total[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-ganda-display__pengumuman-juri[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-ganda-display__pengumuman-juri[data-juri="' + nomorJuriTertinggi + '"]').text("Tertinggi")
+            
+            $('.js-ganda-display__nomor-juri[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-ganda-display__nilai[data-nilai="teknik-serang-bela"][data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-ganda-display__nilai[data-nilai="kekompakan"][data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-ganda-display__nilai[data-nilai="penghayatan"][data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-ganda-display__nilai-hukuman[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-ganda-display__nilai-total[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-ganda-display__pengumuman-juri[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-ganda-display__pengumuman-juri[data-juri="' + nomorJuriTerendah + '"]').text("Terendah")
+           
+            $('.js-ganda-display__pengumuman').removeAttr("hidden")
         }
         
         function renderDiskualifikasi(juri) {

@@ -29,8 +29,7 @@
                 return j.diskualifikasi == true
             })
             if (isDisqualified) {
-                for (var nomorJuri in data.dewanJuri) {
-                    
+                for (var nomorJuri in data.dewanJuri) {     
                     $('.js-tunggal-display__nilai-kebenaran[data-juri="' + nomorJuri + '"]').text("DIS")
                     $('.js-tunggal-display__nilai-kemantapan[data-juri="' + nomorJuri + '"]').text("DIS")
                     $('.js-tunggal-display__nilai-hukuman[data-juri="' + nomorJuri + '"]').text("DIS")
@@ -40,12 +39,10 @@
             }
             for (var nomorJuri in data.dewanJuri) {
                 var juri = data.dewanJuri[nomorJuri]
-                
                     renderNilaiJurus(juri)
                     renderNilaiHukuman(juri)
                     renderTotalNilai(juri)
                     renderNilaiKemantapan(juri)
-
                     if (data.skor_akhir != null) {
                         renderSkorAkhir(data.skor_akhir)
                     }
@@ -116,6 +113,29 @@
             $tabelMax.show();
             $tabelMin.show();
             $tabelTotal.show();
+
+            var nomorJuriTertinggi = skor_akhir.juriTeratas.nomorJuri
+            var nomorJuriTerendah = skor_akhir.juriTerendah.nomorJuri
+
+            $('.js-tunggal-display__nomor-juri[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-tunggal-display__nilai-kebenaran[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-tunggal-display__nilai-kemantapan[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-tunggal-display__nilai-hukuman[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-tunggal-display__nilai-hukuman[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-tunggal-display__nilai-total[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-tunggal-display__pengumuman-juri[data-juri="' + nomorJuriTertinggi + '"]').css("background-color", "blue").css("color","white")
+            $('.js-tunggal-display__pengumuman-juri[data-juri="' + nomorJuriTertinggi + '"]').text("Tertinggi")
+            
+            $('.js-tunggal-display__nomor-juri[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-tunggal-display__nilai-kebenaran[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-tunggal-display__nilai-kemantapan[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-tunggal-display__nilai-hukuman[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-tunggal-display__nilai-hukuman[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-tunggal-display__nilai-total[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-tunggal-display__pengumuman-juri[data-juri="' + nomorJuriTerendah + '"]').css("background-color", "red").css("color","white")
+            $('.js-tunggal-display__pengumuman-juri[data-juri="' + nomorJuriTerendah + '"]').text("Terendah")
+            
+            $('.js-tunggal-display__pengumuman').removeAttr("hidden")
         }
   
         function resetCountdown() {
