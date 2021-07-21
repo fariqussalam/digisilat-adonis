@@ -79,6 +79,8 @@ Route.get('pertandingan/generate-jadwal', 'JadwalTandingController.generateJadwa
 Route.get('pertandingan/jadwal/tanding', 'JadwalTandingController.jadwalTanding')
 Route.post('pertandingan/jadwal/update-gelanggang', 'JadwalTandingController.updateGelanggang')
 Route.post('pertandingan/jadwal/update-partai', 'JadwalTandingController.updatePartai')
+Route.get('pertandingan/bracket-info', 'JadwalTandingController.bracketInfo')
+Route.post('pertandingan/bracket-info', 'JadwalTandingController.bracketInfo')
 /**
 * Jadwal Seni
 */

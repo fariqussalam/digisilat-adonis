@@ -92,6 +92,7 @@ class UndianService {
             const pesilat = undian.type == 'tanding' ? await Pesilat.findOrFail(id) : await PesilatSeni.findOrFail(id)
             const kontingen = await Kontingen.find(pesilat.kontingen_id)
             pesertaList.push({
+                pesilat_id: pesilat.id,
                 nomor_undian: pu.nomor_undian,
                 nama: pesilat.nama,
                 kontingen: kontingen.nama

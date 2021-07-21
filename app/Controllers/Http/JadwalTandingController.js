@@ -134,6 +134,12 @@ class JadwalTandingController {
     return response.route('JadwalTandingController.jadwalTanding')
   }
 
+  async bracketInfo({request, response}) {
+    const params = request.only(['kelas'])
+    const bracketInfo = await this.pertandinganService.getBracketInfo(params.kelas)
+    return response.json(bracketInfo)
+  }
+
 
 }
 

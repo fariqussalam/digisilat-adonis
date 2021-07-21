@@ -357,6 +357,7 @@
       var peserta = getDataPeserta();
       var teams = bracketData.data.teams;
 
+      console.log(teams)
       var replaced = replaceBracketData(peserta, teams);
       if (replaced) bracketData.data.teams = replaced;
 
@@ -366,6 +367,7 @@
       $template.find('.js-bracket').data("jumlah", jumlahPeserta);
       $bracketWrapper.append($template);
 
+      
       $('.js-bracket').bracket({
         init: bracketData.data, teamWidth: 300,
         save: saveBagan,
@@ -745,6 +747,36 @@
 
     $('.js-peserta-add-group-submit').click(function() {
       $(this).closest('div').find('form').submit()
+    })
+
+  })
+})(jQuery);
+
+/**
+ * Bracket Info Wrapper
+ */
+ (function () {
+  $(function () {
+
+    $('.js-bracket-info-wrapper').each(function() {
+      var kelas = $(this).data("kelas");
+      var url = $(this).data("url")
+      var _instance = $(this)
+      $.ajax({
+        method: "POST",
+        url: url,
+        data: {
+          _csrf: window['_csrf'],
+          kelas: kelas
+        }
+      }).done(function (data) {
+        if (data.bracketData) {
+          _instance.bracket({
+            init: data.bracketData, 
+            teamWidth: 300
+          });
+        }
+      });
     })
 
   })

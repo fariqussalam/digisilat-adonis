@@ -13,11 +13,14 @@ const PesilatService = use('App/Services/PesilatService')
 const KategoriSeni = use('App/Models/KategoriSeni')
 const Kontingen = use('App/Models/Kontingen')
 const PesilatSeni = use('App/Models/PesilatSeni')
+const Undian = use('App/Models/Undian')
+const UndianService = use('App/Services/UndianService')
 
 class PertandinganService {
 
   constructor() {
     this.pesilatService = new PesilatService
+    this.undianService = new UndianService
   }
 
   async generateJadwal({ undian }, tournament) {
@@ -393,6 +396,194 @@ class PertandinganService {
     else if (kategori.jenis == 'REGU') tipeSeni = 'regu'
 
     return tipeSeni
+  }
+
+  async mapUndianToBagan(pesertaUndian, matchups) {
+    let new_matchups = []
+    _.each(matchups, (match) => {
+      let new_match = []
+      _.each(match, m => {
+        if (m != null && m.length > 0) {
+          const nomor = s.words(m, ":")[1]
+          const pasanganUndian = _.find(pesertaUndian, p => {return p.nomor_undian == nomor})
+          if (pasanganUndian) {
+            new_match.push(pasanganUndian)
+          }
+        } else {
+          new_match.push(m)
+        }
+      })
+      new_matchups.push(new_match)
+    })
+    return new_matchups
+  }
+
+  async getFirstRoundMatchups(teams) {
+    const firstRoundResult = []
+    for (const team of teams) {
+      if (team[0] == null && team[1] == null) {
+        var res = {
+          winner: null,
+          result: [null, null],
+          pertandingan_id: null
+        }
+        firstRoundResult.push(res)
+      } else if (team[0] == null || team[1] == null) {
+        var res = {
+          winner: null,
+          result: [null, null],
+          pertandingan_id: null
+        }
+        if (team[1] == null) {
+          res.winner = team[0].pesilat_id
+          const kualifikasi = await Kualifikasi.query().where({merah_id: res.winner, biru_id: null}).first()
+          if (kualifikasi) res.pertandingan_id = kualifikasi.pertandingan_id
+        }
+        else if (team[0] == null) {
+          res.winner = team[1].pesilat_id
+          const kualifikasi = await Kualifikasi.query().where({merah_id: null, biru_id: res.winner}).first()
+          if (kualifikasi) res.pertandingan_id = kualifikasi.pertandingan_id
+        }
+        firstRoundResult.push(res)
+      } else {
+        let merah_id = team[0] == null ? null : team[0].pesilat_id
+        let biru_id = team[1] == null ? null : team[1].pesilat_id
+        const kualifikasi = await Kualifikasi.query().where({merah_id: merah_id, biru_id: biru_id}).first()
+        if (kualifikasi) {
+          const pertandingan = await Pertandingan.find(kualifikasi.pertandingan_id)
+          var res = {
+            winner: null,
+            result: [null,null],
+            pertandingan_id: pertandingan.id
+          }
+          if (pertandingan.skor_merah != null && pertandingan.skor_biru != null) {
+            if (pertandingan.skor_merah >= pertandingan.skor_biru) {
+              res.winner = merah_id
+            } else if (pertandingan.skor_merah < pertandingan.skor_biru) {
+              res.winner = biru_id
+            }
+            res.result = [pertandingan.skor_merah, pertandingan.skor_biru]
+          } else {
+            if (pertandingan.pemenang == "MERAH") {
+                res.winner = merah_id,
+                res.result =[1, 0]
+            } else if (pertandingan.pemenang == "BIRU") {
+              res.winner = biru_id,
+              res.result =[0, 1]
+            }
+          }
+          firstRoundResult.push(res)
+        }       
+      }
+    }
+    return firstRoundResult
+  }
+
+  async getRoundResult(matchups) {
+    const new_matchups = []
+    for (var m of matchups) {
+      var res = {
+        winner: null,
+        result: [null, null],
+        pertandingan_id: null
+      }
+       if (m[0].pertandingan_id == null) {
+        res.winner = m[1].winner
+        const eliminasi = await Eliminasi.query().where({pemenang_b_id: m[1].pertandingan_id}).first()
+        res.pertandingan_id = eliminasi.pertandingan_id
+      } else if (m[1].pertandingan_id == null) {
+        res.winner = m[0].winner
+        const eliminasi = await Eliminasi.query().where({pemenang_a_id: m[0].pertandingan_id}).first()
+        res.pertandingan_id = eliminasi.pertandingan_id
+      } else if (m[0].pertandingan_id != null && m[1].pertandingan_id != null) {
+        const eliminasi = await Eliminasi.query().where({pemenang_a_id: m[0].pertandingan_id, pemenang_b_id: m[1].pertandingan_id}).first()
+        res.pertandingan_id = eliminasi.pertandingan_id
+        if (eliminasi) {
+          const pertandingan = await Pertandingan.find(eliminasi.pertandingan_id)
+          var res = {
+            winner: null,
+            result: [null,null],
+            pertandingan_id: pertandingan.id
+          }
+          if (pertandingan.skor_merah != null && pertandingan.skor_biru != null) {
+            if (pertandingan.skor_merah >= pertandingan.skor_biru) {
+              res.winner = m[0].winner
+            } else if (pertandingan.skor_merah < pertandingan.skor_biru) {
+              res.winner = m[1].winner
+            }
+            res.result = [pertandingan.skor_merah, pertandingan.skor_biru]
+          } else {
+            if (pertandingan.pemenang == "MERAH") {
+                res.winner = m[0].winner,
+                res.result =[1, 0]
+            } else if (pertandingan.pemenang == "BIRU") {
+              res.winner = m[1].winner,
+              res.result =[0, 1]
+            }
+          }
+        }
+      }
+      new_matchups.push(res)
+    }
+  
+    return new_matchups
+  }
+
+  async getBracketInfo(kelas_id) {
+    const kelas = await Kelas.find(kelas_id).then(k => k.toJSON())
+    const tournament = await Tournament.find(kelas.tournament_id).then(t => t.toJSON())
+    const undian = await Undian.query().where({tournament_id: tournament.id, kelas_id: kelas.id}).first()
+    const pesertaUndian = await this.undianService.collectPesertaUndian(undian.id)
+    const jumlahPeserta = pesertaUndian.length
+    const bagan = await this.getTemplateBagan(jumlahPeserta)
+
+    const teams = await this.mapUndianToBagan(pesertaUndian, bagan.matchups)
+    
+    const initial_teams = []
+    for (const t of teams) {
+      let red = null, blue = null
+      if (t[0] != null) {
+        red = t[0].nama + " | " + t[0].kontingen
+      }
+      if (t[1] != null) {
+        blue = t[1].nama + " | " + t[1].kontingen
+      }
+      initial_teams.push([red, blue])
+    }
+
+
+
+    const firstRoundResult = await this.getFirstRoundMatchups(teams)
+
+    const bracketData = {}
+    bracketData.teams = initial_teams
+    bracketData.results = []
+    bracketData.results.push(_.map(firstRoundResult, 'result'))
+
+    let sisaPeserta = firstRoundResult.length
+    let ronde = 2
+    let matchups = _.map(firstRoundResult, (m) => {return {winner: m.winner, pertandingan_id: m.pertandingan_id}})
+    while (sisaPeserta > 1) {
+      
+       matchups = _.chunk(matchups, 2)
+       matchups = await this.getRoundResult(matchups)
+      sisaPeserta = matchups.length
+      ronde++
+      bracketData.results.push(_.map(matchups, 'result'))
+    }
+
+       
+    
+
+    return {
+      kelas,
+      tournament,
+      undian, 
+      pesertaUndian,
+      bagan,
+      teams,
+      bracketData
+    }
   }
 }
 
