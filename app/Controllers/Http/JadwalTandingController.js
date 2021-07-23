@@ -131,7 +131,7 @@ class JadwalTandingController {
     tournament.jumlah_gelanggang = 0
     await tournament.save()
 
-    await Pertandingan.query().where({tournament_id: tournament.id}).update({nomor_gelanggang: null})
+    await Pertandingan.query().where({tournament_id: tournament.id}).update({nomor_gelanggang: null, status: "BELUM_DIMULAI"})
 
     return response.route('JadwalTandingController.jadwalTanding')
   }

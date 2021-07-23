@@ -203,18 +203,22 @@ class RekapService {
     rekapList[k.id].jumlah = {
       emas: 0,
       perunggu: 0,
-      perak: 0
+      perak: 0,
+      total: 0
     }
     const medali = rekapList[k.id].medali
     const group = _.countBy(medali, 'jenisMedali')
     if (group.emas) {
       rekapList[k.id]['jumlah']['emas'] = group.emas
+      rekapList[k.id]['jumlah']['total'] += group.emas
     }
     if (group.perunggu) {
       rekapList[k.id]['jumlah']['perunggu'] = group.perunggu
+      rekapList[k.id]['jumlah']['total'] += group.perunggu
     }
     if (group.perak) {
       rekapList[k.id]['jumlah']['perak'] = group.perak
+      rekapList[k.id]['jumlah']['total'] += group.perak
     }
     const jumlahPerKelas = {}
     for (var j of kelasList) {

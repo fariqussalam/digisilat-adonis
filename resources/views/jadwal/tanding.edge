@@ -56,6 +56,7 @@
                         </thead>
                         <tbody>
                         @each(pertandingan in rp.pertandinganList)
+                        @if(pertandingan.merah && pertandingan.biru)
                         <tr>
                             <td>{{ pertandingan.nomor_partai ? pertandingan.nomor_partai : "-" }}</td>
                             <td>{{ pertandingan.nomor_gelanggang ? pertandingan.nomor_gelanggang : "-" }}</td>
@@ -86,6 +87,7 @@
                                 @endif
                             </td>
                         </tr>
+                        @endif  
                         @endeach
                         </tbody>
                     </table>

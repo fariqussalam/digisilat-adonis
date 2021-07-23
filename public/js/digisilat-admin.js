@@ -452,7 +452,7 @@
       });
     });
 
-    $('.js-jadwal__atur-pertandingan').click(function() {
+    $(document).on('click', '.js-jadwal__atur-pertandingan', function() {
       var id = $(this).data("id");
       var url = $(this).data("url");
       var jumlah_gelanggang = $('input[name="jumlah_gelanggang"]').val()
@@ -507,7 +507,7 @@
       })
     })
 
-    $('.js-jadwal__atur-pertandingan-seni').click(function() {
+    $(document).on('click', '.js-jadwal__atur-pertandingan-seni', function() {
       var id = $(this).data("id");
       var url = $(this).data("url");
       var jumlah_pool = $('input[name="jumlah_pool"]').val()
@@ -555,7 +555,7 @@
       })
     })
 
-    $('.js-gelanggang__mulai-pertandingan').click(function() {
+    $(document).on('click','.js-gelanggang__mulai-pertandingan', function() {
       var data = $(this).data()
       if (!data) {
         return console.log('Cancelled')
@@ -575,7 +575,7 @@
     });
     })
 
-    $('.js-gelanggang__mulai-pertandingan-seni').click(function() {
+    $(document).on('click', '.js-gelanggang__mulai-pertandingan-seni').click(function() {
       var data = $(this).data()
       if (!data) {
         return console.log('Cancelled')

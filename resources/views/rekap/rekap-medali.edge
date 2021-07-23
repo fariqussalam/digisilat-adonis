@@ -17,11 +17,12 @@
                                 <th rowspan="2" width="3%">No</th>
                                 <th rowspan="2" width="5%">Kontingen</th>
                                 @each(kelas in rekapMedali.kelasList)
-                                <th colspan="3" width="10%">{{kelas.nama}}</th>
+                                <th colspan="3" width="20%">{{kelas.nama}}</th>
                                 @endeach
                                 <th rowspan="2" width="3%">E</th>
                                 <th rowspan="2" width="3%">P</th>
                                 <th rowspan="2" width="3%">PG</th>
+                                <th rowspan="2" width="3%">Total</th>
                             </tr>
                             <tr>
                                 @each(kelas in rekapMedali.kelasList)
@@ -49,9 +50,11 @@
                             @set('jumlahEmas', rekapMedali.rekapList[k.id].jumlah['emas'])
                             @set('jumlahPerak', rekapMedali.rekapList[k.id].jumlah['perak'])
                             @set('jumlahPerunggu', rekapMedali.rekapList[k.id].jumlah['perunggu'])
-                            <td>{{kelasEmas}}</td>
-                            <td>{{kelasPerak}}</td>
-                            <td>{{kelasPerunggu}}</td>
+                            @set('jumlahTotal', rekapMedali.rekapList[k.id].jumlah['total'])
+                            <td>{{jumlahEmas}}</td>
+                            <td>{{jumlahPerak}}</td>
+                            <td>{{jumlahPerunggu}}</td>
+                            <td>{{jumlahTotal}}</td>
                            </tr>
                            @endeach
                         </tbody>

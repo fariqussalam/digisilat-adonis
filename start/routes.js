@@ -85,6 +85,7 @@ Route.get('pertandingan/rekap-juara', 'JadwalTandingController.rekapJuara')
 Route.post('pertandingan/rekap-juara', 'JadwalTandingController.rekapJuara')
 Route.get('pertandingan/rekap-medali', 'JadwalTandingController.rekapMedali')
 Route.post('pertandingan/rekap-medali', 'JadwalTandingController.rekapMedali')
+Route.get('pertandingan/jadwal/reset-gelanggang', 'JadwalTandingController.resetGelanggang')
 /**
 * Jadwal Seni
 */
@@ -92,7 +93,6 @@ Route.get('pertandingan/generate-jadwal-seni', 'JadwalSeniController.generateJad
 Route.get('pertandingan/jadwal/seni', 'JadwalSeniController.jadwalSeni')
 Route.post('pertandingan/jadwal/update-pool', 'JadwalSeniController.updatePool')
 Route.post('pertandingan/jadwal/update-partai-seni', 'JadwalSeniController.updatePartaiSeni')
-Route.get('pertandingan/jadwal/reset-gelanggang', 'JadwalSeniController.resetGelanggang')
 Route.get('pertandingan/jadwal/reset-pool', 'JadwalSeniController.resetPool')
 Route.get('pertandingan/cetak-jadwal/pool/:nomor_pool', 'JadwalSeniController.cetakJadwal')
 Route.get('pertandingan/lihat-jadwal/pool/:nomor_pool', 'JadwalSeniController.lihatJadwal')
