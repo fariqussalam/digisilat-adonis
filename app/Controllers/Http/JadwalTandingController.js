@@ -169,7 +169,6 @@ class JadwalTandingController {
   async rekapMedali({request, view, response}) {
     const tournament = request.activeTournament
     const rekapMedali = await this.rekapService.getRekapMedali(tournament.id)
-    console.log(rekapMedali.rekapList)
     // return response.json(rekapMedali)
 
     return view.render('rekap.rekap-medali', {
