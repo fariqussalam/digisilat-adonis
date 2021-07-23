@@ -1,0 +1,77 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+    <div class="row mb-1 mb-xl-3">
+        <div class="col-2 d-none d-sm-block">
+            <h3>Rekap Juara</h3>
+        </div>
+    </div>
+    <div class="row mb-1 pb-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Kelas</th>
+                            <th width="5%">Juara</th>
+                            <th>Nama</th>
+                            <th>Kontingen</th>
+                        </thead>
+                        <tbody>
+                            @each(juara in juaraList)
+                            <tr>
+                                <td rowspan="4">{{juara.kelas.nama}}</td>
+                                <td>1</td>
+                                @set('juara1', juara.rekapJuara.juara1)
+                                @if(juara1)
+                                <td>{{juara1.pesilat.nama}}</td>
+                                <td>{{juara1.pesilat.kontingen.nama}}</td>
+                                @else
+                                <td>-</td>
+                                <td>-</td>
+                                @endif    
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                @set('juara2', juara.rekapJuara.juara2)
+                                @if(juara2)
+                                <td>{{juara2.pesilat.nama}}</td>
+                                <td>{{juara2.pesilat.kontingen.nama}}</td>
+                                @else
+                                <td>-</td>
+                                <td>-</td>
+                                @endif   
+                            </tr>
+                            <tr>
+                                @set('juara3_1', juara.rekapJuara.juara3[0])
+                                <td>3</td>
+                                @if(juara3_1)
+                                <td>{{juara3_1.pesilat.nama}}</td>
+                                <td>{{juara3_1.pesilat.kontingen.nama}}</td>
+                                @else
+                                <td>-</td>
+                                <td>-</td>
+                                @endif
+                            </tr>
+                            <tr>
+                                @set('juara3_2', juara.rekapJuara.juara3[1])
+                                <td>3</td>
+                                @if(juara3_2)
+                                <td>{{juara3_2.pesilat.nama}}</td>
+                                <td>{{juara3_2.pesilat.kontingen.nama}}</td>
+                                @else
+                                <td>-</td>
+                                <td>-</td>
+                                @endif
+                            </tr>
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+     
+        </div>
+    </div>
+</div>
+@endsection

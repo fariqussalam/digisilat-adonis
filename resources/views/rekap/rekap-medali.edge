@@ -1,0 +1,65 @@
+@layout('layouts/layout')
+
+@section('content')
+<div class="container-fluid p-0">
+    <div class="row mb-1 mb-xl-3">
+        <div class="col-2 d-none d-sm-block">
+            <h3>Rekap Medali</h3>
+        </div>
+    </div>
+    <div class="row mb-1 pb-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" width="3%">No</th>
+                                <th rowspan="2" width="5%">Kontingen</th>
+                                @each(kelas in rekapMedali.kelasList)
+                                <th colspan="3" width="10%">{{kelas.nama}}</th>
+                                @endeach
+                                <th rowspan="2" width="3%">E</th>
+                                <th rowspan="2" width="3%">P</th>
+                                <th rowspan="2" width="3%">PG</th>
+                            </tr>
+                            <tr>
+                                @each(kelas in rekapMedali.kelasList)
+                                <th>E</th>
+                                <th>P</th>
+                                <th>PG</th>
+                                @endeach
+                            </tr>
+                         
+                        </thead>
+                        <tbody>
+                           @each(kontingen in rekapMedali.kontingenList)
+                           <tr>
+                            <td>{{$loop.index + 1}}</td>
+                            <td>{{kontingen.nama}}</td>
+                            @set('k', kontingen)
+                            @each(kelas in rekapMedali.kelasList)
+                            @set('kelasEmas', rekapMedali.rekapList[k.id].jumlahPerKelas[kelas.kelas_id]['emas'])
+                            @set('kelasPerak', rekapMedali.rekapList[k.id].jumlahPerKelas[kelas.kelas_id]['perak'])
+                            @set('kelasPerunggu', rekapMedali.rekapList[k.id].jumlahPerKelas[kelas.kelas_id]['perunggu'])
+                            <td>{{kelasEmas}}</td>
+                            <td>{{kelasPerak}}</td>
+                            <td>{{kelasPerunggu}}</td>
+                            @endeach
+                            @set('jumlahEmas', rekapMedali.rekapList[k.id].jumlah['emas'])
+                            @set('jumlahPerak', rekapMedali.rekapList[k.id].jumlah['perak'])
+                            @set('jumlahPerunggu', rekapMedali.rekapList[k.id].jumlah['perunggu'])
+                            <td>{{kelasEmas}}</td>
+                            <td>{{kelasPerak}}</td>
+                            <td>{{kelasPerunggu}}</td>
+                           </tr>
+                           @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+     
+        </div>
+    </div>
+</div>
+@endsection

@@ -100,6 +100,21 @@
             </div>
           </div>
           @endif
+          @if(activeTournament.jadwal_generated && activeTournament.jadwal_seni_generated)
+          <li class="sidebar-header">
+            Rekap
+          </li>
+          <li class="sidebar-item {{ url.includes('/pertandingan/rekap-juara') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('JadwalTandingController.rekapJuara') }}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Juara</span>
+            </a>
+          </li>
+          <li class="sidebar-item {{ url.includes('/pertandingan/rekap-medali') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('JadwalTandingController.rekapMedali') }}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Medali</span>
+            </a>
+          </li>
+          @endif
         </ul>
 
       </div>

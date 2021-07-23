@@ -357,7 +357,6 @@
       var peserta = getDataPeserta();
       var teams = bracketData.data.teams;
 
-      console.log(teams)
       var replaced = replaceBracketData(peserta, teams);
       if (replaced) bracketData.data.teams = replaced;
 
@@ -367,11 +366,10 @@
       $template.find('.js-bracket').data("jumlah", jumlahPeserta);
       $bracketWrapper.append($template);
 
+      console.log(teams)
       
       $('.js-bracket').bracket({
         init: bracketData.data, teamWidth: 300,
-        save: saveBagan,
-        disableToolbar: true
       });
     }
 

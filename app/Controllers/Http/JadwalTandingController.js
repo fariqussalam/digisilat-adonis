@@ -6,11 +6,13 @@ const Kelas = use('App/Models/Kelas')
 const PertandinganService = use('App/Services/PertandinganService')
 const Pertandingan = use('App/Models/Pertandingan')
 const TandingService = use('App/Services/TandingService')
+const RekapService = use('App/Services/RekapService')
 
 class JadwalTandingController {
   constructor() {
     this.pertandinganService = new PertandinganService
     this.tandingService = new TandingService
+    this.rekapService = new RekapService
   }
 
   async generateJadwal({ request, params, response }) {
@@ -140,7 +142,42 @@ class JadwalTandingController {
     return response.json(bracketInfo)
   }
 
+  async rekapJuara({request, response, view}) {
+    const params = request.only(['kelas'])
+    const tournament = request.activeTournament
+    const kelasList = await this.rekapService.getKelasList(tournament.id)
+    
+    let juaraList = []
+    
+    for (var kelas of kelasList) {
+      const k = await Kelas.find(kelas).then(res => res.toJSON())
+      const rekapJuara = await this.rekapService.getRekapJuara(kelas, tournament.id)
+      juaraList.push({
+        kelas: k,
+        rekapJuara: rekapJuara
+      })
+    }
+    
+    return view.render('rekap.rekap-juara', {
+      kelasList: kelasList,
+      tournament_id: tournament.id,
+      tournament: tournament,
+      juaraList : _.sortBy(juaraList, m => {m.kelas.nama})
+    })
+  }
 
-}
+  async rekapMedali({request, view, response}) {
+    const tournament = request.activeTournament
+    const rekapMedali = await this.rekapService.getRekapMedali(tournament.id)
+    console.log(rekapMedali.rekapList)
+    // return response.json(rekapMedali)
+
+    return view.render('rekap.rekap-medali', {
+      tournament: tournament,
+      rekapMedali: rekapMedali
+    })
+  }
+
+} 
 
 module.exports = JadwalTandingController

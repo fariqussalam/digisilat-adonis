@@ -81,6 +81,10 @@ Route.post('pertandingan/jadwal/update-gelanggang', 'JadwalTandingController.upd
 Route.post('pertandingan/jadwal/update-partai', 'JadwalTandingController.updatePartai')
 Route.get('pertandingan/bracket-info', 'JadwalTandingController.bracketInfo')
 Route.post('pertandingan/bracket-info', 'JadwalTandingController.bracketInfo')
+Route.get('pertandingan/rekap-juara', 'JadwalTandingController.rekapJuara')
+Route.post('pertandingan/rekap-juara', 'JadwalTandingController.rekapJuara')
+Route.get('pertandingan/rekap-medali', 'JadwalTandingController.rekapMedali')
+Route.post('pertandingan/rekap-medali', 'JadwalTandingController.rekapMedali')
 /**
 * Jadwal Seni
 */

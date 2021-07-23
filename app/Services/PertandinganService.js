@@ -261,8 +261,8 @@ class PertandinganService {
     console.log("Creating Ronde " + ronde);
     let match_rounds = [];
     let i = 1;
+   
     for (const matchup of matchups) {
-
       const pertandingan = new Pertandingan()
       pertandingan.status = "BELUM_DIMULAI"
       pertandingan.tournament_id = tournament.id
@@ -277,13 +277,15 @@ class PertandinganService {
         kualifikasi.pertandingan_id = pertandingan.id
         kualifikasi.merah_id = parseInt(matchup[0])
         kualifikasi.biru_id = parseInt(matchup[1])
-        if (kualifikasi.merah_id == null) {
+        if (kualifikasi.merah_id == null || isNaN(kualifikasi.merah_id)) {
           pertandingan.pemenang = "BIRU"
           pertandingan.status = "SELESAI"
+          pertandingan.alasan_kemenangan = "Menang BYE"
           await pertandingan.save()
-        } else if (kualifikasi.biru_id == null) {
+        } else if (kualifikasi.biru_id == null || isNaN(kualifikasi.biru_id)) {
           pertandingan.pemenang = "MERAH"
           pertandingan.status = "SELESAI"
+          pertandingan.alasan_kemenangan = "Menang BYE"
           await pertandingan.save()
         }
         await kualifikasi.save()

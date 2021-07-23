@@ -1,4 +1,5 @@
 'use strict'
+const s = require('underscore.string')
 const _ = require('underscore')
 const Database = use('Database')
 const TournamentService = use('App/Services/TournamentService');
@@ -84,7 +85,15 @@ class TournamentController {
             return {tournament_id: tournament.id, nama: kelas}
         })
         const seniList = _.map(seed_data.kategori_seni, (kat) => {
-            return {tournament_id: tournament.id, nama: kat}
+            let jenis;
+            if (s.include(kat, "tunggal")) {
+                jenis = "TUNGGAL"
+            } else if (s.include(kat, "ganda")) {
+                jenis = "GANDA"
+            } else if (s.include(kat, "regu")) {
+                jenis = "REGU"
+            }
+            return {tournament_id: tournament.id, nama: kat, jenis: jenis}
         })
 
      
