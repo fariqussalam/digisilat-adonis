@@ -575,7 +575,7 @@
     });
     })
 
-    $(document).on('click', '.js-gelanggang__mulai-pertandingan-seni').click(function() {
+    $(document).on('click', '.js-gelanggang__mulai-pertandingan-seni', function() {
       var data = $(this).data()
       if (!data) {
         return console.log('Cancelled')
