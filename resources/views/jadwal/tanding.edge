@@ -129,6 +129,9 @@
                     <a href="{{ route('TandingController.gelanggang', {nomor_gelanggang: nomorGelanggang}) }}" class="mb-1 btn btn-sm btn-success">
                         Luncurkan Gelanggang
                     </a>
+                    <a href="{{ route('JadwalTandingController.cetakJadwal') }}?kelas={{kelas}}&nomor_gelanggang={{nomorGelanggang}}" class="mb-1 btn btn-sm btn-info">
+                        Cetak Jadwal
+                    </a>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped datatables-kategori" style="width:100%">

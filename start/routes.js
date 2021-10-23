@@ -98,6 +98,7 @@ Route.get('pertandingan/cetak-jadwal/pool/:nomor_pool', 'JadwalSeniController.ce
 Route.get('pertandingan/lihat-jadwal/pool/:nomor_pool', 'JadwalSeniController.lihatJadwal')
 Route.get('pertandingan/cetak-jadwal/all-pool', 'JadwalSeniController.cetakSemuaJadwal')
 Route.get('pertandingan/cetak-jadwal-tanding/all', 'JadwalTandingController.cetakSemuaJadwal')
+Route.get('pertandingan/cetak-jadwal-gelanggang', 'JadwalTandingController.cetakJadwal')
 
 /**
 * Tanding

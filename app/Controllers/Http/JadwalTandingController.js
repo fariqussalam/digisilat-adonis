@@ -181,13 +181,11 @@ class JadwalTandingController {
 
   async cetakSemuaJadwal({request, view, response}) {
     const param = request.only(['kelas'])
-    console.log(param)
     const pertandinganList = await this.pertandinganService.getPertandinganList(
       {kelas: param.kelas},
       request.activeTournament.id, true
     )
 
-    console.log(pertandinganList.length)
     let filteredList = pertandinganList.filter(p => p.nomor_partai != null && p.nomor_gelanggang != null)    
     let orderedList = _.map(filteredList, (p) => {
       let dto =  {
@@ -212,8 +210,6 @@ class JadwalTandingController {
     orderedList = _.sortBy(orderedList, 'nomor_partai')
     orderedList = _.sortBy(orderedList, 'kelas_id')
 
-    console.log(orderedList.length)
-
     const templateFile = fs.readFileSync('templates/template-gelanggang-list-all.docx');
     const handler = new TemplateHandler();
     const doc = await handler.process(templateFile, {
@@ -221,6 +217,53 @@ class JadwalTandingController {
     });
     
     const filename = 'jadwal-tanding-' + new Date().getTime() + '.docx';
+    response.response.setHeader('Content-disposition', 'attachment; filename=' + filename);
+    response.type('application/octet-stream')
+    response.send(doc)
+  }
+
+  async cetakJadwal({request, view, response}) {
+    const param = request.only(['kelas', 'nomor_gelanggang'])
+    const pertandinganList = await this.pertandinganService.getPertandinganList(
+      {kelas: param.kelas},
+      request.activeTournament.id, true
+    )
+
+    let idx = 1
+    let filteredList = pertandinganList.filter(p => p.nomor_partai != null && p.nomor_gelanggang == param.nomor_gelanggang)    
+    let orderedList = _.map(filteredList, (p) => {
+      let dto =  {
+        idx: idx,
+        id: p.id,
+        ronde: p.ronde,
+        kelas: p.kelas.nama,
+        jenis: p.jenis,
+        nomor_partai: p.nomor_partai,
+        kelas_id: p.kelas.id,
+        nomor_gelanggang: p.nomor_gelanggang
+      }
+
+      dto.merah_nama = p.merah ? p.merah.nama : '-'
+      dto.merah_kontingen = p.merah ? p.merah.kontingen.nama : '-'
+      dto.biru_nama = p.biru ? p.biru.nama : '-'
+      dto.biru_kontingen = p.biru ? p.biru.kontingen.nama : '-'
+      idx++;
+      return dto
+    })
+    orderedList = _.sortBy(orderedList, 'ronde')
+    orderedList = _.sortBy(orderedList, 'nomor_gelanggang')
+    orderedList = _.sortBy(orderedList, 'nomor_partai')
+    orderedList = _.sortBy(orderedList, 'kelas_id')
+
+    const templateFile = fs.readFileSync('templates/template-gelanggang-list.docx');
+    const handler = new TemplateHandler();
+    const doc = await handler.process(templateFile, {
+      jadwalList: [
+        { nomor_gelanggang: param.nomor_gelanggang,  pertandinganList: orderedList }
+      ]
+    });
+    
+    const filename = 'jadwal-tanding-gelanggang -' + param.nomor_gelanggang + '-' + new Date().getTime() + '.docx';
     response.response.setHeader('Content-disposition', 'attachment; filename=' + filename);
     response.type('application/octet-stream')
     response.send(doc)
