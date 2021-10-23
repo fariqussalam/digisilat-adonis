@@ -64,10 +64,10 @@ class PertandinganService {
 
   async getPertandinganList({kelas, nomor_gelanggang}, tournament_id, without_data) {
     const queryParams = {tournament_id}
-    if (kelas != "all" && kelas != null) {
+    if (kelas != "all" && kelas != null  && kelas != '') {
       queryParams.kelas_id = kelas
     }
-    if (nomor_gelanggang) {
+    if (nomor_gelanggang && nomor_gelanggang != "not_null") {
       queryParams.nomor_gelanggang = nomor_gelanggang
     }
 
@@ -85,6 +85,7 @@ class PertandinganService {
       }
     }
 
+    console.log(responseList.length)
     return responseList
   }
 

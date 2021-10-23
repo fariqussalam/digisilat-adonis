@@ -7,6 +7,8 @@ const PertandinganService = use('App/Services/PertandinganService')
 const Pertandingan = use('App/Models/Pertandingan')
 const TandingService = use('App/Services/TandingService')
 const RekapService = use('App/Services/RekapService')
+const fs = require('fs')
+const TemplateHandler = require('easy-template-x').TemplateHandler
 
 class JadwalTandingController {
   constructor() {
@@ -175,6 +177,53 @@ class JadwalTandingController {
       tournament: tournament,
       rekapMedali: rekapMedali
     })
+  }
+
+  async cetakSemuaJadwal({request, view, response}) {
+    const param = request.only(['kelas'])
+    console.log(param)
+    const pertandinganList = await this.pertandinganService.getPertandinganList(
+      {kelas: param.kelas},
+      request.activeTournament.id, true
+    )
+
+    console.log(pertandinganList.length)
+    let filteredList = pertandinganList.filter(p => p.nomor_partai != null && p.nomor_gelanggang != null)    
+    let orderedList = _.map(filteredList, (p) => {
+      let dto =  {
+        id: p.id,
+        ronde: p.ronde,
+        kelas: p.kelas.nama,
+        jenis: p.jenis,
+        nomor_partai: p.nomor_partai,
+        kelas_id: p.kelas.id,
+        nomor_gelanggang: p.nomor_gelanggang
+      }
+
+      dto.merah_nama = p.merah ? p.merah.nama : '-'
+      dto.merah_kontingen = p.merah ? p.merah.kontingen.nama : '-'
+      dto.biru_nama = p.biru ? p.biru.nama : '-'
+      dto.biru_kontingen = p.biru ? p.biru.kontingen.nama : '-'
+        
+      return dto
+    })
+    orderedList = _.sortBy(orderedList, 'ronde')
+    orderedList = _.sortBy(orderedList, 'nomor_gelanggang')
+    orderedList = _.sortBy(orderedList, 'nomor_partai')
+    orderedList = _.sortBy(orderedList, 'kelas_id')
+
+    console.log(orderedList.length)
+
+    const templateFile = fs.readFileSync('templates/template-gelanggang-list-all.docx');
+    const handler = new TemplateHandler();
+    const doc = await handler.process(templateFile, {
+      pertandinganList: orderedList
+    });
+    
+    const filename = 'jadwal-tanding-' + new Date().getTime() + '.docx';
+    response.response.setHeader('Content-disposition', 'attachment; filename=' + filename);
+    response.type('application/octet-stream')
+    response.send(doc)
   }
 
 } 

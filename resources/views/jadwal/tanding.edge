@@ -111,6 +111,9 @@
         <div class="col-8">
             <div>
                 <h4>Jumlah Gelanggang : {{ activeTournament.jumlah_gelanggang }}</h4>
+                <a href="{{ route('JadwalTandingController.cetakSemuaJadwal') }}?kelas={{kelas}}" class="mb-1 btn btn-sm btn-info">
+                    Cetak Jadwal
+                </a>
             </div>
         </div>
     </div>
