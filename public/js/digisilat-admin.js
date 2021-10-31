@@ -261,10 +261,11 @@
         callback: function (data) {
           doUndian(dataUndian);
         },
-        contentClassName: 'vex-undian-wrapper',
-        unsafeMessage: '<div class="undian-box-wrapper">' +
-          '<div class="undian-box text-center btn btn-success">UNDI</div>' +
-          '</div>',
+        contentClassName: 'vex-undian-wrapper ',
+        unsafeMessage: '<div class="undian-box-wrapper text-center">' +
+            '<div class="undian-box text-center btn btn-success undian-nama">Undi</div>' +
+            // '<div class="text-center undian-nama"></div>' +
+            '</div>',
         afterOpen: function () {
           var undianList = pesertaList,
             num = undianList.length - 1,
