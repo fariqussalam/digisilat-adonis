@@ -40,11 +40,11 @@
       table.DataTable({
         responsive: true,
         lengthChange: !1,
-       ordering: false
+        ordering: false
       });
     });
 
-    var ajaxAndReload = function(url, id) {
+    var ajaxAndReload = function (url, id) {
       if (!url || !id) return false;
       $.ajax({
         method: "POST",
@@ -117,8 +117,8 @@
           '<input name="nama" type="text" required />'
         ].join(''),
         buttons: [
-          $.extend({}, vex.dialog.buttons.YES, {text: 'Simpan'}),
-          $.extend({}, vex.dialog.buttons.NO, {text: 'Kembali'})
+          $.extend({}, vex.dialog.buttons.YES, { text: 'Simpan' }),
+          $.extend({}, vex.dialog.buttons.NO, { text: 'Kembali' })
         ],
         callback: function (data) {
           if (!data) return false;
@@ -155,8 +155,8 @@
           '<input name="nama" type="text" value="' + kategori.nama + '" required />'
         ].join(''),
         buttons: [
-          $.extend({}, vex.dialog.buttons.YES, {text: 'Simpan'}),
-          $.extend({}, vex.dialog.buttons.NO, {text: 'Kembali'})
+          $.extend({}, vex.dialog.buttons.YES, { text: 'Simpan' }),
+          $.extend({}, vex.dialog.buttons.NO, { text: 'Kembali' })
         ],
         callback: function (data) {
           if (!data) return false;
@@ -174,7 +174,7 @@
         message: 'Yakin ingin menghapus data ?',
         callback: function (result) {
           if (!result) return false;
-          deleteKategori(url, {id: id, type: type});
+          deleteKategori(url, { id: id, type: type });
         }
       })
     };
@@ -184,7 +184,7 @@
       $.ajax({
         method: "POST",
         url: url,
-        data: {id: data.id, type: data.type, _csrf: _csrf}
+        data: { id: data.id, type: data.type, _csrf: _csrf }
       }).done(function (response) {
         window.location.reload();
       });
@@ -209,7 +209,7 @@
       $.ajax({
         method: "POST",
         url: url,
-        data: {type: tipe, id: id , _csrf: _csrf}
+        data: { type: tipe, id: id, _csrf: _csrf }
       }).done(function (response) {
         window.location.reload();
       });
@@ -222,7 +222,7 @@
     $(document).on('click', '.js-kategori-delete', confirmDeleteKategori);
     $(document).on('click', '.js-peserta-delete', confirmDeletePeserta);
 
-    $('.js-tournament-change-image').click(function() {
+    $('.js-tournament-change-image').click(function () {
       var $closestDiv = $(this).closest("div");
       var inputName = $(this).data('name');
       var inputLabel = $(this).data('label')
@@ -256,25 +256,25 @@
       var pesertaList = dataUndian.pesertaUndian.split(",");
       vex.dialog.open({
         buttons: [
-          $.extend({}, vex.dialog.buttons.YES, {text: 'Draw'}),
+          $.extend({}, vex.dialog.buttons.YES, { text: 'Draw' }),
         ],
         callback: function (data) {
           doUndian(dataUndian);
         },
         contentClassName: 'vex-undian-wrapper',
         unsafeMessage: '<div class="undian-box-wrapper">' +
-            '<div class="undian-box text-center btn btn-success">UNDI</div>' +
-            '</div>',
+          '<div class="undian-box text-center btn btn-success">UNDI</div>' +
+          '</div>',
         afterOpen: function () {
           var undianList = pesertaList,
-              num = undianList.length - 1,
-              btnClass = '.undian-box',
-              open = false;
+            num = undianList.length - 1,
+            btnClass = '.undian-box',
+            open = false;
           $(document).on('click', btnClass, function () {
             if (!open) {
               timer = setInterval(function () {
                 var random = Math.round(Math.random() * num),
-                    eat = undianList[random];
+                  eat = undianList[random];
                 $(btnClass).text(eat);
               }, 40);
               open = true;
@@ -297,7 +297,7 @@
   $(function () {
 
     if (!String.prototype.includes) {
-      String.prototype.includes = function(search, start) {
+      String.prototype.includes = function (search, start) {
         'use strict';
 
         if (search instanceof RegExp) {
@@ -310,7 +310,7 @@
 
     function getDataPeserta() {
       var pesertaList = []
-      $('.js-data-peserta').each(function() {
+      $('.js-data-peserta').each(function () {
         var data = $(this).data();
         if (data.nomorUndian !== "-") {
           pesertaList.push(data)
@@ -323,11 +323,11 @@
       if (!peserta || peserta.length < 1) return null;
       if (!teams) return null;
       var pesertaMap = {}
-      _.each(peserta, function(p) {
+      _.each(peserta, function (p) {
         pesertaMap[p.nomorUndian] = p.nama + " | " + p.namaKontingen;
       })
 
-      var replaced = _.map(teams, function(t) {
+      var replaced = _.map(teams, function (t) {
         var newList = []
         _.each(t, function (el) {
           if (el != null && el.includes("Undian")) {
@@ -345,7 +345,7 @@
     /**
      * TODO: finish save bagan
      */
-    function saveBagan() {}
+    function saveBagan() { }
 
     function initBrackets() {
       var jumlahPeserta = $("input[name='jumlah_peserta']").val();
@@ -367,7 +367,7 @@
       $bracketWrapper.append($template);
 
       console.log(teams)
-      
+
       $('.js-bracket').bracket({
         init: bracketData.data, teamWidth: 300,
       });
@@ -379,7 +379,7 @@
       var xobj = new XMLHttpRequest();
       xobj.overrideMimeType("application/json");
       xobj.open('GET', '/template-bagan.json', true);
-      xobj.onreadystatechange = function() {
+      xobj.onreadystatechange = function () {
         if (xobj.readyState === 4 && xobj.status === 200) {
           callback(xobj.responseText);
         }
@@ -388,21 +388,21 @@
     }
 
     function initContohBagan() {
-      loadJSON(function(response) {
+      loadJSON(function (response) {
         var brackets = JSON.parse(response);
         var $bracketWrapper = $('.js-contoh-bagan');
-        for (var i = 2; i<=50;i++) {
+        for (var i = 2; i <= 50; i++) {
           var bracketTemplate = "<div>" +
-              "<div class='row mb-1 mt-1 js-bracket-name' style='width:100%'></div>" +
-              "<div class='js-bracket'></div>" +
-              "</div>";
+            "<div class='row mb-1 mt-1 js-bracket-name' style='width:100%'></div>" +
+            "<div class='js-bracket'></div>" +
+            "</div>";
           var $template = $(bracketTemplate);
           $template.find('.js-bracket-name').html("Bracket " + i + " : ");
           $template.find('.js-bracket').data("jumlah", i);
           $bracketWrapper.append($template);
         }
 
-        $('.js-bracket').each(function() {
+        $('.js-bracket').each(function () {
           var jumlah = $(this).data("jumlah");
           var bracketData = brackets.brackets[jumlah];
           if (bracketData) {
@@ -438,242 +438,293 @@
 (function () {
   $(function () {
 
-    $('.js-turnamen-generate-jadwal').on('click', function() {
+    $('.js-turnamen-generate-jadwal').on('click', function () {
       var url = $(this).data("url");
       swal({
         title: "Perhatian",
         text: "Apabila Jadwal Telah Dibuat Maka Undian Sudah Tidak Bisa Diubah",
         icon: "warning",
         buttons: ["Cancel", "Buat"],
-      }).then(function(confirm) {
+      }).then(function (confirm) {
         if (confirm) {
-         window.location.href= url;
+          window.location.href = url;
         }
       });
     });
 
-    $(document).on('click', '.js-jadwal__atur-pertandingan', function() {
+    $(document).on('click', '.js-jadwal__atur-pertandingan', function () {
       var id = $(this).data("id");
       var url = $(this).data("url");
       var jumlah_gelanggang = $('input[name="jumlah_gelanggang"]').val()
       var template = "";
-      for (var i = 1;i <= jumlah_gelanggang;i++) {
+      for (var i = 1; i <= jumlah_gelanggang; i++) {
         template += '<option value="' + i + '">Gelanggang ' + i + '</option>'
       }
       vex.dialog.open({
-          message: 'Atur Nomor Partai dan Nomor Gelanggang',
-          input: [
-              '<style>',
-                  '.vex-custom-field-wrapper {',
-                      'margin: 1em 0;',
-                  '}',
-                  '.vex-custom-field-wrapper > label {',
-                      'display: inline-block;',
-                      'margin-bottom: .2em;',
-                  '}',
-              '</style>',
-              '<div class="vex-custom-field-wrapper">',
-                  '<label for="nomor_partai">Nomor Partai</label>',
-                  '<div class="vex-custom-input-wrapper">',
-                      '<input type="text" name="nomor_partai" />',
-                  '</div>',
-              '</div>',
-              '<div class="vex-custom-field-wrapper">',
-                  '<label for="color">Nomor Gelanggang</label>',
-                  '<div class="vex-custom-input-wrapper">',
-                  '<select name="nomor_gelanggang" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Nomor Gelanggang">',
-                      template,
-                      '</select>',
-                  '</div>',
-              '</div>'
-          ].join(''),
-          callback: function (data) {
-              if (!data) {
-                  return console.log('Cancelled')
-              }
-              $.ajax({
-                method: "POST",
-                url: url,
-                data: {
-                  _csrf: window['_csrf'],
-                  id: id,
-                  nomor_gelanggang: data.nomor_gelanggang,
-                  nomor_partai: data.nomor_partai
-                }
-              }).done(function () {
-                window.location.reload();
-              });
-          }
-      })
-    })
-
-    $(document).on('click', '.js-jadwal__atur-pertandingan-seni', function() {
-      var id = $(this).data("id");
-      var url = $(this).data("url");
-      var jumlah_pool = $('input[name="jumlah_pool"]').val()
-      var template = "";
-      for (var i = 1;i <= jumlah_pool;i++) {
-        template += '<option value="' + i + '">Pool ' + i + '</option>'
-      }
-      vex.dialog.open({
-          message: 'Atur Nomor Pool',
-          input: [
-              '<style>',
-                  '.vex-custom-field-wrapper {',
-                      'margin: 1em 0;',
-                  '}',
-                  '.vex-custom-field-wrapper > label {',
-                      'display: inline-block;',
-                      'margin-bottom: .2em;',
-                  '}',
-              '</style>',
-              '<div class="vex-custom-field-wrapper">',
-                  '<label for="color">Nomor Pool</label>',
-                  '<div class="vex-custom-input-wrapper">',
-                  '<select name="nomor_pool" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Nomor Pool">',
-                      template,
-                      '</select>',
-                  '</div>',
-              '</div>'
-          ].join(''),
-          callback: function (data) {
-              if (!data) {
-                  return console.log('Cancelled')
-              }
-              $.ajax({
-                method: "POST",
-                url: url,
-                data: {
-                  _csrf: window['_csrf'],
-                  id: id,
-                  nomor_pool: data.nomor_pool
-                }
-              }).done(function () {
-                window.location.reload();
-              });
-          }
-      })
-    })
-
-    $(document).on('click','.js-gelanggang__mulai-pertandingan', function() {
-      var data = $(this).data()
-      if (!data) {
-        return console.log('Cancelled')
-    }
-    $.ajax({
-      method: "POST",
-      url: data.url,
-      data: {
-        _csrf: window['_csrf'],
-        id: data.id,
-        nomor_gelanggang: data.nomorGelanggang,
-        status: data.status
-      }
-    }).done(function (data) {
-      console.log("okk")
-      window.location.reload();
-    });
-    })
-
-    $(document).on('click', '.js-gelanggang__mulai-pertandingan-seni', function() {
-      var data = $(this).data()
-      if (!data) {
-        return console.log('Cancelled')
-    }
-    $.ajax({
-      method: "POST",
-      url: data.url,
-      data: {
-        _csrf: window['_csrf'],
-        id: data.id,
-        nomor_pool: data.nomorPool,
-        status: data.status
-      }
-    }).done(function (data) {
-      window.location.reload();
-    });
-    })
-
-    $('.js-gelanggang__pengumuman-pemenang').click(function() {
-      var alasanKemenangan = window.alasanKemenangan
-      if (!alasanKemenangan) return false;
-      
-      var url = $(this).data('url')
-      var pertandinganId = $(this).data("pertandingan");
-      var alasanKemenanganTemplate = ""
-      _.each(alasanKemenangan, function(alasan) {
-        alasanKemenanganTemplate += '<option value="' + alasan + '">' + alasan + '</option>'
-      })
-
-      var sudut = window.sudut
-      var sudutTemplate = ""
-      _.each(sudut, function(s) {
-        sudutTemplate += '<option value="' + s + '">' + s + '</option>'
-      })
-
-      vex.dialog.open({
-        message: 'Pengumuman Pemenang',
+        message: 'Atur Nomor Partai dan Nomor Gelanggang',
         input: [
-            '<style>',
-                '.vex-custom-field-wrapper {',
-                    'margin: 1em 0;',
-                '}',
-                '.vex-custom-field-wrapper > label {',
-                    'display: inline-block;',
-                    'margin-bottom: .2em;',
-                '}',
-            '</style>',
-            '<input type="hidden" name="pertandingan_id" value="' + pertandinganId + '"',
-            '<div class="vex-custom-field-wrapper">',
-                '<label for="color">Sudut Pemenang</label>',
-                '<div class="vex-custom-input-wrapper">',
-                '<select name="sudut" class="form-control js-select2">',
-                    sudutTemplate,
-                    '</select>',
-                '</div>',
-            '</div>',
-            '<div class="vex-custom-field-wrapper">',
-                '<label for="color">Alasan Kemenangan</label>',
-                '<div class="vex-custom-input-wrapper">',
-                '<select name="alasan_kemenangan" class="form-control js-select2">',
-                    alasanKemenanganTemplate,
-                    '</select>',
-                '</div>',
-            '</div>',
+          '<style>',
+          '.vex-custom-field-wrapper {',
+          'margin: 1em 0;',
+          '}',
+          '.vex-custom-field-wrapper > label {',
+          'display: inline-block;',
+          'margin-bottom: .2em;',
+          '}',
+          '</style>',
           '<div class="vex-custom-field-wrapper">',
-          '<label for="poin">Poin Merah</label>',
+          '<label for="nomor_partai">Nomor Partai</label>',
           '<div class="vex-custom-input-wrapper">',
-          '<input type="number" name="poin_merah" max="10" value="0"/>',
+          '<input type="text" name="nomor_partai" />',
+          '</div>',
           '</div>',
           '<div class="vex-custom-field-wrapper">',
-          '<label for="poin">Poin Biru</label>',
+          '<label for="color">Nomor Gelanggang</label>',
           '<div class="vex-custom-input-wrapper">',
-          '<input type="number" name="poin_biru" max="10" value="0" />',
+          '<select name="nomor_gelanggang" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Nomor Gelanggang">',
+          template,
+          '</select>',
           '</div>',
           '</div>'
         ].join(''),
         callback: function (data) {
-            if (!data) {
-                return console.log('Cancelled')
+          if (!data) {
+            return console.log('Cancelled')
+          }
+          $.ajax({
+            method: "POST",
+            url: url,
+            data: {
+              _csrf: window['_csrf'],
+              id: id,
+              nomor_gelanggang: data.nomor_gelanggang,
+              nomor_partai: data.nomor_partai
             }
-            $.ajax({
-              method: "POST",
-              url: url,
-              data: {
-                _csrf: window['_csrf'],
-                pertandingan_id: data.pertandingan_id,
-                sudut: data.sudut,
-                alasan: data.alasan_kemenangan,
-                skor_merah: data.poin_merah,
-                skor_biru: data.poin_biru
-              }
-            }).done(function () {
-              window.location.reload();
-            });
+          }).done(function () {
+            window.location.reload();
+          });
         }
+      })
     })
 
+    $(document).on('click', '.js-jadwal__atur-pertandingan-seni', function () {
+      var id = $(this).data("id");
+      var url = $(this).data("url");
+      var jumlah_pool = $('input[name="jumlah_pool"]').val()
+      var template = "";
+      for (var i = 1; i <= jumlah_pool; i++) {
+        template += '<option value="' + i + '">Pool ' + i + '</option>'
+      }
+      vex.dialog.open({
+        message: 'Atur Nomor Pool',
+        input: [
+          '<style>',
+          '.vex-custom-field-wrapper {',
+          'margin: 1em 0;',
+          '}',
+          '.vex-custom-field-wrapper > label {',
+          'display: inline-block;',
+          'margin-bottom: .2em;',
+          '}',
+          '</style>',
+          '<div class="vex-custom-field-wrapper">',
+          '<label for="color">Nomor Pool</label>',
+          '<div class="vex-custom-input-wrapper">',
+          '<select name="nomor_pool" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Nomor Pool">',
+          template,
+          '</select>',
+          '</div>',
+          '</div>'
+        ].join(''),
+        callback: function (data) {
+          if (!data) {
+            return console.log('Cancelled')
+          }
+          $.ajax({
+            method: "POST",
+            url: url,
+            data: {
+              _csrf: window['_csrf'],
+              id: id,
+              nomor_pool: data.nomor_pool
+            }
+          }).done(function () {
+            window.location.reload();
+          });
+        }
+      })
+    })
 
+    $(document).on('click', '.js-gelanggang__mulai-pertandingan', function () {
+      var data = $(this).data()
+      if (!data) {
+        return console.log('Cancelled')
+      }
+      $.ajax({
+        method: "POST",
+        url: data.url,
+        data: {
+          _csrf: window['_csrf'],
+          id: data.id,
+          nomor_gelanggang: data.nomorGelanggang,
+          status: data.status
+        }
+      }).done(function (data) {
+        console.log("okk")
+        window.location.reload();
+      });
+    })
+
+    $(document).on('click', '.js-gelanggang__mulai-pertandingan-seni', function () {
+      var data = $(this).data()
+      if (!data) {
+        return console.log('Cancelled')
+      }
+      $.ajax({
+        method: "POST",
+        url: data.url,
+        data: {
+          _csrf: window['_csrf'],
+          id: data.id,
+          nomor_pool: data.nomorPool,
+          status: data.status
+        }
+      }).done(function (data) {
+        window.location.reload();
+      });
+    })
+
+    // $('.js-gelanggang__pengumuman-pemenang').click(function() {
+    //   var alasanKemenangan = window.alasanKemenangan
+    //   if (!alasanKemenangan) return false;
+
+    //   var url = $(this).data('url')
+    //   var pertandinganId = $(this).data("pertandingan");
+    //   var alasanKemenanganTemplate = ""
+    //   _.each(alasanKemenangan, function(alasan) {
+    //     alasanKemenanganTemplate += '<option value="' + alasan + '">' + alasan + '</option>'
+    //   })
+
+    //   var sudut = window.sudut
+    //   var sudutTemplate = ""
+    //   _.each(sudut, function(s) {
+    //     sudutTemplate += '<option value="' + s + '">' + s + '</option>'
+    //   })
+
+    //   vex.dialog.open({
+    //     message: 'Pengumuman Pemenang',
+    //     input: [
+    //         '<style>',
+    //             '.vex-custom-field-wrapper {',
+    //                 'margin: 1em 0;',
+    //             '}',
+    //             '.vex-custom-field-wrapper > label {',
+    //                 'display: inline-block;',
+    //                 'margin-bottom: .2em;',
+    //             '}',
+    //         '</style>',
+    //         '<input type="hidden" name="pertandingan_id" value="' + pertandinganId + '"',
+    //         '<div class="vex-custom-field-wrapper">',
+    //             '<label for="color">Sudut Pemenang</label>',
+    //             '<div class="vex-custom-input-wrapper">',
+    //             '<select name="sudut" class="form-control js-select2">',
+    //                 sudutTemplate,
+    //                 '</select>',
+    //             '</div>',
+    //         '</div>',
+    //         '<div class="vex-custom-field-wrapper">',
+    //             '<label for="color">Alasan Kemenangan</label>',
+    //             '<div class="vex-custom-input-wrapper">',
+    //             '<select name="alasan_kemenangan" class="form-control js-select2">',
+    //                 alasanKemenanganTemplate,
+    //                 '</select>',
+    //             '</div>',
+    //         '</div>',
+    //       '<div class="vex-custom-field-wrapper">',
+    //       '<label for="poin">Poin Merah</label>',
+    //       '<div class="vex-custom-input-wrapper">',
+    //       '<input type="number" name="poin_merah" max="10" value="0"/>',
+    //       '</div>',
+    //       '<div class="vex-custom-field-wrapper">',
+    //       '<label for="poin">Poin Biru</label>',
+    //       '<div class="vex-custom-input-wrapper">',
+    //       '<input type="number" name="poin_biru" max="10" value="0" />',
+    //       '</div>',
+    //       '</div>'
+    //     ].join(''),
+    //     callback: function (data) {
+    //         if (!data) {
+    //             return console.log('Cancelled')
+    //         }
+    //         $.ajax({
+    //           method: "POST",
+    //           url: url,
+    //           data: {
+    //             _csrf: window['_csrf'],
+    //             pertandingan_id: data.pertandingan_id,
+    //             sudut: data.sudut,
+    //             alasan: data.alasan_kemenangan,
+    //             skor_merah: data.poin_merah,
+    //             skor_biru: data.poin_biru
+    //           }
+    //         }).done(function () {
+    //           window.location.reload();
+    //         });
+    //     }
+    // })
+
+
+    // })
+
+    $('.js-gelanggang__pengumuman-pemenang').click(function () {
+      var $modal = $('#modalPengumumanPemenang');
+      var alasanKemenangan = window.alasanKemenangan
+      if (!alasanKemenangan) return false;
+      var alasanKemenanganTemplate = "<option>Pilih Alasan Kemenangan</option>"
+      _.each(alasanKemenangan, function (alasan) {
+        alasanKemenanganTemplate += '<option value="' + alasan + '">' + alasan + '</option>'
+      })
+
+      var sudut = window.sudut
+      var sudutTemplate = "<option>Pilih Sudut</option>"
+      _.each(sudut, function (s) {
+        sudutTemplate += '<option value="' + s + '">' + s + '</option>'
+      })
+
+      $modal.find('form select[name="sudut"]').html(sudutTemplate)
+      $modal.find('form select[name="alasan_kemenangan"]').html(alasanKemenanganTemplate)
+
+      $alasanKemenangan = $modal.find('form select[name="alasan_kemenangan"]');
+      var $container = $modal.find('.container-pengumuman')
+      $alasanKemenangan.off('change')
+      $alasanKemenangan.on('change', function () {
+        $container.empty()
+        var selected = $(this).val();
+        if (selected == 'Menang Angka') {
+          var $angkaTemplate = $('#menangAngkaTemplate').html();
+          Mustache.parse($angkaTemplate);
+          var rendered = Mustache.render($angkaTemplate)
+          $container.html(rendered)
+          var pertandingan_id = $modal.find('form input[name="pertandingan_id"]').val()
+          $('.angka-seri').empty()
+          $.get("/pertandingan/get-nilai",
+            { pertandingan_id: pertandingan_id },
+            function (data) {
+              if (data.juri_seri && data.juri_seri.length > 0) {
+                var htmlString = "<h4>Juri Seri</h4>"
+                _.each(data.juri_seri, function(juri) {
+                  var rendered = Mustache.render($('#juriSeriTemplate').html(), juri)
+                  htmlString += rendered
+                })
+                $('.angka-seri').empty()
+                $('.angka-seri').html(htmlString)
+                $('.angka-seri').removeClass('d-none')
+              }
+            })
+        }
+      })
+
+      $modal.modal('show')
     })
   })
 })(jQuery);
@@ -681,18 +732,18 @@
 /**
  * Undian Export To Excel
  */
- (function () {
+(function () {
   $(function () {
 
-    $('.js-undian-export-to-excel').click(function() {
+    $('.js-undian-export-to-excel').click(function () {
       swal({
         title: 'Exporting...',
         allowOutsideClick: false,
         onBeforeOpen: () => {
-            swal.showLoading()
+          swal.showLoading()
         },
         buttons: false
-    });
+      });
 
       var id = $(this).data("undian")
       var url = $(this).data("url")
@@ -709,7 +760,7 @@
           $('.js-download-form').find('input[name="filename"]').val(data.filename)
           $('.js-download-form').submit()
         }
-      }).fail(function() {
+      }).fail(function () {
         swal.close()
       });
     });
@@ -719,7 +770,7 @@
 /**
  * Seni
  */
- (function () {
+(function () {
   $(function () {
 
   })
@@ -728,22 +779,22 @@
 /**
  * Tambah Peseta Massal
  */
- (function () {
+(function () {
   $(function () {
 
-    $('.js-peserta-add-group-item').click(function() {
+    $('.js-peserta-add-group-item').click(function () {
       var template = $('#template-peserta-tanding-massal').html()
       var rendered = Mustache.render(template)
       $(this).closest('div').find('form').append(rendered);
     })
 
-    $('.js-peserta-seni-add-group-item').click(function() {
+    $('.js-peserta-seni-add-group-item').click(function () {
       var template = $('#template-peserta-seni-massal').html()
       var rendered = Mustache.render(template)
       $(this).closest('div').find('form').append(rendered);
     })
 
-    $('.js-peserta-add-group-submit').click(function() {
+    $('.js-peserta-add-group-submit').click(function () {
       $(this).closest('div').find('form').submit()
     })
 
@@ -753,10 +804,10 @@
 /**
  * Bracket Info Wrapper
  */
- (function () {
+(function () {
   $(function () {
 
-    $('.js-bracket-info-wrapper').each(function() {
+    $('.js-bracket-info-wrapper').each(function () {
       var kelas = $(this).data("kelas");
       var url = $(this).data("url")
       var _instance = $(this)
@@ -770,7 +821,7 @@
       }).done(function (data) {
         if (data.bracketData) {
           _instance.bracket({
-            init: data.bracketData, 
+            init: data.bracketData,
             teamWidth: 300
           });
         }

@@ -16,7 +16,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('index')
+
+// Route.get('/login', 'UserController.login')
+// route khusus administrator
+// Route.group(() => {
+    Route.on('/').render('index')
 Route.get('file/download', 'FileController.download')
 
 /**
@@ -71,7 +75,10 @@ Route.get('undian/bagan', 'UndianController.bagan')
 Route.post('undian/undi', 'UndianController.undi')
 Route.post('undian/export', 'UndianController.exportExcel')
 Route.get('undian/lock', 'UndianController.kunciUndian')
+// }).middleware(['rbac:admin'])
 
+// route khusus administrator
+// Route.group(() => {
 /**
 * Jadwal Tanding
 */
@@ -86,6 +93,9 @@ Route.post('pertandingan/rekap-juara', 'JadwalTandingController.rekapJuara')
 Route.get('pertandingan/rekap-medali', 'JadwalTandingController.rekapMedali')
 Route.post('pertandingan/rekap-medali', 'JadwalTandingController.rekapMedali')
 Route.get('pertandingan/jadwal/reset-gelanggang', 'JadwalTandingController.resetGelanggang')
+Route.get('pertandingan/rekap-medali-seni', 'JadwalTandingController.rekapSeni')
+Route.post('pertandingan/rekap-medali-seni', 'JadwalTandingController.rekapSeni')
+Route.get('pertandingan/get-nilai', 'JadwalTandingController.getNilai')
 /**
 * Jadwal Seni
 */
@@ -107,6 +117,7 @@ Route.post('pertandingan/jadwal/mulai-pertandingan', 'TandingController.mulaiPer
 Route.get('tanding/gelanggang/:nomor_gelanggang', 'TandingController.gelanggang')
 Route.get('tanding/gelanggang/:nomor_gelanggang/:halaman', 'TandingController.halaman')
 Route.post('tanding/pengumuman-pemenang', 'TandingController.pengumumanPemenang' )
+Route.post('tanding/pengumuman-pemenang-baru', 'TandingController.pengumumanPemenangBaru' )
 Route.post('pertandingan/export-pdf', 'TandingController.exportToPdf' )
 
 /**
@@ -115,3 +126,6 @@ Route.post('pertandingan/export-pdf', 'TandingController.exportToPdf' )
  Route.post('seni/jadwal/mulai-pertandingan', 'SeniController.mulaiPertandingan')
  Route.get('seni/pool/:nomor_pool', 'SeniController.pool')
  Route.get('seni/pool/:nomor_pool/:halaman', 'SeniController.halaman')
+
+//   }).middleware(['rbac:admin,gelanggang'])
+

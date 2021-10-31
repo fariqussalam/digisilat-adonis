@@ -85,7 +85,6 @@ class PertandinganService {
       }
     }
 
-    console.log(responseList.length)
     return responseList
   }
 

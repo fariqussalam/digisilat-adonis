@@ -61,11 +61,20 @@
                 var nilaiBiru = 0
                 var totalMerah = this.getTotal("merah")
                 var totalBiru = this.getTotal("biru")
+                var justifikasi = "total"
                 if (totalMerah > totalBiru) nilaiMerah = 1
                 else if (totalBiru > totalMerah) nilaiBiru = 1
+                // else if (totalBiru == totalMerah) {
+                //     justifikasi = "hukuman"
+                //     var hukumanMerah = _.filter(this.penilaian, function(n) { return n.sudut == "merah" && n.nilai < 0})
+                //     var hukumanBiru = _.filter(this.penilaian, function(n) { return n.sudut == "biru" && n.nilai < 0})
+                //     if (hukumanMerah.length > hukumanBiru.length) nilaiBiru = 1
+                //     else if (hukumanBiru.length > hukumanMerah.length) nilaiMerah = 1
+                // }
                 return {
                     merah: nilaiMerah,
-                    biru: nilaiBiru
+                    biru: nilaiBiru,
+                    justifikasi: justifikasi
                 }
             }
             this.getNilai = function(sudut, ronde) {

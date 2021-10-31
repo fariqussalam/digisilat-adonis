@@ -1,0 +1,69 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalPengumumanPemenang">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Pengumuman Pemenang</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form name="form-pengumuman-pemenang" method="POST" action="{{ route('TandingController.pengumumanPemenangBaru') }}">
+        <div class="modal-body m-3">
+          {{ csrfField() }}
+            <input type="hidden" name="pertandingan_id" value="{{pertandinganAktif.id}}">
+            <input type="hidden" name="url" value="{{url}}">
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label class="form-label" >Sudut</label>
+                <select class="form-control mb-3" name="sudut">
+                  <option>Pilih Sudut</option>
+                </select>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" >Alasan Kemenangan</label>
+                <select class="form-control mb-3" name="alasan_kemenangan">
+                  <option>Pilih Alasan Kemenangan</option>
+                </select>
+              </div>
+            </div>
+            <div class="container-pengumuman">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <script id="menangAngkaTemplate" type="x-tmpl-mustache">
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label class="form-label" >Poin Merah</label>
+        <input type="number" class="form-control" name="poin_merah" value="0">
+      </div>
+      <div class="mb-3 col-md-6">
+        <label class="form-label">Poin Biru</label>
+        <input type="number" class="form-control" name="poin_biru" value="0">
+      </div>
+    </div>
+    <div class="row angka-seri d-none"></div>
+  </script>
+  <script id="juriSeriTemplate" type="x-tmpl-mustache">
+    <div class="col-md-5">
+      <span><b>Juri @{{nomor_juri}} </b></span>
+      <ul>
+        <li>Nilai Merah =  @{{nilai_merah}}</li>
+        <li>Hukuman Merah =  @{{hukuman_merah}}</li>
+        <li>Nilai Biru =  @{{nilai_biru}}</li>
+        <li>Hukuman Biru =  @{{hukuman_biru}}</li>
+        <div class="mt-1">
+          <h5>Pemenang</h5>
+          <input type="radio" class="m-2" name="pemenang_juri_@{{nomor_juri}}" value="merah">
+          <label>Merah</label>
+          <input type="radio" class="m-2" name="pemenang_juri_@{{nomor_juri}}" value="biru">
+          <label>Biru</label>
+        </div>
+      </ul>
+      
+    </div>
+  </script>

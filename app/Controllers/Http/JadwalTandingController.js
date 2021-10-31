@@ -7,6 +7,7 @@ const PertandinganService = use('App/Services/PertandinganService')
 const Pertandingan = use('App/Models/Pertandingan')
 const TandingService = use('App/Services/TandingService')
 const RekapService = use('App/Services/RekapService')
+const Database = use('Database')
 const fs = require('fs')
 const TemplateHandler = require('easy-template-x').TemplateHandler
 
@@ -179,6 +180,16 @@ class JadwalTandingController {
     })
   }
 
+  async rekapSeni( { request, view, response} ) {
+    const tournament = request.activeTournament
+
+    const kategoriList = [];
+    view.render('rekap.rekap-medali-seni', {
+      tournament: tournament
+    })
+    return
+  }
+
   async cetakSemuaJadwal({request, view, response}) {
     const param = request.only(['kelas'])
     const pertandinganList = await this.pertandinganService.getPertandinganList(
@@ -267,6 +278,34 @@ class JadwalTandingController {
     response.response.setHeader('Content-disposition', 'attachment; filename=' + filename);
     response.type('application/octet-stream')
     response.send(doc)
+  }
+
+  async getNilai({ request, response, view }) {
+    const { pertandingan_id } = request.all()
+
+    const result = await Database.select('data_pertandingan').from('pertandingan').where({id: pertandingan_id}).first()
+    const data_pertandingan = JSON.parse(result.data_pertandingan)
+
+    let juri_seri = []
+    for (let [key, value] of Object.entries(data_pertandingan.dewanJuri)) {
+      const { nomorJuri, penilaian } = value
+      const totalNilaiMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah'), (memo, n) => memo + n.nilai, 0)
+      const totalNilaiBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru'), (memo, n) => memo + n.nilai, 0)
+      if (totalNilaiMerah == totalNilaiBiru) {
+        const hukumanMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
+        const hukumanBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
+        juri_seri.push({
+          nomor_juri: nomorJuri,
+          nilai_merah: totalNilaiMerah,
+          nilai_biru: totalNilaiBiru,
+          hukuman_merah: hukumanMerah,
+          hukuman_biru: hukumanBiru
+        })
+      }}
+
+
+    response.json({juri_seri: juri_seri})
+    return
   }
 
 } 

@@ -97,6 +97,11 @@ table.tanding-admin.table-bordered > tbody > tr > td {
     background-color: red;
 }
 
+.sisi-total {
+    color: white;
+    background-color: dimgrey;
+}
+
 .tanding-juri-radio {
     margin-top: 30px;
     font-size: 20px;

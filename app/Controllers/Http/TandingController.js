@@ -84,7 +84,6 @@ class TandingController {
     pertandingan.pemenang = params.sudut.toUpperCase()
     pertandingan.alasan_kemenangan = params.alasan
     pertandingan.tanggal_pertandingan = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
-    // pertandingan.status = "SELESAI"
 
     try {
       const poinMerah = params.skor_merah
@@ -96,17 +95,59 @@ class TandingController {
       pertandingan.skor_biru = null
     }
 
-    if (alasanKemenangan === 'menang angka') {
-      // const poin = await this.tandingService.getPoinPertandingan(pertandingan.id)
-      // console.log(poin)
-      // if (poin) {
-      //   pertandingan.skor_merah = poin.skor_merah
-      //   pertandingan.skor_biru = poin.skor_biru
-      // }
-    }
     await pertandingan.save()
     
     return response.json({success: true})
+  }
+
+  async pengumumanPemenangBaru({request, response, view}) {
+  const {url, pertandingan_id, sudut, alasan_kemenangan, poin_merah, poin_biru} = request.all() 
+  const pertandingan = await Pertandingan.findOrFail(pertandingan_id)
+    const alasanKemenangan = alasan_kemenangan.toLowerCase()
+    pertandingan.pemenang = sudut.toUpperCase()
+    pertandingan.alasan_kemenangan = alasan_kemenangan
+    pertandingan.tanggal_pertandingan = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+
+    if (alasanKemenangan == 'menang angka') {
+      try {
+        pertandingan.skor_merah = parseInt(poin_merah)
+        pertandingan.skor_biru = parseInt(poin_biru)
+
+        let keys_seri = _.pick(request.all(), (value, key, obj) => key.includes('pemenang_juri_'))
+        if (keys_seri) {
+          
+          let hasil_seri = []
+          _.mapObject(keys_seri, function(val, key) {
+            let nomor_juri = key.split("_")[2];
+            hasil_seri.push({
+              nomor_juri: nomor_juri,
+              pemenang: val
+            })
+            return null
+          })
+  
+          const data_pertandingan = JSON.parse(pertandingan.data_pertandingan)
+          data_pertandingan.hasil_seri = hasil_seri
+          pertandingan.data_pertandingan = JSON.stringify(data_pertandingan)
+        }
+      } catch (e) {
+        console.log(e.message)
+      }
+    } else {
+      if (sudut.toUpperCase() == "MERAH") {
+        pertandingan.skor_merah = 1
+        pertandingan.skor_biru = 0
+      } else if (sudut.toUpperCase() == "BIRU") {
+        pertandingan.skor_merah = 0
+        pertandingan.skor_biru = 1
+      }
+    }
+    
+    await pertandingan.save()
+    // console.log(pertandingan.toJSON())
+    
+    response.redirect(url)
+    return
   }
 
   async exportToPdf({request, response, view}) {

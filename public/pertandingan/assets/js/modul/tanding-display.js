@@ -41,18 +41,26 @@
         }
 
         function renderPoin(poinMerah, poinBiru) {
-            $('.js-tanding-display-poin-merah').text(poinMerah)
-            $('.js-tanding-display-poin-biru').text(poinBiru)
+            $('.js-tanding-display-poin-merah').text(poinMerah ? poinMerah : 0)
+            $('.js-tanding-display-poin-biru').text(poinBiru ? poinBiru : 0)
         }
 
-        function renderPemenang(data, pemberiPoin) {
-            console.log(pemberiPoin)
-            var $indikatorMerah = $('[data-indikator-merah="true"], .js-tanding-display__nilai[data-sudut="merah"]')
-            var $indikatorBiru = $('[data-indikator-biru="true"], .js-tanding-display__nilai[data-sudut="biru"]')
+        function renderPemenang(data, pemberiPoin, hasil_seri) {
+            // var $indikatorMerah = $('[data-indikator-merah="true"], .js-tanding-display__nilai[data-sudut="merah"]')
+            // var $indikatorBiru = $('[data-indikator-biru="true"], .js-tanding-display__nilai[data-sudut="biru"]')
             $('.js-tanding-display-merah-nama').text(data.merah.nama)
             $('.js-tanding-display-biru-nama').text(data.biru.nama)
-            $indikatorMerah.removeClass("glow-img-danger").css("background-color", "red")
-            $indikatorBiru.removeClass("glow-img-primary").css("background-color", "")
+            // $indikatorMerah.removeClass("sisi-merah")
+            // $indikatorBiru.removeClass("sisi-biru")
+            // $indikatorMerah.removeClass("glow-img-danger").css("background-color", "dimgrey")
+            // $indikatorBiru.removeClass("glow-img-primary").css("background-color", "dimgrey")
+            $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"]')
+            .removeClass('glow-img-danger').removeClass('sisi-merah')
+            .addClass('sisi-total')
+            $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"]')
+            .removeClass('sisi-biru')
+            .removeClass('glow-img-primary')
+            .addClass('sisi-total')
             if (data.pemenang === 'MERAH') {
                 $('.js-tanding-display-merah-nama').text(data.merah.nama + " (Pemenang)")
                 $('.sisi-biru.display-name').css("background-color", "dimgrey")
@@ -64,17 +72,30 @@
             }
 
             _.each(pemberiPoin.merah, function(m) {
-                $('[data-indikator-merah="true"][data-juri="' + m + '"]').addClass("glow-img-danger")
-                $('.js-tanding-display__nilai[data-sudut="merah"][data-juri="'+ m +'"]').addClass("glow-img-danger")
-                $('.js-tanding-display__nilai[data-sudut="biru"][data-juri="'+ m +'"]').css("background-color", "dimgrey")
-                $('[data-indikator-biru="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
+                // $('[data-indikator-merah="true"][data-juri="' + m + '"]').addClass("glow-img-danger")
+                $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ m +'"]').removeClass('sisi-total').addClass('sisi-merah').addClass("glow-img-danger")
+                // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').addClass('sisi-total')
+                // $('[data-indikator-biru="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
             })
             _.each(pemberiPoin.biru, function(m) {
-                $('[data-indikator-biru="true"][data-juri="' + m + '"]').addClass("glow-img-primary")
-                $('.js-tanding-display__nilai[data-sudut="biru"][data-juri="'+ m +'"]').addClass("glow-img-primary")
-                $('.js-tanding-display__nilai[data-sudut="merah"][data-juri="'+ m +'"]').css("background-color", "dimgrey")
-                $('[data-indikator-merah="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
+                // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').addClass('sisi-biru')
+                // // $('[data-indikator-biru="true"][data-juri="' + m + '"]').addClass("glow-img-primary")
+                // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').addClass("glow-img-primary").css("background-color", "")
+                // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ m +'"]').css("background-color", "dimgrey")
+                // // $('[data-indikator-merah="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
+                $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').removeClass('sisi-total').addClass('sisi-biru').addClass("glow-img-primary")
+                // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ m +'"]').addClass('sisi-total')
             })
+
+            if (hasil_seri && hasil_seri.length > 0) {
+                _.each(hasil_seri, function(item) {
+                    if (item.pemenang == "merah") {
+                        $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ item.nomor_juri +'"]').removeClass('sisi-total').addClass('sisi-merah').addClass("glow-img-danger")
+                    } else if (item.pemenang == "biru") {
+                        $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ item.nomor_juri +'"]').removeClass('sisi-total').addClass('sisi-biru').addClass("glow-img-primary")
+                    }
+                })
+            }
         }
 
         $(document).ready(function() {
@@ -111,7 +132,9 @@
             }) ;
             setWarnaRonde(state.ronde)
             if (data.pemenang) {
-                renderPemenang(data, pemberiPoin)
+                state.hasil_seri = data.hasil_seri
+                renderPemenang(data, pemberiPoin, data.hasil_seri)
+                renderPoin(data.skor_merah, data.skor_biru)
             }
         })
         socket.on('kontrol-ronde', function(currentRonde) {
