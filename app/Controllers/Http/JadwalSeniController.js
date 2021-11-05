@@ -184,10 +184,22 @@ class JadwalSeniController {
     orderedList = _.sortBy(orderedList, 'nomor_pool')
     orderedList = _.sortBy(orderedList, 'kategori_id')
 
-    const templateFile = fs.readFileSync('templates/template-pool-list-all.docx');
+    const poolMap = _.groupBy(orderedList, 'nomor_pool')
+    console.log(poolMap)
+    const poolList = []
+    _.each(_.keys(poolMap), function(k, idx) {
+      let pertandinganList = poolMap[k]
+      poolList.push({
+        idx: idx + 1,
+        pertandinganList: pertandinganList,
+        nomor_pool: k
+      })
+    })
+
+    const templateFile = fs.readFileSync('templates/template-pool-list.docx');
     const handler = new TemplateHandler();
     const doc = await handler.process(templateFile, {
-      pertandinganList: orderedList
+      pool: poolList
     });
     
     response.response.setHeader('Content-disposition', 'attachment; filename=' + 'jadwal-seni.docx');

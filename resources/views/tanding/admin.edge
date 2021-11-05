@@ -50,9 +50,9 @@
                           {{--  <td>-- Skor Pertandingan --</td>  --}}
                           <td>
                             @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                            <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomor_gelanggang}}" >Mulai</button>
+                            <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-type="tanding" data-nomor-gelanggang="{{nomor_gelanggang}}" >Mulai</button>
                             @elseif(pertandingan.status.name == 'BERJALAN')
-                            <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-gelanggang="{{nomor_gelanggang}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
+                            <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan" data-url="{{ route('TandingController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-type="tanding" data-nomor-gelanggang="{{nomor_gelanggang}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
                             @endif
                           </td>
                         </tr>

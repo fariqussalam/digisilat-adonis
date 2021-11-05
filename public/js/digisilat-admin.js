@@ -439,6 +439,30 @@
 (function () {
   $(function () {
 
+    var socket;
+    var type;
+    var tandingIndikator = $('.js-gelanggang__mulai-pertandingan');
+    var isTanding = tandingIndikator && tandingIndikator.length > 0;
+    if (isTanding) {
+      var pertandinganId = tandingIndikator.data("id");
+      socket = io({ query: { type: 'tanding', name : 'gelanggang', pertandinganId: pertandinganId } });
+      type = 'tanding'
+    }
+
+    var seniIndikator = $('.js-gelanggang__mulai-pertandingan-seni');
+    var isSeni = seniIndikator && seniIndikator.length > 0;
+    if (isSeni) {
+      var pertandinganId = seniIndikator.data("id");
+      socket = io({ query: { type: 'seni', name : 'gelanggang', pertandinganId: pertandinganId } });
+      type = 'seni'
+    }
+
+    if (socket) {
+      socket.on('connect', function() {
+        console.log("Connected to Server")
+      });
+    }
+
     $('.js-turnamen-generate-jadwal').on('click', function () {
       var url = $(this).data("url");
       swal({
@@ -558,6 +582,7 @@
 
     $(document).on('click', '.js-gelanggang__mulai-pertandingan', function () {
       var data = $(this).data()
+      var status = data.status
       if (!data) {
         return console.log('Cancelled')
       }
@@ -571,13 +596,17 @@
           status: data.status
         }
       }).done(function (data) {
-        console.log("okk")
+        console.log(data.status)
+        if (socket && status != "BELUM_DIMULAI") {
+          socket.emit('refresh-pertandingan', type)
+        }
         window.location.reload();
       });
     })
 
     $(document).on('click', '.js-gelanggang__mulai-pertandingan-seni', function () {
       var data = $(this).data()
+      var status = data.status
       if (!data) {
         return console.log('Cancelled')
       }
@@ -591,6 +620,9 @@
           status: data.status
         }
       }).done(function (data) {
+        if (socket && status != "BELUM_DIMULAI") {
+          socket.emit('refresh-pertandingan', type)
+        }
         window.location.reload();
       });
     })

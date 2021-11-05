@@ -131,5 +131,22 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
+    /*
+    Refresh Pertandingan
+    * */
+    socket.on('refresh-pertandingan', function(type) {
+        if (type == 'seni') {
+            var rooms = Array.from( io.sockets.adapter.rooms.keys() );
+            var filtered = _.filter(rooms, (name) => name.indexOf('tunggal') >= 0 || name.indexOf('ganda') >= 0 || name.indexOf('regu') >= 0)
+
+            _.each(filtered, (r) => io.to(r).emit('refresh'))
+        } else {
+            var rooms = Array.from( io.sockets.adapter.rooms.keys() );
+            var filtered = _.filter(rooms, (name) => name.indexOf(type) >= 0)
+
+            _.each(filtered, (r) => io.to(r).emit('refresh'))
+        }
+    })
+
 
 });
