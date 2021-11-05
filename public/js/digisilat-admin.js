@@ -535,6 +535,7 @@
     $(document).on('click', '.js-jadwal__atur-pertandingan-seni', function () {
       var id = $(this).data("id");
       var url = $(this).data("url");
+      var nomor_penampil = $(this).data("nomor-penampil");
       var jumlah_pool = $('input[name="jumlah_pool"]').val()
       var template = "";
       for (var i = 1; i <= jumlah_pool; i++) {
@@ -553,9 +554,15 @@
           '}',
           '</style>',
           '<div class="vex-custom-field-wrapper">',
+          '<label for="color">Nomor Penampil</label>',
+          '<div class="vex-custom-input-wrapper">',
+          '<input type="text" name="nomor_penampil" class="form-control" value="'  + nomor_penampil + '" data-placeholder="Pilih Nomor Pool">',
+          '</div>',
+          '</div>',
+          '<div class="vex-custom-field-wrapper">',
           '<label for="color">Nomor Pool</label>',
           '<div class="vex-custom-input-wrapper">',
-          '<select name="nomor_pool" class="form-control js-select2 js-auto-submit" data-placeholder="Pilih Nomor Pool">',
+          '<select name="nomor_pool" class="form-control js-select2" data-placeholder="Pilih Nomor Pool">',
           template,
           '</select>',
           '</div>',
@@ -571,7 +578,8 @@
             data: {
               _csrf: window['_csrf'],
               id: id,
-              nomor_pool: data.nomor_pool
+              nomor_pool: data.nomor_pool,
+              nomor_penampil: data.nomor_penampil
             }
           }).done(function () {
             window.location.reload();

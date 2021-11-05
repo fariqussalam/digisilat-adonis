@@ -58,7 +58,7 @@
               <td>{{ pertandingan.skor_akhir ? pertandingan.skor_akhir : "-"  }}</td>
               <td>
                 @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalSeniController.updatePartaiSeni') }}" data-id="{{pertandingan.id}}" >Atur</button>
+                <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan-seni" data-url="{{ route('JadwalSeniController.updatePartaiSeni') }}" data-id="{{pertandingan.id}}" data-nomor-penampil="{{pertandingan.nomor_penampil ? pertandingan.nomor_penampil : ''}}" >Atur</button>
                 @else
                 -
                 @endif
@@ -76,6 +76,7 @@
             <h3>Jadwal Seni</h3>
         </div>
         <div class="col-10">
+            <a class=" mr-5 ml-1 float-end btn btn-info" style="margin-left: 10px;" href="{{route('JadwalSeniController.resetNomorPenampil')}}">Reset Nomor Penampil</a>
           <a class="float-end btn btn-info" href="{{route('JadwalSeniController.resetPool')}}">Reset Pool</a>
         </div>
         @include('partials/flash')

@@ -111,10 +111,10 @@ class JadwalSeniController {
   }
 
   async updatePartaiSeni ({ request, response }) {
-    const params = request.only(['id', 'nomor_pool'])
-
+    const params = request.only(['id', 'nomor_pool', 'nomor_penampil'])
     const pertandinganSeni = await PertandinganSeni.find(params.id)
     pertandinganSeni.nomor_pool = params.nomor_pool
+    pertandinganSeni.nomor_penampil = params.nomor_penampil
     await pertandinganSeni.save()
 
     response.route('JadwalSeniController.jadwalSeni')
@@ -127,6 +127,15 @@ class JadwalSeniController {
     await PertandinganSeni.query()
       .where({ tournament_id: tournament.id })
       .update({ nomor_pool: null })
+    return response.route('JadwalSeniController.jadwalSeni')
+  }
+
+
+  async resetNomorPenampil ({ request, response }) {
+    const tournament = await request.activeTournament
+    await PertandinganSeni.query()
+        .where({ tournament_id: tournament.id })
+        .update({ nomor_penampil: null })
     return response.route('JadwalSeniController.jadwalSeni')
   }
 
