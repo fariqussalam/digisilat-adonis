@@ -591,6 +591,7 @@
     $(document).on('click', '.js-gelanggang__mulai-pertandingan', function () {
       var data = $(this).data()
       var status = data.status
+      var aktifId = data.aktif
       if (!data) {
         return console.log('Cancelled')
       }
@@ -604,9 +605,8 @@
           status: data.status
         }
       }).done(function (data) {
-        console.log(data.status)
-        if (socket && status != "BELUM_DIMULAI") {
-          socket.emit('refresh-pertandingan', type)
+        if (socket && aktifId) {
+          socket.emit('refresh-pertandingan', aktifId)
         }
         window.location.reload();
       });
@@ -615,6 +615,7 @@
     $(document).on('click', '.js-gelanggang__mulai-pertandingan-seni', function () {
       var data = $(this).data()
       var status = data.status
+      var aktifId = data.aktif
       if (!data) {
         return console.log('Cancelled')
       }
@@ -628,8 +629,8 @@
           status: data.status
         }
       }).done(function (data) {
-        if (socket && status != "BELUM_DIMULAI") {
-          socket.emit('refresh-pertandingan', type)
+        if (socket && aktifId) {
+          socket.emit('refresh-pertandingan', aktifId)
         }
         window.location.reload();
       });

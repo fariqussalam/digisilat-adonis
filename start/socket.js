@@ -134,16 +134,23 @@ io.on('connection', async function(socket){
     /*
     Refresh Pertandingan
     * */
-    socket.on('refresh-pertandingan', function(type) {
-        if (type == 'seni') {
-            var rooms = Array.from( io.sockets.adapter.rooms.keys() );
-            var filtered = _.filter(rooms, (name) => name.indexOf('tunggal') >= 0 || name.indexOf('ganda') >= 0 || name.indexOf('regu') >= 0)
+    socket.on('refresh-pertandingan', function(aktifId) {
+        // if (type == 'seni') {
+        //     var rooms = Array.from( io.sockets.adapter.rooms.keys() );
+        //     var filtered = _.filter(rooms, (name) => name.indexOf('tunggal') >= 0 || name.indexOf('ganda') >= 0 || name.indexOf('regu') >= 0)
+        //
+        //     _.each(filtered, (r) => io.to(r).emit('refresh'))
+        // } else {
+        //     var rooms = Array.from( io.sockets.adapter.rooms.keys() );
+        //     var filtered = _.filter(rooms, (name) => name.indexOf(type) >= 0)
+        //
+        //     _.each(filtered, (r) => io.to(r).emit('refresh'))
+        // }
 
-            _.each(filtered, (r) => io.to(r).emit('refresh'))
-        } else {
-            var rooms = Array.from( io.sockets.adapter.rooms.keys() );
-            var filtered = _.filter(rooms, (name) => name.indexOf(type) >= 0)
+        var rooms = Array.from( io.sockets.adapter.rooms.keys() );
+            var filtered = _.filter(rooms, (name) => name.indexOf(aktifId) >= 0)
 
+        if (filtered && filtered.length > 0) {
             _.each(filtered, (r) => io.to(r).emit('refresh'))
         }
     })

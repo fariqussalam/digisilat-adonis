@@ -38,9 +38,9 @@
                           <td>{{ pertandingan.skor_akhir ? pertandingan.skor_akhir : "-"  }}</td>
                           <td>
                               @if(pertandingan.status.name == 'BELUM_DIMULAI')
-                              <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" >Mulai</button>
+                              <button class="btn btn-sm btn-info js-gelanggang__mulai-pertandingan-seni" data-aktif="{{pertandinganAktif.id}}" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" >Mulai</button>
                               @elseif(pertandingan.status.name == 'BERJALAN')
-                              <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan-seni" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
+                              <button class="btn btn-sm btn-danger js-gelanggang__mulai-pertandingan-seni" data-aktif="{{pertandinganAktif.id}}" data-url="{{ route('SeniController.mulaiPertandingan') }}" data-id="{{pertandingan.id}}" data-nomor-pool="{{nomor_pool}}" data-status="BELUM_DIMULAI" >Hentikan Pertandingan</button>
                               @endif                                
                           </td>
                       </tr>
