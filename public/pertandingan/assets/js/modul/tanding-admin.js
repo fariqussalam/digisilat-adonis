@@ -27,6 +27,7 @@
         }
 
         var pertandinganId = $('input[name="pertandingan_id"]').val();
+        var jumlahJuri = $('input[name="jumlah_juri"]').val();
         var state = new DigiSilat.State.Dewan();
         var socket = DigiSilat.createSocket("tanding", "Tanding Dewan", pertandinganId)
 
@@ -38,12 +39,20 @@
             setDataPertandingan(data)
             state.dewanJuri = data.dewanJuri;
             var juriList = _.keys(state.dewanJuri);
+            if (jumlahJuri && !isNaN(jumlahJuri)) {
+                var modified = _.first(juriList, jumlahJuri);
+                var sisaJuri = _.difference(juriList, modified);
+                juriList = modified
+            }
             _.each(juriList, function(nomorJuri) {
                 var juri = new DigiSilat.Juri(nomorJuri);
                 juri.penilaian = state.dewanJuri[nomorJuri].penilaian
                 renderInitialData(juri);
             }) ;
-
+            _.each(sisaJuri, function(nomorJuri) {
+                $('.js-nilai-pertandingan[data-juri="'+ nomorJuri +'"]').css("display", "none");
+                $('.js-juri-pertandingan[data-juri="'+ nomorJuri +'"]').css("display", "none");
+            });
             if (data.pemenang == "MERAH" || data.pemenang == "BIRU") {
                 if (data.updated_at) setDateAndTime(data.updated_at)
                 setDataPemenang(data)

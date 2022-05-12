@@ -2,6 +2,7 @@
     $(function () {
 
         var pertandinganId = $('input[name="pertandingan_id"]').val();
+        var jumlahJuri = $('input[name="jumlah_juri"]').val();
         var state = new DigiSilat.State.Display();
 
         function renderInitialData(juri) {
@@ -110,10 +111,16 @@
             state.ronde = data.ronde
 
             var juriList = _.keys(state.dewanJuri);
+            var sisaJuri = []
             var poinMerah = 0, poinBiru = 0;
             var pemberiPoin = {
                 merah: [],
                 biru: []
+            }
+            if (jumlahJuri && !isNaN(jumlahJuri)) {
+                var modified = _.first(juriList, jumlahJuri);
+                var sisaJuri = _.difference(juriList, modified);
+                juriList = modified
             }
             _.each(juriList, function(nomorJuri) {
                 var juri = new DigiSilat.Juri(nomorJuri);
@@ -130,6 +137,10 @@
                 }
                 renderPoin(poinMerah, poinBiru)
             }) ;
+            _.each(sisaJuri, function(nomorJuri) {
+                $('.js-tanding-display__nilai[data-juri="'+ nomorJuri +'"]').css("display", "none");
+                $('.js-tanding-display__juri[data-juri="'+ nomorJuri +'"]').css("display", "none");
+            });
             setWarnaRonde(state.ronde)
             if (data.pemenang) {
                 state.hasil_seri = data.hasil_seri
@@ -159,7 +170,6 @@
         });
 
         socket.on('timer-command', function(data) {
-            console.log(data)
             if (data.command == 'start') {
                 timer.start({startValues: {seconds: state.countdown}});
             } else if (data.command == 'stop') {

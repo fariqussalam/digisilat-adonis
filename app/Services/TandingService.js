@@ -105,7 +105,7 @@ class TandingService {
 
         let dataPertandinganJson, skor_merah = 0, skor_biru = 0;
         try {
-            let listJuri = [1, 2, 3, 4, 5]
+            let listJuri = [1, 2, 3]
             dataPertandinganJson = JSON.parse(dataPertandinganString)
             let jsonDewanJuri = dataPertandinganJson.dewanJuri
             _.each(listJuri, (nomorJuri) => {

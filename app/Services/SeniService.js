@@ -11,6 +11,8 @@ const template_tunggal = use('App/DTO/pertandingan_seni.json')
 const template_ganda = use('App/DTO/pertandingan_ganda.json')
 const template_regu = use('App/DTO/pertandingan_regu.json')
 
+const jumlahJuri = 3
+
 class SeniService {
     constructor() {
         this.pesilatService = new PesilatService
@@ -194,12 +196,12 @@ class SeniService {
 
     getJuriMax(dewanJuri) {
         var totalNilaiArray = []
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= jumlahJuri; i++) {
             totalNilaiArray.push(this.getTotalNilai(dewanJuri[i.toString()]));
         }
         var totalNilai = this.getMaxOfArray(totalNilaiArray);
         var juriMax;
-        for (var x = 1; x <= 5; x++) {
+        for (var x = 1; x <= jumlahJuri; x++) {
             var nilai = this.getTotalNilai(dewanJuri[x.toString()]);
             if (totalNilai === nilai) {
                 juriMax = dewanJuri[x.toString()];
@@ -210,12 +212,12 @@ class SeniService {
 
     getJuriMin(excluded, dewanJuri) {
         var totalNilaiArray = []
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= jumlahJuri; i++) {
             totalNilaiArray.push(this.getTotalNilai(dewanJuri[i.toString()]));
         }
         var totalNilai = this.getMinOfArray(totalNilaiArray);
         var juriMin;
-        for (var x = 1; x <= 5; x++) {
+        for (var x = 1; x <= jumlahJuri; x++) {
             var isExcluded = excluded != null && excluded.nomorJuri === dewanJuri[x.toString()].nomorJuri
             if (!isExcluded) {
                 var nilai = this.getTotalNilai(dewanJuri[x.toString()]);
@@ -232,7 +234,7 @@ class SeniService {
         var juriMax = this.getJuriMax(dewanJuri);
         var juriMin = this.getJuriMin(juriMax, dewanJuri);
         var totalNilai = 0
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= jumlahJuri; i++) {
             totalNilai += this.getTotalNilai(dewanJuri[i.toString()])
         }
         var nilaiTeratas = this.getTotalNilai(juriMax);
@@ -330,7 +332,7 @@ class SeniService {
         var juriMax = this.getJuriMaxGanda(dewanJuri);
         var juriMin = this.getJuriMinGanda(juriMax, dewanJuri);
         var totalNilai = 0
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= jumlahJuri; i++) {
             totalNilai += this.getTotalNilaiGanda(dewanJuri[i.toString()])
         }
         var nilaiTeratas = this.getTotalNilaiGanda(juriMax);
@@ -364,12 +366,12 @@ class SeniService {
 
     getJuriMaxGanda(dewanJuri) {
         var totalNilaiArray = []
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= jumlahJuri; i++) {
             totalNilaiArray.push(this.getTotalNilaiGanda(dewanJuri[i.toString()]));
         }
         var totalNilai = this.getMaxOfArray(totalNilaiArray);
         var juriMax;
-        for (var x = 1; x <= 5; x++) {
+        for (var x = 1; x <= jumlahJuri; x++) {
             var nilai = this.getTotalNilaiGanda(dewanJuri[x.toString()]);
             if (totalNilai === nilai) {
                 juriMax = dewanJuri[x.toString()];
@@ -380,12 +382,12 @@ class SeniService {
 
     getJuriMinGanda(excluded, dewanJuri) {
         var totalNilaiArray = []
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= jumlahJuri; i++) {
             totalNilaiArray.push(this.getTotalNilaiGanda(dewanJuri[i.toString()]));
         }
         var totalNilai = this.getMinOfArray(totalNilaiArray);
         var juriMin;
-        for (var x = 1; x <= 5; x++) {
+        for (var x = 1; x <= jumlahJuri; x++) {
             var isExcluded = excluded != null && excluded.nomorJuri === dewanJuri[x.toString()].nomorJuri
             if (!isExcluded) {
                 var nilai = this.getTotalNilaiGanda(dewanJuri[x.toString()]);

@@ -54,23 +54,23 @@
                         <thead>
                         <tr class="text-center" style="font-size:20px;font-weight:bold;">
                             <th width="5%" colspan="1" rowspan="2" class="text-center bg-success" style="vertical-align:middle">BABAK</th>
-                            <th class="text-center" colspan="2" width="15%">JURI 1</th>
-                            <th class="text-center" colspan="2" width="15%">JURI 2</th>
-                            <th class="text-center" colspan="2" width="15%">JURI 3</th>
-                            <th class="text-center" colspan="2" width="15%">JURI 4</th>
-                            <th class="text-center" colspan="2" width="15%">JURI 5</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="1" colspan="2" width="15%">JURI 1</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="2" colspan="2" width="15%">JURI 2</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="3" colspan="2" width="15%">JURI 3</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="4" colspan="2" width="15%">JURI 4</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="5" colspan="2" width="15%">JURI 5</th>
                         </tr>
                         <tr style="font-size:20px;font-weight:bold">
-                            <td data-indikator-merah="true" data-juri="1" style="background-color:red;color: white;width:9%;">MERAH</td>
-                            <td data-indikator-biru="true"  data-juri="1"style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td data-indikator-merah="true" data-juri="2" style="background-color:red;color:white;width:9%;">MERAH</td>
-                            <td data-indikator-biru="true"  data-juri="2" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td data-indikator-merah="true" data-juri="3"  style="background-color:red;color:white;width:9%;">MERAH</td>
-                            <td data-indikator-biru="true"  data-juri="3" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td data-indikator-merah="true" data-juri="4" style="background-color:red;color:white;width:9%;">MERAH</td>
-                            <td data-indikator-biru="true"  data-juri="4" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
-                            <td data-indikator-merah="true" data-juri="5" style="background-color:red;color:white;width:9%;">MERAH</td>
-                            <td data-indikator-biru="true"  data-juri="5" style="color: #ffffff;width:9%;" class="bg-primary">BIRU</td>
+                            <td class="js-tanding-display__juri" data-indikator-merah="true" data-juri="1" style="background-color:red;color: white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="1" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="2" style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="2" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="3"  style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="3" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="4" style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="4" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="5" style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="5" style="color: #ffffff;width:9%;">BIRU</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -139,6 +139,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" name="jumlah_juri" value="{{request_params.jumlah_juri ? request_params.jumlah_juri : 3 }}" />
 @endsection
 @section('module_js')
 <script src="/pertandingan/lib/easytimer.min.js"></script>
