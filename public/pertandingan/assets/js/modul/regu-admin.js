@@ -24,7 +24,11 @@
                 }
                 return;
             }
+            var excluded = ["4", "5"]
             for (var nomorJuri in data.dewanJuri) {
+                if (_.contains(excluded, nomorJuri)) {
+                    continue
+                }
                 var juri = data.dewanJuri[nomorJuri]
                 
                 for (var jurus of juri.daftarNilai) {
@@ -49,7 +53,7 @@
                 renderSkorAkhir(data.skor_akhir)
                 renderTanggalPertandingan(data.tanggal_pertandingan)
             }
-            var excluded = ["4", "5"]
+            
             _.each(excluded, function(nomorJuri) {
                 $(".js-dewan-regu__juri[data-juri='"+nomorJuri+"']").css("display", "none")
             })

@@ -33,7 +33,11 @@
                 }
                 return;
             }
+            var excluded = ["4", "5"]
             for (var nomorJuri in data.dewanJuri) {
+                if (_.contains(excluded, nomorJuri)) {
+                    continue
+                }
                 var juri = data.dewanJuri[nomorJuri]
                 
                     renderNilaiJurus(juri)
@@ -46,7 +50,7 @@
                     }
             }
 
-            var excluded = ["4", "5"]
+            
             _.each(excluded, function(nomorJuri) {
                 $(".js-regu-display__juri[data-juri='"+nomorJuri+"']").css("display", "none")
             })
