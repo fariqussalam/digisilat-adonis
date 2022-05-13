@@ -1,6 +1,8 @@
 (function () {
     $(function () {
 
+        var listJuri = ["1", "2", "3"]
+        var excludedJuri = ["4", "5"]
         var pertandinganId = $('input[name="pertandingan_id"]').val();
         var state = new DigiSilat.Seni.State.Dewan();
         var socket = DigiSilat.createSocket("tunggal", "Tunggal Dewan", pertandinganId)
@@ -9,13 +11,15 @@
             socket.emit('get-data-pertandingan-seni', { pertandinganId: pertandinganId })
         });
         socket.on('data-pertandingan-seni', function(data) {
-            console.log("Data Pertandingan Seni", data)
             renderPertandingan(data)
         })
 
         function renderPertandingan(data) {
             state.dewanJuri = data.dewanJuri
             for (var nomorJuri in data.dewanJuri) {
+                if (!listJuri.includes(nomorJuri)) {
+                    continue
+                } 
                 var juri = data.dewanJuri[nomorJuri]
                 for (var jurus of juri.daftarNilai) {
                     renderNilaiJurus(juri, jurus.nomorJurus)
@@ -28,6 +32,10 @@
                 renderSkorAkhir(data.skor_akhir)
                 renderTanggalPertandingan(data.tanggal_pertandingan)
             }
+            _.each(excludedJuri, function(nomorJuri) {
+                $(".js-tunggal-admin__nilai[data-juri="+ nomorJuri +"]").css("display", "none")
+                $(".js-tunggal-admin__juri[data-juri="+ nomorJuri +"]").css("display", "none")
+            })
         }
 
         function renderSkorAkhir(skor_akhir) {

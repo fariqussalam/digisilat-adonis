@@ -45,6 +45,11 @@
                         renderSkorAkhir(data.skor_akhir)
                     }
             }
+
+            var excluded = ["4", "5"]
+            _.each(excluded, function(nomorJuri) {
+                $(".js-regu-display__juri[data-juri='"+nomorJuri+"']").css("display", "none")
+            })
         }
 
         function getNilaiJurus(juri, nomorJurus) {

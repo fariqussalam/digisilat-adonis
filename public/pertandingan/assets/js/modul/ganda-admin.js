@@ -43,6 +43,10 @@
                 renderSkorAkhir(data.skor_akhir)
                 renderTanggalPertandingan(data.tanggal_pertandingan)
             }
+            var excluded = ["4", "5"]
+            _.each(excluded, function(nomorJuri) {
+                $(".js-ganda-dewan__juri[data-juri='"+nomorJuri+"']").css("display", "none")
+            })
         }
 
         function getTotalNilai(juri) {

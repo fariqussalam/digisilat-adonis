@@ -25,6 +25,7 @@
         })
 
         function renderPertandingan(data) {
+            var excludedJuri = ["4", "5"]
             var isDisqualified = _.find(_.values(data.dewanJuri), function(j) {
                 return j.diskualifikasi == true
             })
@@ -38,6 +39,9 @@
                 return;
             }
             for (var nomorJuri in data.dewanJuri) {
+                if (excludedJuri.includes(nomorJuri)) {
+                    continue
+                }
                 var juri = data.dewanJuri[nomorJuri]
                     renderNilaiJurus(juri)
                     renderNilaiHukuman(juri)
@@ -47,6 +51,10 @@
                         renderSkorAkhir(data.skor_akhir)
                     }
             }
+           
+            _.each(excludedJuri, function(nomorJuri) {
+                $('.js-tunggal-display__juri[data-juri="'+nomorJuri+'"]').css("display", "none")
+            })
         }
         
         function getNilaiJurus(juri, nomorJurus) {
