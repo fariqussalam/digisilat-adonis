@@ -37,14 +37,14 @@
         socket.on('data-pertandingan', function(data) {
             setDataPertandingan(data)
             state.dewanJuri = data.dewanJuri;
-            var juriList = _.keys(state.dewanJuri);
+            var juriList =["1"];
             _.each(juriList, function(nomorJuri) {
                 var juri = new DigiSilat.Juri(nomorJuri);
                 juri.penilaian = state.dewanJuri[nomorJuri].penilaian
                 renderInitialData(juri);
             }) ;
 
-            if (data.pemenang == "MERAH" || data.pemenang == "BIRU") {
+            if (data.pemenang == "BIRU" || data.pemenang == "KUNING") {
                 if (data.updated_at) setDateAndTime(data.updated_at)
                 setDataPemenang(data)
             }
@@ -61,9 +61,9 @@
 
             var $kelas = $(".js-data-pertandingan__kelas-gender"),
                 $partai = $(".js-data-pertandingan__nomor-partai"),
-                $merah = {
-                    nama: $(".js-data-pertandingan__merah-nama"),
-                    kontingen: $(".js-data-pertandingan__merah-kontingen")
+                $kuning = {
+                    nama: $(".js-data-pertandingan__kuning-nama"),
+                    kontingen: $(".js-data-pertandingan__kuning-kontingen")
                 },
                 $biru = {
                     nama: $(".js-data-pertandingan__biru-nama"),
@@ -72,8 +72,8 @@
 
             $kelas.text(pertandingan.kelas.nama);
             $partai.text(pertandingan.nomor_partai);
-            $merah.nama.text(pertandingan.merah.nama);
-            $merah.kontingen.text(pertandingan.merah.kontingen.nama);
+            $kuning.nama.text(pertandingan.kuning.nama);
+            $kuning.kontingen.text(pertandingan.kuning.kontingen.nama);
             $biru.nama.text(pertandingan.biru.nama);
             $biru.kontingen.text(pertandingan.biru.kontingen.nama);
         }
@@ -84,9 +84,9 @@
 
         function setDataPemenang(data) {
             var pemenang, sudut, alasan_kemenangan = "-";
-            if (data.pemenang === 'MERAH') {
-                pemenang = data.merah
-                sudut = 'Merah'
+            if (data.pemenang === 'KUNING') {
+                pemenang = data.kuning
+                sudut = 'Kuning'
             } else if(data.pemenang === 'BIRU') {
                 pemenang = data.biru
                 sudut = 'Biru'

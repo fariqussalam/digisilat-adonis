@@ -23,24 +23,27 @@
 
         function renderRonde(ronde) {
             $('#remot_ronde').text(ronde)
+            $('.indikator-ronde').css("background-color", "white")
+            $('.indikator-ronde').css("color", "black")
+            $('.indikator-ronde[data-ronde="' + ronde + '"]').css("background-color", "red")
+            $('.indikator-ronde[data-ronde="' + ronde + '"]').css("color", "white")
         }
 
         var pertandinganId = $('input[name="pertandingan_id"]').val();
         var nomorJuriInput = $('input[name="nomorJuri"]').val();
         var state = new DigiSilat.State.Juri();
-        var $modal = $('#modalJuri');
+        // var $modal = $('#modalJuri');
         $(document).ready(function() {
-            if (nomorJuriInput == null) $modal.modal("show");
-            else {
-                state.nomorJuri = nomorJuriInput
+            //if (nomorJuriInput == null) $modal.modal("show");
+            //else {
+                state.nomorJuri = 1
                 $("#remot_nomor_juri").text(state.nomorJuri);
                 socket.emit('koneksi-juri', { nomorJuri: state.nomorJuri });
                 socket.emit('get-data-pertandingan', { pertandinganId: pertandinganId })
-            }
+            //}
         });
 
-        var socket = DigiSilat.createSocket("tanding", 
-        "Tanding Juri", pertandinganId);
+        var socket = DigiSilat.createSocket("tanding", "Tanding Juri", pertandinganId);
         socket.on('data-pertandingan', function(data) {
             var nomorJuri = state.nomorJuri
             var dataJuri = data.dewanJuri[nomorJuri];
@@ -71,9 +74,13 @@
 
         $('.js-tanding-juri-tombol').click(function(){
             var data = $(this).data();
-            var indikator = data.indikator === "plus" ? "+" : "-"
-            var poinString = data.poinString == null ? data.poin : data.poinString
-            var nilai = new DigiSilat.Nilai(data.sudut, state.ronde, indikator, data.poin, poinString)
+            var isHukuman = data.hukuman && data.hukuman.length > 0 && data.hukuman != null
+            var nilai = NewNilai(data.serangan)
+            if (isHukuman) {
+                nilai = NewHukuman(data.hukuman)
+            }
+            nilai.ronde = state.ronde
+            nilai.sudut = data.sudut
             socket.emit('input-skor', {
                 pertandinganId: pertandinganId,
                 nomorJuri: state.nomorJuri,

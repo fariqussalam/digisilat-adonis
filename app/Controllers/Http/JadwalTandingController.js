@@ -288,22 +288,23 @@ class JadwalTandingController {
 
     let juri_seri = []
     for (let [key, value] of Object.entries(data_pertandingan.dewanJuri)) {
-      const { nomorJuri, penilaian } = value
-      const totalNilaiMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah'), (memo, n) => memo + n.nilai, 0)
-      const totalNilaiBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru'), (memo, n) => memo + n.nilai, 0)
-      if (totalNilaiMerah == totalNilaiBiru) {
-        const hukumanMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
-        const hukumanBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
-        juri_seri.push({
-          nomor_juri: nomorJuri,
-          nilai_merah: totalNilaiMerah,
-          nilai_biru: totalNilaiBiru,
-          hukuman_merah: hukumanMerah,
-          hukuman_biru: hukumanBiru
-        })
-      }}
-
-
+      if (key == "1") {
+        const { nomorJuri, penilaian } = value
+        const totalNilaiKuning = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'kuning'), (memo, n) => memo + n.nilai, 0)
+        const totalNilaiBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru'), (memo, n) => memo + n.nilai, 0)
+        if (totalNilaiMerah == totalNilaiBiru) {
+          const hukumanKuning = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'kuning' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
+          const hukumanBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
+          juri_seri.push({
+            nomor_juri: nomorJuri,
+            nilai_kuning: totalNilaiKuning,
+            nilai_biru: totalNilaiBiru,
+            hukuman_kuning: hukumanKuning,
+            hukuman_biru: hukumanBiru
+          })
+        }}
+      }
+    
     response.json({juri_seri: juri_seri})
     return
   }

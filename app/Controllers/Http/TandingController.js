@@ -101,7 +101,7 @@ class TandingController {
   }
 
   async pengumumanPemenangBaru({request, response, view}) {
-  const {url, pertandingan_id, sudut, alasan_kemenangan, poin_merah, poin_biru} = request.all() 
+  const {url, pertandingan_id, sudut, alasan_kemenangan, poin_biru, poin_kuning} = request.all() 
   const pertandingan = await Pertandingan.findOrFail(pertandingan_id)
     const alasanKemenangan = alasan_kemenangan.toLowerCase()
     pertandingan.pemenang = sudut.toUpperCase()
@@ -110,8 +110,8 @@ class TandingController {
 
     if (alasanKemenangan == 'menang angka') {
       try {
-        pertandingan.skor_merah = parseInt(poin_merah)
-        pertandingan.skor_biru = parseInt(poin_biru)
+        pertandingan.skor_merah = parseInt(poin_biru)
+        pertandingan.skor_biru = parseInt(poin_kuning)
 
         let keys_seri = _.pick(request.all(), (value, key, obj) => key.includes('pemenang_juri_'))
         if (keys_seri) {
@@ -134,10 +134,10 @@ class TandingController {
         console.log(e.message)
       }
     } else {
-      if (sudut.toUpperCase() == "MERAH") {
+      if (sudut.toUpperCase() == "BIRU") {
         pertandingan.skor_merah = 1
         pertandingan.skor_biru = 0
-      } else if (sudut.toUpperCase() == "BIRU") {
+      } else if (sudut.toUpperCase() == "KUNING") {
         pertandingan.skor_merah = 0
         pertandingan.skor_biru = 1
       }

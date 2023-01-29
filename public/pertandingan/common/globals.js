@@ -4,7 +4,7 @@
 (function(window){
     var DigiSilat = {
         getSudutList: function() {
-            return ["merah", "biru"]
+            return ["biru", "kuning"]
         },
         getRondeList: function() {
             return [1, 2, 3]
@@ -26,7 +26,7 @@
                 return nilaiString
             }
             var isJatuhan = function(nilai, nilaiString) {
-                return nilai > 0 && (nilaiString == '1+3' || nilaiString == '3')
+                return nilai > 0 && (nilaiString.includes("+") || nilaiString == "40")
             }
             this.getJatuhan = function(sudut, ronde) {
                 var nilaiList = _.filter(this.penilaian, function(n) {

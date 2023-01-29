@@ -53,42 +53,6 @@
     </div>
     @endeach
   </div>
-  <div class="row">
-    <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-              <a href="{{route('KategoriController.createSeni')}}" class="btn btn-primary float-end">
-                  Tambah Kategori Seni
-              </a>
-            <h5 class="card-title">Daftar Kategori Seni</h5>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped datatables-kategori table-full-width">
-              <thead>
-                <tr>
-                  <th width="5%">No</th>
-                  <th width="60%">Nama</th>
-                  <th width="20%">Jenis</th>
-                  <th width="15%"></th>
-                </tr>
-              </thead>
-              <tbody>
-                @each(kategori in kategoriSeniList)
-                  <tr>
-                      <td>{{ $loop.index + 1 }}</td>
-                      <td>{{ kategori.nama }}</td>
-                      <td>{{ kategori.jenis ? kategori.jenis : "-" }}</td>
-                      <td>
-                          <a  href="{{route('KategoriController.editSeni', {id: kategori.id})}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
-                          <a href="{{route('KategoriController.deleteSeni', {id: kategori.id})}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                      </td>
-                  </tr>
-                  @endeach
-              </tbody>
-            </table>
-          </div>
-        </div>
-    </div>
-  </div>
+ 
 </div>
 @endsection

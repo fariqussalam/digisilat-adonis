@@ -466,10 +466,10 @@ class PertandinganService {
             }
             res.result = [pertandingan.skor_merah, pertandingan.skor_biru]
           } else {
-            if (pertandingan.pemenang == "MERAH") {
+            if (pertandingan.pemenang == "BIRU") {
                 res.winner = merah_id,
                 res.result =[1, 0]
-            } else if (pertandingan.pemenang == "BIRU") {
+            } else if (pertandingan.pemenang == "KUNING") {
               res.winner = biru_id,
               res.result =[0, 1]
             }
@@ -515,10 +515,10 @@ class PertandinganService {
             }
             res.result = [pertandingan.skor_merah, pertandingan.skor_biru]
           } else {
-            if (pertandingan.pemenang == "MERAH") {
+            if (pertandingan.pemenang == "BIRU") {
                 res.winner = m[0].winner,
                 res.result =[1, 0]
-            } else if (pertandingan.pemenang == "BIRU") {
+            } else if (pertandingan.pemenang == "KUNING") {
               res.winner = m[1].winner,
               res.result =[0, 1]
             }

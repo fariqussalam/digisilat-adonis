@@ -46,8 +46,8 @@ class TandingService {
 
         let objPertandingan = JSON.parse(dataPertandingan.data_pertandingan);
         const peserta = await this.getPesertaPertandingan(pertandinganId, dataPertandingan.jenis)
-        objPertandingan.merah = peserta.merah
-        objPertandingan.biru = peserta.biru
+        objPertandingan.biru = peserta.merah
+        objPertandingan.kuning = peserta.biru
 
         const kelas = await Kelas.find(dataPertandingan.kelas_id)
         objPertandingan.kelas = kelas.toJSON()
@@ -55,8 +55,8 @@ class TandingService {
 
         if (dataPertandingan.pemenang) objPertandingan.pemenang = dataPertandingan.pemenang
         if (dataPertandingan.alasan_kemenangan) objPertandingan.alasan_kemenangan = dataPertandingan.alasan_kemenangan
-        if (dataPertandingan.skor_merah) objPertandingan.skor_merah = dataPertandingan.skor_merah
         if (dataPertandingan.skor_biru) objPertandingan.skor_biru = dataPertandingan.skor_biru
+        if (dataPertandingan.skor_kuning) objPertandingan.skor_kuning = dataPertandingan.skor_kuning
         if (dataPertandingan.updated_at) objPertandingan.updated_at = dataPertandingan.updated_at
 
         return objPertandingan;
@@ -67,14 +67,13 @@ class TandingService {
         const pertandingan = await Pertandingan.find(pertandinganId)
         pertandingan.data_pertandingan = stringData
         await pertandingan.save()
-
         return true
     }
 
     async inputSkor(pertandinganId, pertandinganData, nomorJuri, nilai) {
         pertandinganData.dewanJuri[nomorJuri].penilaian.push(nilai);
         await this.setPertandinganData(pertandinganId, pertandinganData);
-        return await this.getPertandinganData(pertandinganId);
+        return pertandinganData;
     }
 
     async hapusSkor(pertandinganId, pertandinganData, nomorJuri, sudut, ronde) {
@@ -86,7 +85,7 @@ class TandingService {
         penilaian.splice(lastIndex, 1);
         pertandinganData.dewanJuri[nomorJuri].penilaian = penilaian;
         await this.setPertandinganData(pertandinganId, pertandinganData);
-        return await this.getPertandinganData(pertandinganId);
+        return pertandinganData;
     }
 
     async kontrolRonde({ ronde, pertandinganId }) {
@@ -145,12 +144,13 @@ class TandingService {
 
     async setupInitData(pertandingan, initData) {
         const jsonPertandingan = JSON.parse(initData)
+        jsonPertandingan.merah = {}
         const masterData = await this.pertandinganService.getMasterDataPertandingan(pertandingan.toJSON())
         jsonPertandingan.id = masterData.id
         jsonPertandingan.nomor_partai = masterData.nomor_partai
         jsonPertandingan.ronde = masterData.ronde
-        jsonPertandingan.merah = masterData.merah
-        jsonPertandingan.biru = masterData.biru
+        jsonPertandingan.biru = masterData.merah
+        jsonPertandingan.kuning = masterData.biru
         jsonPertandingan.kelas = masterData.kelas
 
         return jsonPertandingan
