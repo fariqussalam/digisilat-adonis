@@ -68,12 +68,17 @@ class TandingController {
     const pertandingan = await this.pertandinganService.getPertandinganAktif(params.nomor_gelanggang, tournament)
     const page = `tanding.${params.halaman}`
 
+    let dontOverride = true
+    if (params.halaman == "display") {
+      dontOverride = false
+    }
     return view.render(page, {
       nomor_gelanggang: params.nomor_gelanggang,
       pertandingan: pertandingan,
       tournament: tournament,
       request_params: request_params,
-      current_url: request.url()
+      current_url: request.url(),
+      dontOverride: dontOverride
     })
   }
 

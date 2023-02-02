@@ -1,0 +1,126 @@
+@layout('layouts/pertandingan')
+@section('module_css')
+<link href="/pertandingan/starter-template.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/glow-css@0.2.0/dist/css/glow.min.css" />
+
+@endsection
+@section('content')
+<div class="container" style="width:100%;padding-top:0px;margin-top:-30px;">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+            <div>
+                <table class="table text-center table-borderless">
+                    <thead>
+                        <tr style="padding-left:10%;padding-right:10%">
+                            <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                                <img style="width:150px;height:150px;" src="{{tournament.logo_1}}" alt="">
+                            </th>
+                            <th class="text-center" style="width:60%;font-size:50px;vertical-align:middle">
+                                <h2>{{tournament.nama}}</h1>
+                                <h4>{{pertandingan.kelas.nama}}</h3>
+                                <h4>Partai 1</h3>
+                            </th>
+                            <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                                <img style="width:150px;height:150px;" src="{{tournament.logo_2}}" alt="">
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="table text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th rowspan="1" colspan="5" class="text-center sisi-biru display-name" width="40%"
+                                data-indikator-merah="true">
+                                <span style="font-size:20px;" class="js-tanding-display-biru-nama"></span><br />   
+                            </th>
+                            <th rowspan="1" colspan="5" class="text-center sisi-kuning display-name" width="40%"
+                                data-indikator-biru="true">
+                                <span style="font-size:20px;" class="js-tanding-display-kuning-nama"></span><br />
+                            </th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr>
+                            <th rowspan="1" colspan="5" class="text-center sisi-biru display-name" width="40%"
+                                data-indikator-merah="true">
+                                <span style="font-size:20px;" class="js-tanding-display-biru-kontingen"></span><br />
+                            </th>
+                            <th rowspan="1" colspan="5" class="text-center sisi-kuning display-name" width="40%"
+                                data-indikator-biru="true">
+                                <span style="font-size:20px;" class="js-tanding-display-kuning-kontingen"></span><br />
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                {{--
+                      <table class="table text-center" cellspacing="1">
+                    <tbody>
+                        <tr style="font-size:40px;font-weight:bold;height:3em;">
+                            <td class="js-tanding-display__nilai sisi-biru" style="vertical-align: middle" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-kuning" style="vertical-align: middle" data-sudut="biru">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                  --}}
+                  <div class="row" style="margin-top:3em;">
+                    <div class="col-xs-6 text-center">
+                        <span class="label sisi-biru f-20 js-total-nilai" data-sudut="biru" style="color:black; font-size: 100px;">0</span>    
+                    </div>
+                    <div class="col-xs-6 text-center">
+                        <span class="label f-20 sisi-kuning js-total-nilai" data-sudut="kuning" style="font-size: 100px;">0</span>    
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="col-md-1 col-lg-1 col-sm-1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="text-center" style="margin-top:4em;">
+            <span class="lead label label-primary indikator-ronde" style="font-size:20px;">Ronde 1</span>
+            <div class="lead js-timer-clock text-center" style="font-size:70px;"></div>
+        </div>
+    </div>
+    <div class="col-xs-10 col-xs-offset-1">
+        <div class="row js-panel-pengumuman-pemenang">
+            <div class="col-xs-6">
+                <div class="panel panel-warning">
+                    <div class="panel-heading text-center">
+                        <b>Keputusan Pemenang</b>
+                    </div>
+                    <div class="panel-body" style="margin-top:-1em;">
+                        <div class="row">
+                            <div class="col-xs-4 f-20">
+                                <h5>Ronde 1</h6>
+                                    <span class="label label-primary js-indikator-pemenang-ronde" data-ronde="1" data-sudut="biru">Biru</span>
+                                    <span class="label label-warning js-indikator-pemenang-ronde" data-ronde="1" data-sudut="kuning">Kuning</span>
+                            </div>
+                            <div class="col-xs-4 f-20">
+                                <h5>Ronde 2</h6>
+                                    <span class="label label-primary js-indikator-pemenang-ronde" data-ronde="2" data-sudut="biru">Biru</span>
+                                    <span class="label label-warning js-indikator-pemenang-ronde" data-ronde="2" data-sudut="kuning">Kuning</span>
+                            </div>
+                            <div class="col-xs-4 f-20">
+                                <h5>Ronde 3</h6>
+                                    <span class="label label-primary js-indikator-pemenang-ronde" data-ronde="3" data-sudut="biru">Biru</span>
+                                    <span class="label label-warning js-indikator-pemenang-ronde" data-ronde="3" data-sudut="kuning">Kuning</span>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-xs-6">
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-warning f-16">Pemenang : <b class="js-pemenang-nama"></b></li>
+                  <li class="list-group-item list-group-item-warning f-16">Sudut : <b class="js-pemenang-sudut"></b></li>
+                  <li class="list-group-item list-group-item-warning f-16">Hasil Kemenangan : <b class="js-pemenang-hasil"></b></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+<script src="/pertandingan/lib/easytimer.min.js"></script>
+<script src="/pertandingan/assets/js/modul/tanding-display.js"></script>
+@endsection

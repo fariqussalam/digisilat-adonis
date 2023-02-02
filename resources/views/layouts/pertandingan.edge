@@ -2,6 +2,7 @@
 <html>
 <head>
     @section('head')
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <!-- CSS -->
+        @if(dontOverride)
         <link href="/pertandingan/lib/bootstrap.min.css" rel="stylesheet">
         <link href="/pertandingan/assets/css/application.css" rel="stylesheet">
         <link href="/pertandingan/assets/css/helper.css" rel="stylesheet">
@@ -26,8 +28,9 @@
 .table-noborder>tfoot>tr>td {
     border: none;
 }
-
-        </style>
+</style>
+        @endif
+       
         @section('module_css')
         @endsection
     @endsection

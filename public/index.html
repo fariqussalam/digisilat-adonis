@@ -1,49 +1,54 @@
-@layout('layouts/pertandingan')
-@section('module_css')
-<link href="/pertandingan/assets/css/style.css" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papan Skor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
-@endsection
-@section('content')
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
     <div class="logo">
-        <img src="/logo.png" alt="LOGO KEJURDA 1 TS GOWA" />
+        <img src="logo.png" alt="LOGO KEJURDA 1 TS GOWA" />
     </div>
     <div class="main-sec">
         <div class="item">
             <div class="kolom-peserta">
-                <img src="/1.png" alt="PESERTA 1" />
+                <img src="1.png" alt="PESERTA 1" />
                 <div class="kolom-peserta-nama-1">
-                    <div class="box-perserta-1-name-1 js-tanding-display-kuning-nama">MAEC</div>
-                    <div class="box-perserta-1-name-2 js-tanding-display-kuning-kontingen">NAMEC</div>
+                    <div class="box-perserta-1-name-1">MAEC</div>
+                    <div class="box-perserta-1-name-2">NAMEC</div>
                 </div>  
             </div>
-            <div class="score-box yellow js-total-nilai" data-sudut="kuning">
+            <div class="score-box yellow">
                 75
             </div>
         </div>
         <div class="item">
             <div class="info">
-                <div class="info-text1">PARTAI {{pertandingan.nomor_partai}}</div>
+                <div class="info-text1">PARTAI 5000</div>
                 <hr />
-                <div class="info-text1 red-text">Kelas {{pertandingan.kelas.nama}}</div>
+                <div class="info-text1 red-text">KELAS J PA</div>
                 <hr />
-                {{--  <div class="info-text2">FINAL</div>  --}}
+                <div class="info-text2">FINAL</div>
             </div>
             <div class="ronde">
-                <div class="ronde-text1 indikator-ronde">RONDE 1</div>
-                <div class="ronde-timer js-timer-clock red-text">1:30</div>
+                <div class="ronde-text1">RONDE 1</div>
+                <div class="ronde-timer red-text">1:30</div>
             </div>
         </div>
         <div class="item">
             <div class="kolom-peserta">
-                <img src="/2.png" alt="PESERTA 2" style="margin-top: -3vh;"/>
+                <img src="2.png" alt="PESERTA 2" style="margin-top: -3vh;"/>
                 <div class="kolom-peserta-nama-2">
-                    <div class="box-perserta-2-name-1 js-tanding-display-biru-nama">CAMVRET</div>
-                    <div class="box-perserta-2-name-2 js-tanding-display-biru-kontingen">SUDIANG</div>
+                    <div class="box-perserta-2-name-1">CAMVRET</div>
+                    <div class="box-perserta-2-name-2">SUDIANG</div>
                 </div>  
             </div>
-            <div class="score-box blue js-total-nilai" data-sudut="biru">
+            <div class="score-box blue">
                 75
             </div>
         </div>
@@ -56,19 +61,19 @@
                     <div class="footer-ronde">
                         <div class="footer-ronde-item">RONDE 1</div>
                         <div class="footer-ronde-value">
-                            <span class="yellow-text js-indikator-pemenang-ronde" data-ronde="1" data-sudut="kuning">KUNING</span>/<span class="blue-text js-indikator-pemenang-ronde" data-ronde="1" data-sudut="biru">BIRU</span>
+                            <span class="yellow-text">KUNING</span>/<span class="blue-text">BIRU</span>
                         </div>
                     </div>
                     <div class="footer-ronde">
                         <div class="footer-ronde-item">RONDE 2</div>
                         <div class="footer-ronde-value">
-                            <span class="yellow-text js-indikator-pemenang-ronde" data-ronde="2" data-sudut="kuning">KUNING</span>/<span class="blue-text js-indikator-pemenang-ronde" data-ronde="2" data-sudut="biru">BIRU</span>
+                            <span class="yellow-text">KUNING</span>/<span class="blue-text">BIRU</span>
                         </div>
                     </div>
                     <div class="footer-ronde">
                         <div class="footer-ronde-item">RONDE 1</div>
                         <div class="footer-ronde-value">
-                            <span class="yellow-text js-indikator-pemenang-ronde" data-ronde="3" data-sudut="kuning">KUNING</span>/<span class="blue-text js-indikator-pemenang-ronde" data-ronde="3" data-sudut="biru">BIRU</span>
+                            <span class="yellow-text">KUNING</span>/<span class="blue-text">BIRU</span>
                         </div>
                     </div>
                 </div>
@@ -78,24 +83,21 @@
                     <div class="footer-result-item">
                         <div class="footer-result-value">PEMENANG</div>
                         <div class="footer-result-value">:</div>
-                        <div class="footer-result-value js-pemenang-nama">Nama Pemenang</div>
+                        <div class="footer-result-value">Nama Pemenang</div>
                     </div>
                     <div class="footer-result-item">
                         <div class="footer-result-value">SUDUT</div>
                         <div class="footer-result-value">:</div>
-                        <div class="footer-result-value js-pemenang-sudut">Sudut</div>
+                        <div class="footer-result-value">Sudut</div>
                     </div>
                     <div class="footer-result-item">
                         <div class="footer-result-value">HASIL KEMENANGAN</div>
                         <div class="footer-result-value">:</div>
-                        <div class="footer-result-value js-pemenang-hasil">Hasil</div>
+                        <div class="footer-result-value">Hasil</div>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-@endsection
-@section('module_js')
-<script src="/pertandingan/lib/easytimer.min.js"></script>
-<script src="/pertandingan/assets/js/modul/tanding-display.js"></script>
-@endsection
+</body>
+</html>
