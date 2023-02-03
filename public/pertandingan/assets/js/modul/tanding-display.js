@@ -9,9 +9,13 @@
             _.each(DigiSilat.getSudutList(), function(sudut) {
                 var nilaiPerSudut = 0
                 _.each(DigiSilat.getRondeList(), function(ronde) {
-                    var nilai = juri.getNilai(sudut, ronde);
-                    nilaiPerSudut = nilaiPerSudut + nilai.totalRonde
-                  //  renderNilai(sudut, juri.nomorJuri, ronde, nilai.totalRonde, nilai.total);
+                    if (ronde == state.ronde) {
+                        var nilai = juri.getNilai(sudut, ronde);
+                        nilaiPerSudut = nilaiPerSudut + nilai.totalRonde
+                    }
+                //     var nilai = juri.getNilai(sudut, ronde);
+                //     nilaiPerSudut = nilaiPerSudut + nilai.totalRonde
+                //   //  renderNilai(sudut, juri.nomorJuri, ronde, nilai.totalRonde, nilai.total);
                 })
                 
                 renderNilaiSudut(sudut, nilaiPerSudut)
@@ -147,6 +151,7 @@
         socket.on('kontrol-ronde', function(currentRonde) {
             state.ronde = currentRonde
             renderRonde(currentRonde)
+            socket.emit('get-data-pertandingan', { pertandinganId: pertandinganId })
         })
 
         function resetCountdown() {
