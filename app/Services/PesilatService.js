@@ -65,10 +65,10 @@ class PesilatService {
 
   async getPesilatTanding(id) {
     if (!id) return null
-    const pesilat = await Pesilat.find(id).then((result) => result.toJSON())
+    const pesilat = await Pesilat.find(id).then((result) => result ? result.toJSON() : null)
     if (!pesilat) return null
 
-    pesilat.kelas = await Kelas.find(pesilat.kelas_id).then((result) => result.toJSON())
+    pesilat.kelas = await Kelas.find(pesilat.kelas_id).then((result) => result ? result.toJSON() : null)
     pesilat.kontingen = await Kontingen.find(pesilat.kontingen_id).then((result) => result.toJSON())
 
     return pesilat

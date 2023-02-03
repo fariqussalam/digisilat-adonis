@@ -43,7 +43,9 @@ class TandingService {
         let dataPertandingan = await Pertandingan.query().where({ id: pertandinganId }).first()
 
         if (!dataPertandingan) return;
+        if (!dataPertandingan.data_pertandingan) return;
 
+        console.log(dataPertandingan.data_pertandingan)
         let objPertandingan = JSON.parse(dataPertandingan.data_pertandingan);
         const peserta = await this.getPesertaPertandingan(pertandinganId, dataPertandingan.jenis)
         objPertandingan.biru = peserta.merah
