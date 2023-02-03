@@ -26,7 +26,7 @@
                 return nilaiString
             }
             var isJatuhan = function(nilai, nilaiString) {
-                return nilai > 0 && (nilaiString == "10 + 40" || nilaiString == "40")
+                return nilai > 0 && (nilaiString == "10+40" || nilaiString == "40")
             }
             this.getJatuhan = function(sudut, ronde) {
                 var nilaiList = _.filter(this.penilaian, function(n) {
