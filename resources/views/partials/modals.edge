@@ -1,0 +1,46 @@
+<div class="modal fade" id="undianModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pembagian Undian</h5>
+        <button type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group js-jumlah-peserta-form">
+            <label class="col-form-label js-jumlah-peserta-title">Jumlah Peserta Bagan 1</label>
+            <input type="number" name="jumlah_bagan" class="form-control js-jumlah-peserta-input">
+          </div>
+          <div class="form-group mt-3">
+            <button type="button" class="js-tambah-bagan btn btn-primary">Tambah Bagan</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary js-lakukan-undian">Lakukan Undian</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center">
+       
+          <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <h3>Mengundi...</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -20,7 +20,7 @@ const Route = use('Route')
 // Route.get('/login', 'UserController.login')
 // route khusus administrator
 // Route.group(() => {
-    Route.on('/').render('index')
+Route.on('/').render('index')
 Route.get('file/download', 'FileController.download')
 
 /**
@@ -73,6 +73,7 @@ Route.get('undian/tanding', 'UndianController.tanding')
 Route.get('undian/seni', 'UndianController.seni')
 Route.get('undian/bagan', 'UndianController.bagan')
 Route.post('undian/undi', 'UndianController.undi')
+Route.post('undian/undi-baru', 'UndianController.undiBaru')
 Route.post('undian/export', 'UndianController.exportExcel')
 Route.get('undian/lock', 'UndianController.kunciUndian')
 // }).middleware(['rbac:admin'])
@@ -117,16 +118,16 @@ Route.get('pertandingan/cetak-jadwal-gelanggang', 'JadwalTandingController.cetak
 Route.post('pertandingan/jadwal/mulai-pertandingan', 'TandingController.mulaiPertandingan')
 Route.get('tanding/gelanggang/:nomor_gelanggang', 'TandingController.gelanggang')
 Route.get('tanding/gelanggang/:nomor_gelanggang/:halaman', 'TandingController.halaman')
-Route.post('tanding/pengumuman-pemenang', 'TandingController.pengumumanPemenang' )
-Route.post('tanding/pengumuman-pemenang-baru', 'TandingController.pengumumanPemenangBaru' )
-Route.post('pertandingan/export-pdf', 'TandingController.exportToPdf' )
+Route.post('tanding/pengumuman-pemenang', 'TandingController.pengumumanPemenang')
+Route.post('tanding/pengumuman-pemenang-baru', 'TandingController.pengumumanPemenangBaru')
+Route.post('pertandingan/export-pdf', 'TandingController.exportToPdf')
 
 /**
  * Seni
  */
- Route.post('seni/jadwal/mulai-pertandingan', 'SeniController.mulaiPertandingan')
- Route.get('seni/pool/:nomor_pool', 'SeniController.pool')
- Route.get('seni/pool/:nomor_pool/:halaman', 'SeniController.halaman')
+Route.post('seni/jadwal/mulai-pertandingan', 'SeniController.mulaiPertandingan')
+Route.get('seni/pool/:nomor_pool', 'SeniController.pool')
+Route.get('seni/pool/:nomor_pool/:halaman', 'SeniController.halaman')
 
 //   }).middleware(['rbac:admin,gelanggang'])
 

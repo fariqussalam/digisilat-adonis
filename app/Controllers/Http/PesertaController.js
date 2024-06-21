@@ -12,12 +12,12 @@ const KategoriService = use('App/Services/KategoriService')
 
 class PesertaController {
 
-   constructor() {
+  constructor() {
     this.pesilatService = new PesilatService
     this.kategoriService = new KategoriService
   }
 
-  async tanding({request, view}) {
+  async tanding({ request, view }) {
     const tournament = request.activeTournament
     const pesilatList = await this.pesilatService.getPesilatTandingList(tournament.id)
     return view.render('peserta.tanding', {
@@ -25,7 +25,7 @@ class PesertaController {
     })
   }
 
-  async seni({request, view}) {
+  async seni({ request, view }) {
     const tournament = request.activeTournament
     const pesilatList = await this.pesilatService.getPesilatSeniList(tournament.id)
     return view.render('peserta.seni', {
@@ -33,7 +33,7 @@ class PesertaController {
     })
   }
 
-  async official({request, view}) {
+  async official({ request, view }) {
     const tournament = request.activeTournament
     const officialList = await this.pesilatService.getOfficialList(tournament.id)
     return view.render('peserta.official', {
@@ -41,7 +41,7 @@ class PesertaController {
     })
   }
 
-  async create({request, params, view}) {
+  async create({ request, params, view }) {
     const tournament = request.activeTournament
     const type = params.type
 
@@ -59,7 +59,7 @@ class PesertaController {
     })
   }
 
-  async save({request, response}) {
+  async save({ request, response }) {
     const tournament = request.activeTournament
     const typeProps = {
       'tanding': ["nama", "kelas", "kontingen"],
@@ -95,11 +95,9 @@ class PesertaController {
       await official.save()
       return response.route('PesertaController.official')
     }
-
-
   }
 
-  async edit({request, params, view}) {
+  async edit({ request, params, view }) {
     const tournament = request.activeTournament
     const type = params.type
     let pesilat
@@ -112,10 +110,10 @@ class PesertaController {
       pesilat = await Official.find(params.id)
     }
 
-    const kontingenList = await Kontingen.query().where({tournament_id: tournament.id}).fetch().then((result) => result.toJSON())
-    const kelasList = await Kelas.query().where({tournament_id: tournament.id}).fetch().then((result) => result.toJSON())
-    const seniList = await KategoriSeni.query().where({tournament_id: tournament.id}).fetch().then((result) => result.toJSON())
-    const jabatanList = await Jabatan.query().where({tournament_id: tournament.id}).fetch().then((result) => result.toJSON())
+    const kontingenList = await Kontingen.query().where({ tournament_id: tournament.id }).fetch().then((result) => result.toJSON())
+    const kelasList = await Kelas.query().where({ tournament_id: tournament.id }).fetch().then((result) => result.toJSON())
+    const seniList = await KategoriSeni.query().where({ tournament_id: tournament.id }).fetch().then((result) => result.toJSON())
+    const jabatanList = await Jabatan.query().where({ tournament_id: tournament.id }).fetch().then((result) => result.toJSON())
 
     return view.render('peserta.edit', {
       pesilat,
@@ -127,7 +125,7 @@ class PesertaController {
     })
   }
 
-  async update({request, response}) {
+  async update({ request, response }) {
     const tournament = request.activeTournament
     const typeProps = {
       'tanding': ["id", "nama", "kelas", "kontingen"],
@@ -171,8 +169,7 @@ class PesertaController {
     }
   }
 
-  async delete({request, response}) {
-
+  async delete({ request, response }) {
     const params = request.only(['id', 'type'])
     const type = params.type
     if (type == 'tanding') {
@@ -190,7 +187,7 @@ class PesertaController {
     }
   }
 
-  async createGroup({request, params, view}) {
+  async createGroup({ request, params, view }) {
     const tournament_id = request.activeTournament.id
     const type = params.type
     const kelasList = await this.kategoriService.getKelasList(tournament_id)
@@ -203,14 +200,14 @@ class PesertaController {
     })
   }
 
-  async saveGroup({request, params, response}) {
+  async saveGroup({ request, params, response }) {
     const tournament_id = request.activeTournament.id
     const type = params.type
     const form = request.only(['kontingen', 'nama', 'kelas'])
     const kontingen = await Kontingen.find(form.kontingen)
-    
+
     if (!kontingen) {
-      response.route('PesertaController.createGroup', {type: type})
+      response.route('PesertaController.createGroup', { type: type })
     }
 
     const pesertaList = []
@@ -227,9 +224,9 @@ class PesertaController {
 
     _.each(pesertaList, async (p) => {
       await this.pesilatService.createPesilat({
-        nama: p.nama, 
-        kelas_id:p.kelas_id, 
-        kontingen_id: kontingen.id, 
+        nama: p.nama,
+        kelas_id: p.kelas_id,
+        kontingen_id: kontingen.id,
         tournament_id: tournament_id
       })
     })
@@ -237,7 +234,7 @@ class PesertaController {
     response.route('PesertaController.tanding')
   }
 
-  async createSeniGroup({request, params, view}) {
+  async createSeniGroup({ request, params, view }) {
     const tournament_id = request.activeTournament.id
     const type = params.type
     const kategoriList = await this.kategoriService.getKategoriListByType("SENI", tournament_id)
@@ -250,11 +247,11 @@ class PesertaController {
     })
   }
 
-  async saveSeniGroup({request, response}) {
+  async saveSeniGroup({ request, response }) {
     const tournament_id = request.activeTournament.id
     const form = request.only(['kontingen', 'nama', 'kategori'])
     const kontingen = await Kontingen.find(form.kontingen)
-    
+
     if (!kontingen) {
       response.route('PesertaController.createSeniGroup')
     }
@@ -273,9 +270,9 @@ class PesertaController {
 
     _.each(pesertaList, async (p) => {
       await this.pesilatService.createPesilatSeni({
-        nama: p.nama, 
-        kategori_id:p.kategori_id, 
-        kontingen_id: kontingen.id, 
+        nama: p.nama,
+        kategori_id: p.kategori_id,
+        kontingen_id: kontingen.id,
         tournament_id: tournament_id
       })
     })

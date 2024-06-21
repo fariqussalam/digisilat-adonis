@@ -11,12 +11,12 @@ const fs = require('fs')
 const TemplateHandler = require('easy-template-x').TemplateHandler
 
 class JadwalSeniController {
-  constructor () {
+  constructor() {
     this.pertandinganService = new PertandinganService()
   }
 
-  async generateJadwalSeni ({ request, params, response }) {
-    console.log('Generate Jadwal Seni Action')
+  async generateJadwalSeni({ request, params, response }) {
+    console.log('generating jadwal seni...')
     const tournament = request.activeTournament
     if (tournament.jadwal_seni_generated) {
       return response.route('/')
@@ -36,9 +36,8 @@ class JadwalSeniController {
         undianList.length
       )
       for (const undian of undianList) {
-        const kategoriSeni = await KategoriSeni.findOrFail(
-          undian.kategori_seni_id
-        )
+        const kategoriSeni = await KategoriSeni.findOrFail(undian.kategori_seni_id)
+
         const pesertaUndianList = await PesertaUndian.query()
           .where({ undian_id: undian.id })
           .fetch()
@@ -68,7 +67,7 @@ class JadwalSeniController {
     return response.route('JadwalSeniController.jadwalSeni')
   }
 
-  async jadwalSeni ({ request, view, response }) {
+  async jadwalSeni({ request, view, response }) {
     const params = request.only(['kategori'])
     const kategori = params.kategori
     const tournament_id = request.activeTournament.id
@@ -97,7 +96,7 @@ class JadwalSeniController {
     })
   }
 
-  async updatePool ({ request, response }) {
+  async updatePool({ request, response }) {
     const params = request.only(['jumlah_pool'])
     if (!params.jumlah_pool) {
       return response.route('JadwalSeniController.jadwalSeni')
@@ -110,7 +109,7 @@ class JadwalSeniController {
     response.route('JadwalSeniController.jadwalSeni')
   }
 
-  async updatePartaiSeni ({ request, response }) {
+  async updatePartaiSeni({ request, response }) {
     const params = request.only(['id', 'nomor_pool', 'nomor_penampil'])
     const pertandinganSeni = await PertandinganSeni.find(params.id)
     pertandinganSeni.nomor_pool = params.nomor_pool
@@ -120,7 +119,7 @@ class JadwalSeniController {
     response.route('JadwalSeniController.jadwalSeni')
   }
 
-  async resetPool ({ request, response }) {
+  async resetPool({ request, response }) {
     const tournament = await request.activeTournament
     tournament.jumlah_pool = 0
     await tournament.save()
@@ -131,18 +130,18 @@ class JadwalSeniController {
   }
 
 
-  async resetNomorPenampil ({ request, response }) {
+  async resetNomorPenampil({ request, response }) {
     const tournament = await request.activeTournament
     await PertandinganSeni.query()
-        .where({ tournament_id: tournament.id })
-        .update({ nomor_penampil: null })
+      .where({ tournament_id: tournament.id })
+      .update({ nomor_penampil: null })
     return response.route('JadwalSeniController.jadwalSeni')
   }
 
-  async cetakJadwal({ request, params, response}) {
+  async cetakJadwal({ request, params, response }) {
     const param = request.only(['kategori'])
     const pertandinganList = await this.pertandinganService.getPertandinganSeniList(
-      {kategori: param.kategori, nomor_pool: params.nomor_pool},
+      { kategori: param.kategori, nomor_pool: params.nomor_pool },
       request.activeTournament.id
     )
 
@@ -165,16 +164,16 @@ class JadwalSeniController {
       nomor_pool: params.nomor_pool,
       pertandinganList: orderedList
     });
-    
+
     response.response.setHeader('Content-disposition', 'attachment; filename=' + 'pool-' + params.nomor_pool + '.docx');
     response.type('application/octet-stream')
     response.send(doc)
   }
 
-  async cetakSemuaJadwal({ request, params, response}) {
+  async cetakSemuaJadwal({ request, params, response }) {
     const param = request.only(['kategori'])
     const pertandinganList = await this.pertandinganService.getPertandinganSeniList(
-      {kategori: param.kategori, nomor_pool: "not_null"},
+      { kategori: param.kategori, nomor_pool: "not_null" },
       request.activeTournament.id
     )
 
@@ -196,7 +195,7 @@ class JadwalSeniController {
     const poolMap = _.groupBy(orderedList, 'nomor_pool')
     console.log(poolMap)
     const poolList = []
-    _.each(_.keys(poolMap), function(k, idx) {
+    _.each(_.keys(poolMap), function (k, idx) {
       let pertandinganList = poolMap[k]
       poolList.push({
         idx: idx + 1,
@@ -210,15 +209,15 @@ class JadwalSeniController {
     const doc = await handler.process(templateFile, {
       pool: poolList
     });
-    
+
     response.response.setHeader('Content-disposition', 'attachment; filename=' + 'jadwal-seni.docx');
     response.type('application/octet-stream')
     response.send(doc)
   }
 
-  async lihatJadwal({ request, params, view, response}) {
+  async lihatJadwal({ request, params, view, response }) {
     const pertandinganList = await this.pertandinganService.getPertandinganSeniList(
-      {nomor_pool: params.nomor_pool},
+      { nomor_pool: params.nomor_pool },
       request.activeTournament.id
     )
 

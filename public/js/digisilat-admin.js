@@ -251,42 +251,94 @@
       });
     }
 
+    $('#undianModal').on('hidden.bs.modal', function () {
+      var $template = $('.js-jumlah-peserta-form')[0].outerHTML
+      var $form = $('.js-jumlah-peserta-form').parent()
+      $('.js-jumlah-peserta-form').remove()
+      $($form).prepend($template)
+    });
+
     $('.js-undian-undi').on('click', function () {
-      var dataUndian = $(this).data();
-      var pesertaList = dataUndian.pesertaUndian.split(",");
-      vex.dialog.open({
-        buttons: [
-          $.extend({}, vex.dialog.buttons.YES, { text: 'Draw' }),
-        ],
-        callback: function (data) {
-          doUndian(dataUndian);
-        },
-        contentClassName: 'vex-undian-wrapper ',
-        unsafeMessage: '<div class="undian-box-wrapper text-center">' +
-            '<div class="undian-box text-center btn btn-success undian-nama">Undi</div>' +
-            // '<div class="text-center undian-nama"></div>' +
-            '</div>',
-        afterOpen: function () {
-          var undianList = pesertaList,
-            num = undianList.length - 1,
-            btnClass = '.undian-box',
-            open = false;
-          $(document).on('click', btnClass, function () {
-            if (!open) {
-              timer = setInterval(function () {
-                var random = Math.round(Math.random() * num),
-                  eat = undianList[random];
-                $(btnClass).text(eat);
-              }, 40);
-              open = true;
-            } else {
-              clearInterval(timer);
-              open = false;
-            }
-          })
-        }
+      console.log("undianClicked")
+      var dataUndian = $(this).data()
+      $('#undianModal').modal('toggle')
+
+      $('.js-lakukan-undian').on('click', function () {
+        $('#undianModal').modal('toggle')
+        var jumlahPesertaValues = []; // Array to store extracted values
+
+        $('.js-jumlah-peserta-input').each(function () {
+          var value = $(this).val();
+          jumlahPesertaValues.push(value);
+        });
+
+        console.log("jumlah bagan", jumlahPesertaValues)
+
+        $.ajax({
+          url: "/undian/undi-baru",
+          type: "POST",
+          data: { kategori: dataUndian.kategori, _csrf: _csrf, type: dataUndian.type, jumlah_bagan: jumlahPesertaValues },
+          beforeSend: function () {
+            $('#loadingModal').modal('toggle')// Append to body or specific container
+          },
+
+          // Success callback function
+          success: function (response) {
+            setTimeout(function () {
+              $('#loadingModal').modal('toggle')
+              alert("pengundian berhasil")
+              window.location.reload();
+            }, 2000)
+          },
+
+          // Error callback function
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error:", textStatus, errorThrown);
+            $('#loadingModal').modal('toggle')
+            alert("pengundian gagal: " + errorThrown)
+            // Handle errors here
+          },
+        });
       })
+      // var dataUndian = $(this).data();
+      // var pesertaList = dataUndian.pesertaUndian.split(",");
+      // vex.dialog.open({
+      //   buttons: [
+      //     $.extend({}, vex.dialog.buttons.YES, { text: 'Draw' }),
+      //   ],
+      //   callback: function (data) {
+      //     doUndian(dataUndian);
+      //   },
+      //   contentClassName: 'vex-undian-wrapper ',
+      //   unsafeMessage: '<div class="undian-box-wrapper text-center">' +
+      //     '<div class="undian-box text-center btn btn-success undian-nama">Undi</div>' +
+      //     // '<div class="text-center undian-nama"></div>' +
+      //     '</div>',
+      //   afterOpen: function () {
+      //     var undianList = pesertaList,
+      //       num = undianList.length - 1,
+      //       btnClass = '.undian-box',
+      //       open = false;
+      //     $(document).on('click', btnClass, function () {
+      //       if (!open) {
+      //         timer = setInterval(function () {
+      //           var random = Math.round(Math.random() * num),
+      //             eat = undianList[random];
+      //           $(btnClass).text(eat);
+      //         }, 40);
+      //         open = true;
+      //       } else {
+      //         clearInterval(timer);
+      //         open = false;
+      //       }
+      //     })
+      //   }
+      // })
     })
+
+
+
+
 
   })
 })(jQuery);
@@ -445,7 +497,7 @@
     var isTanding = tandingIndikator && tandingIndikator.length > 0;
     if (isTanding) {
       var pertandinganId = tandingIndikator.data("id");
-      socket = io({ query: { type: 'tanding', name : 'gelanggang', pertandinganId: pertandinganId } });
+      socket = io({ query: { type: 'tanding', name: 'gelanggang', pertandinganId: pertandinganId } });
       type = 'tanding'
     }
 
@@ -453,12 +505,12 @@
     var isSeni = seniIndikator && seniIndikator.length > 0;
     if (isSeni) {
       var pertandinganId = seniIndikator.data("id");
-      socket = io({ query: { type: 'seni', name : 'gelanggang', pertandinganId: pertandinganId } });
+      socket = io({ query: { type: 'seni', name: 'gelanggang', pertandinganId: pertandinganId } });
       type = 'seni'
     }
 
     if (socket) {
-      socket.on('connect', function() {
+      socket.on('connect', function () {
         console.log("Connected to Server")
       });
     }
@@ -556,7 +608,7 @@
           '<div class="vex-custom-field-wrapper">',
           '<label for="color">Nomor Penampil</label>',
           '<div class="vex-custom-input-wrapper">',
-          '<input type="text" name="nomor_penampil" class="form-control" value="'  + nomor_penampil + '" data-placeholder="Pilih Nomor Pool">',
+          '<input type="text" name="nomor_penampil" class="form-control" value="' + nomor_penampil + '" data-placeholder="Pilih Nomor Pool">',
           '</div>',
           '</div>',
           '<div class="vex-custom-field-wrapper">',
@@ -754,7 +806,7 @@
             function (data) {
               if (data.juri_seri && data.juri_seri.length > 0) {
                 var htmlString = "<h4>Juri Seri</h4>"
-                _.each(data.juri_seri, function(juri) {
+                _.each(data.juri_seri, function (juri) {
                   var rendered = Mustache.render($('#juriSeriTemplate').html(), juri)
                   htmlString += rendered
                 })
@@ -868,6 +920,23 @@
           });
         }
       });
+    })
+
+  })
+})(jQuery);
+
+/**
+ * Input
+ */
+(function () {
+  $(function () {
+
+    $('.js-tambah-bagan').click(function () {
+      var jumlahBagan = $('.js-jumlah-peserta-input').length
+      var $template = $('.js-jumlah-peserta-form')[0].outerHTML;
+      var currentCount = jumlahBagan + 1
+      $($template).insertAfter($('.js-jumlah-peserta-form').last())
+      console.log($('.js-jumlah-peserta-form').last().find('.js-jumlah-peserta-title').text("Jumlah Peserta Bagan " + currentCount))
     })
 
   })
