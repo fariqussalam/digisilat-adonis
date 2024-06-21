@@ -9,6 +9,8 @@ const Jabatan = use('App/Models/Jabatan')
 const KategoriSeni = use('App/Models/KategoriSeni')
 const PesilatService = use('App/Services/PesilatService')
 const KategoriService = use('App/Services/KategoriService')
+const Helpers = use('Helpers')
+const ExcelJS = require('exceljs')
 
 class PesertaController {
 
@@ -278,6 +280,132 @@ class PesertaController {
     })
 
     response.route('PesertaController.seni')
+  }
+
+  async tandingImportTemplate({ request, params, view, response }) {
+    const filePath = Helpers.publicPath("import_tanding.xlsx")
+    response.download(filePath)
+  }
+
+  async tandingImport({ request, params, view, response }) {
+    return view.render('peserta.tanding-import.edge', {
+      type: "tanding"
+    })
+  }
+
+  async tandingImportSave({ request, params, view, response }) {
+    let excelFile = request.file('file')
+    const tournament_id = request.activeTournament.id
+
+    await excelFile.move(Helpers.tmpPath('uploads'), {
+      name: `data-pesilat-${new Date().getTime()}.${excelFile.subtype}`
+    })
+
+    if (!excelFile.moved()) {
+      return response.status(500).json({ error: excelFile.error() })
+    }
+
+    const workbook = new ExcelJS.Workbook()
+    await workbook.xlsx.readFile(Helpers.tmpPath('uploads') + '/' + excelFile.fileName)
+
+    const worksheet = workbook.getWorksheet(1)
+
+    for (let i = 1; i <= worksheet.rowCount; i++) {
+      if (i == 1) {
+        continue
+      }
+
+      const row = worksheet.getRow(i)
+
+      let nama_idx = 0
+      let kelas_idx = 1
+      let kontingen_idx = 2
+
+      let values = row.values
+      values.shift()
+
+      const kelas = await Kelas.findOrCreate({
+        nama: values[kelas_idx],
+        tournament_id: tournament_id,
+      })
+
+      const kontingen = await Kontingen.findOrCreate({
+        nama: values[kontingen_idx],
+        tournament_id: tournament_id,
+      })
+
+      const pesilat = await Pesilat.findOrCreate({
+        nama: values[nama_idx],
+        tournament_id: tournament_id,
+        kelas_id: kelas.id,
+        kontingen_id: kontingen.id,
+      })
+    }
+
+    response.route('PesertaController.tandingImport')
+  }
+
+  async seniImportTemplate({ request, params, view, response }) {
+    const filePath = Helpers.publicPath("import_seni.xlsx")
+    response.download(filePath)
+  }
+
+  async seniImport({ request, params, view, response }) {
+    return view.render('peserta.seni-import.edge', {
+      type: "seni"
+    })
+  }
+
+  async seniImportSave({ request, params, view, response }) {
+    let excelFile = request.file('file')
+    const tournament_id = request.activeTournament.id
+
+    await excelFile.move(Helpers.tmpPath('uploads'), {
+      name: `data-pesilat-${new Date().getTime()}.${excelFile.subtype}`
+    })
+
+    if (!excelFile.moved()) {
+      return response.status(500).json({ error: excelFile.error() })
+    }
+
+    const workbook = new ExcelJS.Workbook()
+    await workbook.xlsx.readFile(Helpers.tmpPath('uploads') + '/' + excelFile.fileName)
+
+    const worksheet = workbook.getWorksheet(1)
+
+    for (let i = 1; i <= worksheet.rowCount; i++) {
+      if (i == 1) {
+        continue
+      }
+
+      const row = worksheet.getRow(i)
+
+      let nama_idx = 0
+      let kategori_idx = 1
+      let kontingen_idx = 2
+
+      let values = row.values
+      values.shift()
+
+      const kategori = await KategoriSeni.findOrCreate({
+        nama: values[kategori_idx],
+        tournament_id: tournament_id,
+      })
+
+      const kontingen = await Kontingen.findOrCreate({
+        nama: values[kontingen_idx],
+        tournament_id: tournament_id,
+      })
+
+      const pesilat = await PesilatSeni.findOrCreate({
+        nama: values[nama_idx],
+        tournament_id: tournament_id,
+        kategori_seni_id: kategori.id,
+        kontingen_id: kontingen.id,
+      })
+    }
+
+    response.route('PesertaController.seniImport')
   }
 
 }

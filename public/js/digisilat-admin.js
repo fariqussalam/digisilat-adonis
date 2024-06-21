@@ -930,6 +930,7 @@
  */
 (function () {
   $(function () {
+    var _csrf = $('.wrapper').data('csrf');
 
     $('.js-tambah-bagan').click(function () {
       var jumlahBagan = $('.js-jumlah-peserta-input').length
@@ -938,6 +939,60 @@
       $($template).insertAfter($('.js-jumlah-peserta-form').last())
       console.log($('.js-jumlah-peserta-form').last().find('.js-jumlah-peserta-title').text("Jumlah Peserta Bagan " + currentCount))
     })
+
+    $('form[name="import-data-pesilat"]').on('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+      var fileInput = $('#fileInput')[0].files[0];
+      var formData = new FormData();
+      formData.append('file', fileInput);
+      formData.append('_csrf', _csrf);
+      $('#loadingModal').modal('toggle')
+      // Send the file using AJAX
+      $.ajax({
+        url: '/peserta/import/save', // Replace with your server upload URL
+        type: 'POST',
+        data: formData,
+        processData: false, // Prevent jQuery from automatically transforming the data into a query string
+        contentType: false, // Prevent jQuery from overriding the Content-Type header
+        success: function (response) {
+          // Handle the response from the server
+          $('#loadingModal').modal('toggle')
+          alert("import berhasil!")
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          // Handle any errors that occurred during the upload
+          $('#loadingModal').modal('toggle')
+          alert("import gagal")
+        }
+      });
+    });
+
+    $('form[name="import-data-pesilat-seni"]').on('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+      var fileInput = $('#fileInput')[0].files[0];
+      var formData = new FormData();
+      formData.append('file', fileInput);
+      formData.append('_csrf', _csrf);
+      $('#loadingModal').modal('toggle')
+      // Send the file using AJAX
+      $.ajax({
+        url: '/peserta/seni/import/save', // Replace with your server upload URL
+        type: 'POST',
+        data: formData,
+        processData: false, // Prevent jQuery from automatically transforming the data into a query string
+        contentType: false, // Prevent jQuery from overriding the Content-Type header
+        success: function (response) {
+          // Handle the response from the server
+          $('#loadingModal').modal('toggle')
+          alert("import berhasil!")
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          // Handle any errors that occurred during the upload
+          $('#loadingModal').modal('toggle')
+          alert("import gagal")
+        }
+      });
+    });
 
   })
 })(jQuery);

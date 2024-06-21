@@ -65,6 +65,12 @@ Route.get('peserta/create-group/:type', 'PesertaController.createGroup')
 Route.post('peserta/save-group/:type', 'PesertaController.saveGroup')
 Route.get('peserta/create-group-seni', 'PesertaController.createSeniGroup')
 Route.post('peserta/save-group-seni', 'PesertaController.saveSeniGroup')
+Route.get('peserta/import/upload', 'PesertaController.tandingImport')
+Route.post('peserta/import/save', 'PesertaController.tandingImportSave')
+Route.get('peserta/import/template', 'PesertaController.tandingImportTemplate')
+Route.get('peserta/seni/import/upload', 'PesertaController.seniImport')
+Route.post('peserta/seni/import/save', 'PesertaController.seniImportSave')
+Route.get('peserta/seni/import/template', 'PesertaController.seniImportTemplate')
 
 /**
 * Undian
