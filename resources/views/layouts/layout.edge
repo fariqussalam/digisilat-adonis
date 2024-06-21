@@ -20,6 +20,7 @@
 
 <body>
   <div class="wrapper" data-csrf="{{ csrfToken }}">
+    @if(!bagan_only)
     <nav id="sidebar" class="sidebar">
       <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="/">
@@ -119,8 +120,10 @@
 
       </div>
     </nav>
-
+    @endif
+   
     <div class="main">
+      @if(!bagan_only)
       <nav class="navbar navbar-expand navbar-light navbar-bg">
         <a class="sidebar-toggle d-flex">
           <i class="hamburger align-self-center"></i>
@@ -140,6 +143,7 @@
           </ul>
         </div>
       </nav>
+      @endif
 
       <main class="content">
         @section('content')

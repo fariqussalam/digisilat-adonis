@@ -258,84 +258,62 @@
       $($form).prepend($template)
     });
 
+
     $('.js-undian-undi').on('click', function () {
       console.log("undianClicked")
       var dataUndian = $(this).data()
       $('#undianModal').modal('toggle')
-
-      $('.js-lakukan-undian').on('click', function () {
-        $('#undianModal').modal('toggle')
-        var jumlahPesertaValues = []; // Array to store extracted values
-
-        $('.js-jumlah-peserta-input').each(function () {
-          var value = $(this).val();
-          jumlahPesertaValues.push(value);
-        });
-
-        console.log("jumlah bagan", jumlahPesertaValues)
-
-        $.ajax({
-          url: "/undian/undi-baru",
-          type: "POST",
-          data: { kategori: dataUndian.kategori, _csrf: _csrf, type: dataUndian.type, jumlah_bagan: jumlahPesertaValues },
-          beforeSend: function () {
-            $('#loadingModal').modal('toggle')// Append to body or specific container
-          },
-
-          // Success callback function
-          success: function (response) {
-            setTimeout(function () {
-              $('#loadingModal').modal('toggle')
-              alert("pengundian berhasil")
-              window.location.reload();
-            }, 2000)
-          },
-
-          // Error callback function
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.error("Error:", textStatus, errorThrown);
-            $('#loadingModal').modal('toggle')
-            alert("pengundian gagal: " + errorThrown)
-            // Handle errors here
-          },
-        });
-      })
-      // var dataUndian = $(this).data();
-      // var pesertaList = dataUndian.pesertaUndian.split(",");
-      // vex.dialog.open({
-      //   buttons: [
-      //     $.extend({}, vex.dialog.buttons.YES, { text: 'Draw' }),
-      //   ],
-      //   callback: function (data) {
-      //     doUndian(dataUndian);
-      //   },
-      //   contentClassName: 'vex-undian-wrapper ',
-      //   unsafeMessage: '<div class="undian-box-wrapper text-center">' +
-      //     '<div class="undian-box text-center btn btn-success undian-nama">Undi</div>' +
-      //     // '<div class="text-center undian-nama"></div>' +
-      //     '</div>',
-      //   afterOpen: function () {
-      //     var undianList = pesertaList,
-      //       num = undianList.length - 1,
-      //       btnClass = '.undian-box',
-      //       open = false;
-      //     $(document).on('click', btnClass, function () {
-      //       if (!open) {
-      //         timer = setInterval(function () {
-      //           var random = Math.round(Math.random() * num),
-      //             eat = undianList[random];
-      //           $(btnClass).text(eat);
-      //         }, 40);
-      //         open = true;
-      //       } else {
-      //         clearInterval(timer);
-      //         open = false;
-      //       }
-      //     })
-      //   }
-      // })
     })
+    $('.js-lakukan-undian').on('click', function () {
+      var dataUndian = $('.js-undian-undi').data()
+      $(this).prop("disabled", true)
+      $('#undianModal').modal('toggle')
+      var jumlahPesertaValues = []; // Array to store extracted values
 
+      var total = 0
+      $('.js-jumlah-peserta-input').each(function () {
+        var value = $(this).val();
+        jumlahPesertaValues.push(value);
+        var intVal = parseInt(value, 10)
+        total += intVal
+      });
+
+      var jumlahInt = parseInt(dataUndian.jumlah, 10)
+
+      if (jumlahInt != total) {
+        alert("alokasi bagan dan jumlah peserta tidak sesuai ! jumlah = " + dataUndian.jumlah.toString() + ", alokasi =  " + total.toString())
+        $(this).prop("disabled", false)
+        return false;
+      }
+
+      $.ajax({
+        url: "/undian/undi-baru",
+        type: "POST",
+        data: { kategori: dataUndian.kategori, _csrf: _csrf, type: dataUndian.type, jumlah_bagan: jumlahPesertaValues },
+        beforeSend: function () {
+          $('#loadingModal').modal('toggle')// Append to body or specific container
+        },
+
+        // Success callback function
+        success: function (response) {
+          setTimeout(function () {
+            $('#loadingModal').modal('toggle')
+            alert("pengundian berhasil")
+            window.location.reload();
+          }, 2000)
+          $(this).prop("disabled", false)
+        },
+
+        // Error callback function
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error("Error:", textStatus, errorThrown);
+          $('#loadingModal').modal('toggle')
+          alert("pengundian gagal: " + errorThrown)
+          // Handle errors here
+          $(this).prop("disabled", false)
+        },
+      });
+    })
 
 
 

@@ -20,7 +20,7 @@ class UndianController {
     }
 
     async tanding({ request, view }) {
-        const params = request.only(['kelas'])
+        const params = request.only(['kelas', 'bagan_only'])
         const viewData = {}
         const kelas = params.kelas
         const tournament = request.activeTournament
@@ -62,8 +62,14 @@ class UndianController {
 
         const templateBagan = await Setting.findBy('setting_type', 'TEMPLATE_BAGAN')
         viewData.templateBagan = templateBagan.setting_value
+        viewData.bagan_only = params.bagan_only
 
-        return view.render('undian.tanding', viewData)
+        let viewFile = 'undian.tanding'
+        if (params.bagan_only) {
+            viewFile = 'undian.fullbagan'
+        }
+
+        return view.render(viewFile, viewData)
     }
 
     async seni({ request, view }) {
