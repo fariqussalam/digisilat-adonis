@@ -6,12 +6,19 @@
         var state = new DigiSilat.State.Display();
 
         function renderInitialData(juri) {
-            _.each(DigiSilat.getSudutList(), function(sudut) {
-                _.each(DigiSilat.getRondeList(), function(ronde) {
+            _.each(DigiSilat.getSudutList(), function (sudut) {
+                var nilaiPerSudut = 0
+                _.each(DigiSilat.getRondeList(), function (ronde) {
                     var nilai = juri.getNilai(sudut, ronde);
-                    renderNilai(sudut, juri.nomorJuri, ronde, nilai.totalRonde, nilai.total);
+                    // renderNilai(sudut, juri.nomorJuri, ronde, nilai.totalRonde, nilai.total);
+                    nilaiPerSudut = nilaiPerSudut + nilai.totalRonde
                 })
+                renderNilaiSudut(sudut, nilaiPerSudut)
             })
+        }
+
+        function renderNilaiSudut(sudut, nilaiPerSudut) {
+            $('.js-total-nilai[data-sudut="' + sudut + '"]').text(nilaiPerSudut)
         }
 
         function setWarnaRonde(ronde) {
@@ -19,13 +26,14 @@
                 "background-color": "white",
                 "color": "black"
             })
-            $('.js-tanding-display-ronde[data-ronde="'+ronde+'"]').css({
+            $('.js-tanding-display-ronde[data-ronde="' + ronde + '"]').css({
                 "background-color": "Green",
                 "color": "white"
             })
         }
 
         function setDataPertandingan(pertandingan) {
+            console.log("setting data")
             $(".js-tanding-display-table-pengumuman").hide();
             $(".js-tanding-display-kelas").text(pertandingan.kelas.nama);
             $(".js-tanding-display-merah-nama").text(pertandingan.merah.nama);
@@ -35,10 +43,14 @@
         }
 
         function renderNilai(sudut, nomorJuri, ronde, totalRonde, total) {
-            var $totalRonde = $('.js-tanding-display__nilai[data-ronde="'+ ronde +'"][data-juri="'+ nomorJuri +'"][data-sudut="'+ sudut +'"]')
-            var $total = $('.js-tanding-display__nilai[data-ronde="total"][data-juri="'+ nomorJuri +'"][data-sudut="'+ sudut +'"]')
+            var $totalRonde = $('.js-tanding-display__nilai[data-ronde="' + ronde + '"][data-juri="' + nomorJuri + '"][data-sudut="' + sudut + '"]')
+            var $total = $('.js-tanding-display__nilai[data-ronde="total"][data-juri="' + nomorJuri + '"][data-sudut="' + sudut + '"]')
             $totalRonde.text(totalRonde);
             $total.text(total);
+        }
+
+        function renderRonde(ronde) {
+            $('.indikator-ronde').text(ronde)
         }
 
         function renderPoin(poinMerah, poinBiru) {
@@ -56,12 +68,12 @@
             // $indikatorMerah.removeClass("glow-img-danger").css("background-color", "dimgrey")
             // $indikatorBiru.removeClass("glow-img-primary").css("background-color", "dimgrey")
             $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"]')
-            .removeClass('glow-img-danger').removeClass('sisi-merah')
-            .addClass('sisi-total')
+                .removeClass('glow-img-danger').removeClass('sisi-merah')
+                .addClass('sisi-total')
             $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"]')
-            .removeClass('sisi-biru')
-            .removeClass('glow-img-primary')
-            .addClass('sisi-total')
+                .removeClass('sisi-biru')
+                .removeClass('glow-img-primary')
+                .addClass('sisi-total')
             if (data.pemenang === 'MERAH') {
                 $('.js-tanding-display-merah-nama').text(data.merah.nama + " (Pemenang)")
                 $('.sisi-biru.display-name').css("background-color", "dimgrey")
@@ -72,45 +84,45 @@
                 $('.sisi-biru.display-name').addClass("glow-img-primary")
             }
 
-            _.each(pemberiPoin.merah, function(m) {
+            _.each(pemberiPoin.merah, function (m) {
                 // $('[data-indikator-merah="true"][data-juri="' + m + '"]').addClass("glow-img-danger")
-                $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ m +'"]').removeClass('sisi-total').addClass('sisi-merah').addClass("glow-img-danger")
+                $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="' + m + '"]').removeClass('sisi-total').addClass('sisi-merah').addClass("glow-img-danger")
                 // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').addClass('sisi-total')
                 // $('[data-indikator-biru="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
             })
-            _.each(pemberiPoin.biru, function(m) {
+            _.each(pemberiPoin.biru, function (m) {
                 // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').addClass('sisi-biru')
                 // // $('[data-indikator-biru="true"][data-juri="' + m + '"]').addClass("glow-img-primary")
                 // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').addClass("glow-img-primary").css("background-color", "")
                 // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ m +'"]').css("background-color", "dimgrey")
                 // // $('[data-indikator-merah="true"][data-juri="' + m + '"]').css("background-color", "dimgrey")
-                $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ m +'"]').removeClass('sisi-total').addClass('sisi-biru').addClass("glow-img-primary")
+                $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="' + m + '"]').removeClass('sisi-total').addClass('sisi-biru').addClass("glow-img-primary")
                 // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ m +'"]').addClass('sisi-total')
             })
 
             if (hasil_seri && hasil_seri.length > 0) {
-                _.each(hasil_seri, function(item) {
+                _.each(hasil_seri, function (item) {
                     if (item.pemenang == "merah") {
-                        $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="'+ item.nomor_juri +'"]').removeClass('sisi-total').addClass('sisi-merah').addClass("glow-img-danger")
+                        $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"][data-juri="' + item.nomor_juri + '"]').removeClass('sisi-total').addClass('sisi-merah').addClass("glow-img-danger")
                     } else if (item.pemenang == "biru") {
-                        $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="'+ item.nomor_juri +'"]').removeClass('sisi-total').addClass('sisi-biru').addClass("glow-img-primary")
+                        $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"][data-juri="' + item.nomor_juri + '"]').removeClass('sisi-total').addClass('sisi-biru').addClass("glow-img-primary")
                     }
                 })
             }
         }
 
-        $(document).ready(function() {
-            setWarnaRonde(state.ronde)
+        $(document).ready(function () {
+            renderRonde(state.ronde)
             socket.emit('get-data-pertandingan', { pertandinganId: pertandinganId })
         });
 
         var socket = DigiSilat.createSocket("tanding", "Tanding Display", pertandinganId);
-        socket.on('data-pertandingan', function(data) {
+        socket.on('data-pertandingan', function (data) {
             setDataPertandingan(data)
             state.dewanJuri = data.dewanJuri;
             state.ronde = data.ronde
 
-            var juriList = _.keys(state.dewanJuri);
+            var juriList = ["1"];
             var sisaJuri = []
             var poinMerah = 0, poinBiru = 0;
             var pemberiPoin = {
@@ -122,24 +134,24 @@
                 var sisaJuri = _.difference(juriList, modified);
                 juriList = modified
             }
-            _.each(juriList, function(nomorJuri) {
+            _.each(juriList, function (nomorJuri) {
                 var juri = new DigiSilat.Juri(nomorJuri);
                 juri.penilaian = state.dewanJuri[nomorJuri].penilaian
                 renderInitialData(juri);
 
-                var poin = juri.getRingkasanNilai()
-                poinMerah = poinMerah + poin.merah
-                poinBiru = poinBiru + poin.biru
-                if (poin.merah == 1) {
-                    pemberiPoin.merah.push(juri.nomorJuri)
-                } else if (poin.biru == 1) {
-                    pemberiPoin.biru.push(juri.nomorJuri)
-                }
-                renderPoin(poinMerah, poinBiru)
-            }) ;
-            _.each(sisaJuri, function(nomorJuri) {
-                $('.js-tanding-display__nilai[data-juri="'+ nomorJuri +'"]').css("display", "none");
-                $('.js-tanding-display__juri[data-juri="'+ nomorJuri +'"]').css("display", "none");
+                // var poin = juri.getRingkasanNilai()
+                // poinMerah = poinMerah + poin.merah
+                // poinBiru = poinBiru + poin.biru
+                // if (poin.merah == 1) {
+                //     pemberiPoin.merah.push(juri.nomorJuri)
+                // } else if (poin.biru == 1) {
+                //     pemberiPoin.biru.push(juri.nomorJuri)
+                // }
+                // renderPoin(poinMerah, poinBiru)
+            });
+            _.each(sisaJuri, function (nomorJuri) {
+                $('.js-tanding-display__nilai[data-juri="' + nomorJuri + '"]').css("display", "none");
+                $('.js-tanding-display__juri[data-juri="' + nomorJuri + '"]').css("display", "none");
             });
             setWarnaRonde(state.ronde)
             if (data.pemenang) {
@@ -148,16 +160,16 @@
                 renderPoin(data.skor_merah, data.skor_biru)
             }
         })
-        socket.on('kontrol-ronde', function(currentRonde) {
+        socket.on('kontrol-ronde', function (currentRonde) {
             state.ronde = currentRonde
-            setWarnaRonde(currentRonde)
+            renderRonde(currentRonde)
         })
 
         function resetCountdown() {
             state.countdown = 0
         }
         var $clock = $('.js-timer-clock');
-        var timer = new easytimer.Timer({precision:"secondTenths", countdown: true})
+        var timer = new easytimer.Timer({ precision: "secondTenths", countdown: true })
         timer.addEventListener('secondTenthsUpdated', function (e) {
             state.countdown = timer.getTotalTimeValues().seconds;
             $clock.html(timer.getTimeValues().toString().substring(3));
@@ -169,20 +181,20 @@
             $clock.html(timer.getTimeValues().toString().substring(3));
         });
 
-        socket.on('timer-command', function(data) {
+        socket.on('timer-command', function (data) {
             if (data.command == 'start') {
-                timer.start({startValues: {seconds: state.countdown}});
+                timer.start({ startValues: { seconds: state.countdown } });
             } else if (data.command == 'stop') {
                 timer.stop();
             } else if (data.command == 'reset') {
                 resetCountdown();
                 timer.stop();
-                timer.start({startValues: {seconds: state.countdown}});
+                timer.start({ startValues: { seconds: state.countdown } });
             } else if (data.command == 'set') {
                 var waktu = parseInt(data.countdown);
                 resetCountdown();
                 state.countdown = waktu
-                timer.start({startValues: {seconds: state.countdown}});
+                timer.start({ startValues: { seconds: state.countdown } });
                 timer.stop();
                 state.countdown = waktu
             }

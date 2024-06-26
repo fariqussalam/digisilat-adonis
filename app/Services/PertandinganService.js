@@ -62,9 +62,9 @@ class PertandinganService {
     }
   }
 
-  async getPertandinganList({kelas, nomor_gelanggang}, tournament_id, without_data) {
-    const queryParams = {tournament_id}
-    if (kelas != "all" && kelas != null  && kelas != '') {
+  async getPertandinganList({ kelas, nomor_gelanggang }, tournament_id, without_data) {
+    const queryParams = { tournament_id }
+    if (kelas != "all" && kelas != null && kelas != '') {
       queryParams.kelas_id = kelas
     }
     if (nomor_gelanggang && nomor_gelanggang != "not_null") {
@@ -73,7 +73,7 @@ class PertandinganService {
 
     const responseList = []
     const pertandinganList = await Pertandingan.query().where(queryParams).fetch().then((result) => result.toJSON())
-    for (let p of pertandinganList){
+    for (let p of pertandinganList) {
       const resp = await this.prosesPertandingan(p)
       if (resp) {
         if (without_data) {
@@ -88,8 +88,8 @@ class PertandinganService {
     return responseList
   }
 
-  async getPertandinganSeniList({kategori, nomor_pool}, tournament_id) {
-    const queryParams = {tournament_id}
+  async getPertandinganSeniList({ kategori, nomor_pool }, tournament_id) {
+    const queryParams = { tournament_id }
     if (kategori != "all" && kategori != null && kategori != '') {
       queryParams.kategori_id = kategori
     }
@@ -105,8 +105,8 @@ class PertandinganService {
     } else {
       pertandinganList = await PertandinganSeni.query().where(queryParams).fetch().then((result) => result.toJSON())
     }
-    
-    
+
+
     for (const pertandingan of pertandinganList) {
       const resp = await this.prosesPertandinganSeni(pertandingan)
       if (resp) {
@@ -126,7 +126,7 @@ class PertandinganService {
 
   async prosesPertandingan(pertandingan) {
     if (pertandingan.jenis == 'KUALIFIKASI') {
-      const kualifikasi = await Kualifikasi.query().where({pertandingan_id: pertandingan.id}).first()
+      const kualifikasi = await Kualifikasi.query().where({ pertandingan_id: pertandingan.id }).first()
       if (!kualifikasi) return null
       if (!kualifikasi.merah_id && !kualifikasi.biru_id) return null
 
@@ -136,7 +136,7 @@ class PertandinganService {
       pertandingan.biru = await this.pesilatService.getPesilatTanding(kualifikasi.biru_id)
       return pertandingan
     } else if (pertandingan.jenis == 'ELIMINASI') {
-      const eliminasi = await Eliminasi.query().where({pertandingan_id: pertandingan.id}).first()
+      const eliminasi = await Eliminasi.query().where({ pertandingan_id: pertandingan.id }).first()
       if (!eliminasi) return null
 
       // console.log(`pertandingan id : ${pertandingan.id}`)
@@ -147,7 +147,7 @@ class PertandinganService {
       const biru = await this.findRootPertandingan(eliminasi.pemenang_b_id)
       // console.log("biru", biru)
 
-      if(merah && merah.isBye) {
+      if (merah && merah.isBye) {
         const updateBiru = await Pertandingan.find(pertandingan.id)
         updateBiru.pemenang = "BIRU"
         updateBiru.status = "SELESAI"
@@ -175,7 +175,7 @@ class PertandinganService {
     if (!pertandingan) return null
 
     if (pertandingan.jenis == "ELIMINASI") {
-      const eliminasi = await Eliminasi.query().where({pertandingan_id: pertandingan.id}).first()
+      const eliminasi = await Eliminasi.query().where({ pertandingan_id: pertandingan.id }).first()
       if (!eliminasi) return null
       if (!eliminasi.pemenang_a_id || !eliminasi.pemenang_b_id) return null
 
@@ -186,9 +186,9 @@ class PertandinganService {
       }
 
     } else {
-      const kualifikasi = await Kualifikasi.query().where({pertandingan_id: pertandingan.id}).first()
+      const kualifikasi = await Kualifikasi.query().where({ pertandingan_id: pertandingan.id }).first()
       if (!kualifikasi) return null
-      if (!kualifikasi.merah_id && !kualifikasi.biru_id) return {isBye: true}
+      if (!kualifikasi.merah_id && !kualifikasi.biru_id) return { isBye: true }
 
       if (pertandingan.pemenang == "MERAH") {
         return await this.pesilatService.getPesilatTanding(kualifikasi.merah_id)
@@ -221,7 +221,7 @@ class PertandinganService {
   }
 
   async getPertandinganGelanggang(nomor_gelanggang, tournament) {
-    const pertandinganList = await this.getPertandinganList({nomor_gelanggang}, tournament.id)
+    const pertandinganList = await this.getPertandinganList({ nomor_gelanggang }, tournament.id)
     return pertandinganList
   }
 
@@ -259,55 +259,64 @@ class PertandinganService {
 
   async createMatchups(matchups, ronde, tournament, kelas) {
     console.log("Creating Ronde " + ronde);
+
     let match_rounds = [];
     let i = 1;
-   
-    for (const matchup of matchups) {
-      const pertandingan = new Pertandingan()
-      pertandingan.status = "BELUM_DIMULAI"
-      pertandingan.tournament_id = tournament.id
-      pertandingan.kelas_id = kelas.id
-      pertandingan.ronde = ronde
-      await pertandingan.save()
 
-      if (ronde == 1) {
-        pertandingan.jenis = "KUALIFIKASI"
+    try {
+      for (const matchup of matchups) {
+        const pertandingan = new Pertandingan()
+        pertandingan.status = "BELUM_DIMULAI"
+        pertandingan.tournament_id = tournament.id
+        pertandingan.kelas_id = kelas.id
+        pertandingan.ronde = ronde
         await pertandingan.save()
-        const kualifikasi = new Kualifikasi()
-        kualifikasi.pertandingan_id = pertandingan.id
-        kualifikasi.merah_id = parseInt(matchup[0])
-        kualifikasi.biru_id = parseInt(matchup[1])
-        if (kualifikasi.merah_id == null || isNaN(kualifikasi.merah_id)) {
-          pertandingan.pemenang = "BIRU"
-          pertandingan.status = "SELESAI"
-          pertandingan.alasan_kemenangan = "Menang BYE"
+
+        if (ronde == 1) {
+          // console.log("creating kualifikasi", matchup)
+          pertandingan.jenis = "KUALIFIKASI"
           await pertandingan.save()
-        } else if (kualifikasi.biru_id == null || isNaN(kualifikasi.biru_id)) {
-          pertandingan.pemenang = "MERAH"
-          pertandingan.status = "SELESAI"
-          pertandingan.alasan_kemenangan = "Menang BYE"
+          const kualifikasi = new Kualifikasi()
+          kualifikasi.pertandingan_id = pertandingan.id
+          kualifikasi.merah_id = parseInt(matchup[0]) ? parseInt(matchup[0]) : null
+          kualifikasi.biru_id = parseInt(matchup[1]) ? parseInt(matchup[1]) : null
+
+          if (kualifikasi.merah_id == null || isNaN(kualifikasi.merah_id)) {
+            pertandingan.pemenang = "BIRU"
+            pertandingan.status = "SELESAI"
+            pertandingan.alasan_kemenangan = "Menang BYE"
+            await pertandingan.save()
+          } else if (kualifikasi.biru_id == null || isNaN(kualifikasi.biru_id)) {
+            pertandingan.pemenang = "MERAH"
+            pertandingan.status = "SELESAI"
+            pertandingan.alasan_kemenangan = "Menang BYE"
+            await pertandingan.save()
+          }
+          await kualifikasi.save()
+          match_rounds.push({
+            pertandingan: pertandingan.toJSON(),
+            kualifikasi: kualifikasi.toJSON()
+          })
+        } else {
+          // console.log("creating eliminasi")
+          pertandingan.jenis = "ELIMINASI"
           await pertandingan.save()
+          const eliminasi = new Eliminasi()
+          eliminasi.pertandingan_id = pertandingan.id
+          eliminasi.pemenang_a_id = matchup[0].pertandingan.id
+          eliminasi.pemenang_b_id = matchup[1].pertandingan.id
+          await eliminasi.save()
+          match_rounds.push({
+            pertandingan: pertandingan.toJSON(),
+            eliminasi: eliminasi.toJSON()
+          })
         }
-        await kualifikasi.save()
-        match_rounds.push({
-          pertandingan: pertandingan.toJSON(),
-          kualifikasi: kualifikasi.toJSON()
-        })
-      } else {
-        pertandingan.jenis = "ELIMINASI"
-        await pertandingan.save()
-        const eliminasi = new Eliminasi()
-        eliminasi.pertandingan_id = pertandingan.id
-        eliminasi.pemenang_a_id = matchup[0].pertandingan.id
-        eliminasi.pemenang_b_id = matchup[1].pertandingan.id
-        await eliminasi.save()
-        match_rounds.push({
-          pertandingan : pertandingan.toJSON(),
-          eliminasi : eliminasi.toJSON()
-        })
+        i++
       }
-      i++
+    } catch (exception) {
+      console.error("error: ", exception)
     }
+
     return match_rounds
   }
 
@@ -326,8 +335,8 @@ class PertandinganService {
     masterData.nomor_partai = pertandingan.nomor_partai
     masterData.ronde = pertandingan.ronde
     masterData.merah = rootPertandingan.merah
-    masterData.biru =  rootPertandingan.biru
-    masterData.kelas = await Kelas.find(pertandingan.kelas_id).then((k)  =>  k.toJSON())
+    masterData.biru = rootPertandingan.biru
+    masterData.kelas = await Kelas.find(pertandingan.kelas_id).then((k) => k.toJSON())
     return masterData
   }
 
@@ -348,13 +357,13 @@ class PertandinganService {
       kategori: null,
       tanggal_pertandingan: null,
       skor_akhir: "",
-      diskualifikasi: false    
+      diskualifikasi: false
     }
     master_data.id = pertandingan.id
     master_data.nomor_pool = pertandingan.nomor_pool
     master_data.nomor_penampil = pertandingan.nomor_penampil
     master_data.pesilat = await this.pesilatService.getPesilatSeni(pertandingan.pesilat_seni_id)
-    master_data.kategori = await KategoriSeni.find(pertandingan.kategori_id).then((k)  =>  k.toJSON())
+    master_data.kategori = await KategoriSeni.find(pertandingan.kategori_id).then((k) => k.toJSON())
     master_data.tanggal_pertandingan = pertandingan.tanggal_pertandingan
     master_data.skor_akhir = pertandingan.skor_akhir
     master_data.diskualifikasi = pertandingan.diskualifikasi
@@ -366,7 +375,7 @@ class PertandinganService {
    * Seni
    */
   async getPertandinganPool(nomor_pool, tournament) {
-    const pertandinganList = await this.getPertandinganSeniList({nomor_pool}, tournament.id)
+    const pertandinganList = await this.getPertandinganSeniList({ nomor_pool }, tournament.id)
     return pertandinganList
   }
 
@@ -407,7 +416,7 @@ class PertandinganService {
       _.each(match, m => {
         if (m != null && m.length > 0) {
           const nomor = s.words(m, ":")[1]
-          const pasanganUndian = _.find(pesertaUndian, p => {return p.nomor_undian == nomor})
+          const pasanganUndian = _.find(pesertaUndian, p => { return p.nomor_undian == nomor })
           if (pasanganUndian) {
             new_match.push(pasanganUndian)
           }
@@ -438,24 +447,24 @@ class PertandinganService {
         }
         if (team[1] == null) {
           res.winner = team[0].pesilat_id
-          const kualifikasi = await Kualifikasi.query().where({merah_id: res.winner, biru_id: null}).first()
+          const kualifikasi = await Kualifikasi.query().where({ merah_id: res.winner, biru_id: null }).first()
           if (kualifikasi) res.pertandingan_id = kualifikasi.pertandingan_id
         }
         else if (team[0] == null) {
           res.winner = team[1].pesilat_id
-          const kualifikasi = await Kualifikasi.query().where({merah_id: null, biru_id: res.winner}).first()
+          const kualifikasi = await Kualifikasi.query().where({ merah_id: null, biru_id: res.winner }).first()
           if (kualifikasi) res.pertandingan_id = kualifikasi.pertandingan_id
         }
         firstRoundResult.push(res)
       } else {
         let merah_id = team[0] == null ? null : team[0].pesilat_id
         let biru_id = team[1] == null ? null : team[1].pesilat_id
-        const kualifikasi = await Kualifikasi.query().where({merah_id: merah_id, biru_id: biru_id}).first()
+        const kualifikasi = await Kualifikasi.query().where({ merah_id: merah_id, biru_id: biru_id }).first()
         if (kualifikasi) {
           const pertandingan = await Pertandingan.find(kualifikasi.pertandingan_id)
           var res = {
             winner: null,
-            result: [null,null],
+            result: [null, null],
             pertandingan_id: pertandingan.id
           }
           if (pertandingan.skor_merah != null && pertandingan.skor_biru != null) {
@@ -467,15 +476,15 @@ class PertandinganService {
             res.result = [pertandingan.skor_merah, pertandingan.skor_biru]
           } else {
             if (pertandingan.pemenang == "MERAH") {
-                res.winner = merah_id,
-                res.result =[1, 0]
+              res.winner = merah_id,
+                res.result = [1, 0]
             } else if (pertandingan.pemenang == "BIRU") {
               res.winner = biru_id,
-              res.result =[0, 1]
+                res.result = [0, 1]
             }
           }
           firstRoundResult.push(res)
-        }       
+        }
       }
     }
     return firstRoundResult
@@ -489,22 +498,22 @@ class PertandinganService {
         result: [null, null],
         pertandingan_id: null
       }
-       if (m[0].pertandingan_id == null) {
+      if (m[0].pertandingan_id == null) {
         res.winner = m[1].winner
-        const eliminasi = await Eliminasi.query().where({pemenang_b_id: m[1].pertandingan_id}).first()
+        const eliminasi = await Eliminasi.query().where({ pemenang_b_id: m[1].pertandingan_id }).first()
         res.pertandingan_id = eliminasi.pertandingan_id
       } else if (m[1].pertandingan_id == null) {
         res.winner = m[0].winner
-        const eliminasi = await Eliminasi.query().where({pemenang_a_id: m[0].pertandingan_id}).first()
+        const eliminasi = await Eliminasi.query().where({ pemenang_a_id: m[0].pertandingan_id }).first()
         res.pertandingan_id = eliminasi.pertandingan_id
       } else if (m[0].pertandingan_id != null && m[1].pertandingan_id != null) {
-        const eliminasi = await Eliminasi.query().where({pemenang_a_id: m[0].pertandingan_id, pemenang_b_id: m[1].pertandingan_id}).first()
+        const eliminasi = await Eliminasi.query().where({ pemenang_a_id: m[0].pertandingan_id, pemenang_b_id: m[1].pertandingan_id }).first()
         res.pertandingan_id = eliminasi.pertandingan_id
         if (eliminasi) {
           const pertandingan = await Pertandingan.find(eliminasi.pertandingan_id)
           var res = {
             winner: null,
-            result: [null,null],
+            result: [null, null],
             pertandingan_id: pertandingan.id
           }
           if (pertandingan.skor_merah != null && pertandingan.skor_biru != null) {
@@ -516,31 +525,31 @@ class PertandinganService {
             res.result = [pertandingan.skor_merah, pertandingan.skor_biru]
           } else {
             if (pertandingan.pemenang == "MERAH") {
-                res.winner = m[0].winner,
-                res.result =[1, 0]
+              res.winner = m[0].winner,
+                res.result = [1, 0]
             } else if (pertandingan.pemenang == "BIRU") {
               res.winner = m[1].winner,
-              res.result =[0, 1]
+                res.result = [0, 1]
             }
           }
         }
       }
       new_matchups.push(res)
     }
-  
+
     return new_matchups
   }
 
   async getBracketInfo(kelas_id) {
     const kelas = await Kelas.find(kelas_id).then(k => k.toJSON())
     const tournament = await Tournament.find(kelas.tournament_id).then(t => t.toJSON())
-    const undian = await Undian.query().where({tournament_id: tournament.id, kelas_id: kelas.id}).first()
+    const undian = await Undian.query().where({ tournament_id: tournament.id, kelas_id: kelas.id }).first()
     const pesertaUndian = await this.undianService.collectPesertaUndian(undian.id)
     const jumlahPeserta = pesertaUndian.length
     const bagan = await this.getTemplateBagan(jumlahPeserta)
 
     const teams = await this.mapUndianToBagan(pesertaUndian, bagan.matchups)
-    
+
     const initial_teams = []
     for (const t of teams) {
       let red = null, blue = null
@@ -564,23 +573,23 @@ class PertandinganService {
 
     let sisaPeserta = firstRoundResult.length
     let ronde = 2
-    let matchups = _.map(firstRoundResult, (m) => {return {winner: m.winner, pertandingan_id: m.pertandingan_id}})
+    let matchups = _.map(firstRoundResult, (m) => { return { winner: m.winner, pertandingan_id: m.pertandingan_id } })
     while (sisaPeserta > 1) {
-      
-       matchups = _.chunk(matchups, 2)
-       matchups = await this.getRoundResult(matchups)
+
+      matchups = _.chunk(matchups, 2)
+      matchups = await this.getRoundResult(matchups)
       sisaPeserta = matchups.length
       ronde++
       bracketData.results.push(_.map(matchups, 'result'))
     }
 
-       
-    
+
+
 
     return {
       kelas,
       tournament,
-      undian, 
+      undian,
       pesertaUndian,
       bagan,
       teams,

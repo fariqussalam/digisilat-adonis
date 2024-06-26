@@ -1,0 +1,147 @@
+@layout('layouts/pertandingan')
+@section('module_css')
+<link href="/pertandingan/starter-template.css" rel="stylesheet">
+<link
+        rel="stylesheet"
+        href="https://unpkg.com/glow-css@0.2.0/dist/css/glow.min.css"
+/>
+
+@endsection
+@section('content')
+    <div class="container" style="width:100%;padding-top:0px;">
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div>
+                    <table class="table text-center table-borderless">
+                        <thead>
+                        <tr style="padding-left:10%;padding-right:10%">
+                            <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                                <img style="width:150px;height:150px;" src="{{tournament.logo_1}}" alt="">
+                            </th>
+                            <th class="text-center" style="width:60%;font-size:50px;vertical-align:middle">
+                                <h1>{{tournament.nama}}</h1>
+                                
+                                <h3>{{pertandingan.kelas.nama}}</h3>
+                            </th>
+                            <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                                <img style="width:150px;height:150px;" src="{{tournament.logo_2}}" alt="">
+                            </th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <table class="table text-center table-bordered">
+                        <thead>
+                        <tr>
+                            <th rowspan="2" colspan="5" class="text-center sisi-merah display-name" width="40%" data-indikator-merah="true">
+                                <span style="font-size:30px;" class="js-tanding-display-merah-nama"></span><br/>
+                                <span style="font-size:20px;" class="js-tanding-display-merah-kontingen"></span>
+                            </th>
+                            <th width="10%" rowspan="2" colspan="1" class="text-center js-tanding-display-poin-merah" style="width:5%;font-size:50px;vertical-align:middle;">
+                                0
+                            </th>
+                            <th width="10%" rowspan="2" colspan="1" class="text-center js-tanding-display-poin-biru" style="width:5%;font-size:50px;vertical-align:middle;">
+                                0
+                            </th>
+                            <th rowspan="2" colspan="5" class="text-center sisi-biru display-name" width="40%" data-indikator-biru="true">
+                                <span style="font-size:30px;"class="js-tanding-display-biru-nama"></span><br/>
+                                <span style="font-size:20px;" class="js-tanding-display-biru-kontingen"></span>
+                            </th>
+                        </tr>
+                        </thead>
+                  
+                    </table>
+                    <table class="table text-center table-bordered">
+                        <thead>
+                        <tr class="text-center" style="font-size:20px;font-weight:bold;">
+                            <th width="5%" colspan="1" rowspan="2" class="text-center bg-success" style="vertical-align:middle">BABAK</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="1" colspan="2" width="15%">JURI 1</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="2" colspan="2" width="15%">JURI 2</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="3" colspan="2" width="15%">JURI 3</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="4" colspan="2" width="15%">JURI 4</th>
+                            <th class="js-tanding-display__juri text-center" data-juri="5" colspan="2" width="15%">JURI 5</th>
+                        </tr>
+                        <tr style="font-size:20px;font-weight:bold">
+                            <td class="js-tanding-display__juri" data-indikator-merah="true" data-juri="1" style="background-color:red;color: white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="1" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="2" style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="2" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="3"  style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="3" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="4" style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="4" style="color: #ffffff;width:9%;">BIRU</td>
+                            <td class="js-tanding-display__juri"  data-indikator-merah="true" data-juri="5" style="background-color:red;color:white;width:9%;">MERAH</td>
+                            <td class="js-tanding-display__juri bg-primary"  data-indikator-biru="true"  data-juri="5" style="color: #ffffff;width:9%;">BIRU</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="font-size:40px;font-weight:bold">
+                            <td class="js-tanding-display-ronde" data-ronde="1">1</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="1" data-juri="1" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="1" data-juri="1" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="1" data-juri="2" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="1" data-juri="2" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="1" data-juri="3" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="1" data-juri="3" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="1" data-juri="4" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="1" data-juri="4" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="1" data-juri="5" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="1" data-juri="5" data-sudut="biru">0</td>
+                        </tr>
+                        <tr style="font-size:40px;font-weight:bold">
+                            <td class="js-tanding-display-ronde" data-ronde="2">2</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="2" data-juri="1" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="2" data-juri="1" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="2" data-juri="2" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="2" data-juri="2" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="2" data-juri="3" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="2" data-juri="3" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="2" data-juri="4" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="2" data-juri="4" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="2" data-juri="5" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="2" data-juri="5" data-sudut="biru">0</td>
+                        </tr>
+                        <tr style="font-size:40px;font-weight:bold">
+                            <td class="js-tanding-display-ronde" data-ronde="3">3</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="3" data-juri="1" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="3" data-juri="1" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="3" data-juri="2" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="3" data-juri="2" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="3" data-juri="3" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="3" data-juri="3" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="3" data-juri="4" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="3" data-juri="4" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-merah" data-ronde="3" data-juri="5" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-biru"  data-ronde="3" data-juri="5" data-sudut="biru">0</td>
+                        </tr>
+                        <tr style="font-size:40px;font-weight:bold;">
+                            <td>TOTAL</td>
+                            <td class="js-tanding-display__nilai sisi-total" data-ronde="total" data-juri="1" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-total"  data-ronde="total" data-juri="1" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-total" data-ronde="total" data-juri="2" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-total"  data-ronde="total" data-juri="2" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-total" data-ronde="total" data-juri="3" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-total"  data-ronde="total" data-juri="3" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-total" data-ronde="total" data-juri="4" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-total"  data-ronde="total" data-juri="4" data-sudut="biru">0</td>
+                            <td class="js-tanding-display__nilai sisi-total" data-ronde="total" data-juri="5" data-sudut="merah">0</td>
+                            <td class="js-tanding-display__nilai sisi-total"  data-ronde="total" data-juri="5" data-sudut="biru">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-1 col-lg-1 col-sm-1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <div class="lead js-timer-clock text-center" style="font-size:80px;"></div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="jumlah_juri" value="{{1}}" />
+@endsection
+@section('module_js')
+<script src="/pertandingan/lib/easytimer.min.js"></script>
+<script src="/pertandingan/assets/js/modul/tanding-display.js"></script>  
+@endsection

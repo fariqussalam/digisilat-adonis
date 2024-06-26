@@ -7,7 +7,7 @@ const Pertandingan = use('App/Models/Pertandingan')
 const Kualifikasi = use('App/Models/Kualifikasi')
 const Eliminasi = use('App/Models/Eliminasi')
 const PesilatService = use('App/Services/PesilatService')
-const Setting = use ('App/Models/Setting')
+const Setting = use('App/Models/Setting')
 
 const template_tunggal = use('App/DTO/pertandingan_seni.json')
 const template_ganda = use('App/DTO/pertandingan_ganda.json')
@@ -28,7 +28,7 @@ class TandingService {
                 biru
             }
         } else if (jenis == 'ELIMINASI') {
-            const eliminasi = await Eliminasi.query().where({pertandingan_id: pertandinganId}).first()
+            const eliminasi = await Eliminasi.query().where({ pertandingan_id: pertandinganId }).first()
             const merah = await this.pertandinganService.findRootPertandingan(eliminasi.pemenang_a_id)
             const biru = await this.pertandinganService.findRootPertandingan(eliminasi.pemenang_b_id)
             return {
@@ -45,6 +45,9 @@ class TandingService {
         if (!dataPertandingan) return;
 
         let objPertandingan = JSON.parse(dataPertandingan.data_pertandingan);
+        if (!objPertandingan) {
+            objPertandingan = {}
+        }
         const peserta = await this.getPesertaPertandingan(pertandinganId, dataPertandingan.jenis)
         objPertandingan.merah = peserta.merah
         objPertandingan.biru = peserta.biru
@@ -74,7 +77,7 @@ class TandingService {
     async inputSkor(pertandinganId, pertandinganData, nomorJuri, nilai) {
         pertandinganData.dewanJuri[nomorJuri].penilaian.push(nilai);
         await this.setPertandinganData(pertandinganId, pertandinganData);
-        return await this.getPertandinganData(pertandinganId);
+        return pertandinganData;
     }
 
     async hapusSkor(pertandinganId, pertandinganData, nomorJuri, sudut, ronde) {
@@ -86,7 +89,7 @@ class TandingService {
         penilaian.splice(lastIndex, 1);
         pertandinganData.dewanJuri[nomorJuri].penilaian = penilaian;
         await this.setPertandinganData(pertandinganId, pertandinganData);
-        return await this.getPertandinganData(pertandinganId);
+        return pertandinganData;
     }
 
     async kontrolRonde({ ronde, pertandinganId }) {
@@ -125,7 +128,7 @@ class TandingService {
                     skor_biru = skor_biru + 1
                 }
             })
-        }catch(e) {
+        } catch (e) {
             dataPertandinganJson = null
             skor_biru = 0
             skor_merah = 0
@@ -138,7 +141,7 @@ class TandingService {
     }
 
     async getInitDataPertandingan(pertandingan) {
-        const initData = await Setting.query().where( { setting_type: 'TEMPLATE_TANDING' } ).first()
+        const initData = await Setting.query().where({ setting_type: 'TEMPLATE_TANDING' }).first()
         const initDataSetup = await this.setupInitData(pertandingan, initData.setting_value)
         return initDataSetup
     }
@@ -157,7 +160,7 @@ class TandingService {
     }
 
     async getInfoRonde(tournament_id) {
-        const rondeList = await Pertandingan.query().select('ronde').where({tournament_id}).orderBy('ronde', 'desc').distinct("ronde").fetch().then(r => r.toJSON())
+        const rondeList = await Pertandingan.query().select('ronde').where({ tournament_id }).orderBy('ronde', 'desc').distinct("ronde").fetch().then(r => r.toJSON())
         if (!rondeList.length < 1) return null
 
         var info = {}

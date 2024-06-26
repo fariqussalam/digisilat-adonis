@@ -37,7 +37,7 @@ class JadwalTandingController {
           kelas_id: kelas.id,
           tournament_id: tournament.id
         }).first()
-  
+
         if (undian) {
           let jsonUndian = undian.toJSON()
           let pesertaUndian = await PesertaUndian.query().where({ undian_id: undian.id }).fetch().then(result => result.toJSON())
@@ -51,9 +51,9 @@ class JadwalTandingController {
           undianList.push(jsonUndian)
         }
       }
-  
+
       const resp = []
-  
+
       for (let i = 0; i < undianList.length; i++) {
         const undian = undianList[i]
         const pertandinganList = await this.pertandinganService.generateJadwal({ undian: undian }, tournament)
@@ -61,7 +61,7 @@ class JadwalTandingController {
           undian,
           pertandinganList
         })
-      } 
+      }
     } catch (error) {
       return response.route('TournamentController.index')
     }
@@ -86,7 +86,7 @@ class JadwalTandingController {
     }
 
     const rondePertandinganList = []
-    const rondeList = _.sortBy(_.uniq(_.map(pertandinganList, function (p) {return p.ronde})), (num) => num)
+    const rondeList = _.sortBy(_.uniq(_.map(pertandinganList, function (p) { return p.ronde })), (num) => num)
     _.each(rondeList, (ronde) => {
       const pertandingans = _.where(pertandinganList, { ronde: ronde })
       rondePertandinganList.push({
@@ -128,30 +128,30 @@ class JadwalTandingController {
     response.route('JadwalTandingController.jadwalTanding')
   }
 
-  async resetGelanggang({request, response}) {
+  async resetGelanggang({ request, response }) {
 
     const tournament = await request.activeTournament
     tournament.jumlah_gelanggang = 0
     await tournament.save()
 
-    await Pertandingan.query().where({tournament_id: tournament.id}).update({nomor_gelanggang: null, status: "BELUM_DIMULAI"})
+    await Pertandingan.query().where({ tournament_id: tournament.id }).update({ nomor_gelanggang: null, status: "BELUM_DIMULAI" })
 
     return response.route('JadwalTandingController.jadwalTanding')
   }
 
-  async bracketInfo({request, response}) {
+  async bracketInfo({ request, response }) {
     const params = request.only(['kelas'])
     const bracketInfo = await this.pertandinganService.getBracketInfo(params.kelas)
     return response.json(bracketInfo)
   }
 
-  async rekapJuara({request, response, view}) {
+  async rekapJuara({ request, response, view }) {
     const params = request.only(['kelas'])
     const tournament = request.activeTournament
     const kelasList = await this.rekapService.getKelasList(tournament.id)
-    
+
     let juaraList = []
-    
+
     for (var kelas of kelasList) {
       const k = await Kelas.find(kelas).then(res => res.toJSON())
       const rekapJuara = await this.rekapService.getRekapJuara(kelas, tournament.id)
@@ -160,16 +160,16 @@ class JadwalTandingController {
         rekapJuara: rekapJuara
       })
     }
-    
+
     return view.render('rekap.rekap-juara', {
       kelasList: kelasList,
       tournament_id: tournament.id,
       tournament: tournament,
-      juaraList : _.sortBy(juaraList, m => {m.kelas.nama})
+      juaraList: _.sortBy(juaraList, m => { m.kelas.nama })
     })
   }
 
-  async rekapMedali({request, view, response}) {
+  async rekapMedali({ request, view, response }) {
     const tournament = request.activeTournament
     const rekapMedali = await this.rekapService.getRekapMedali(tournament.id)
     // return response.json(rekapMedali)
@@ -180,7 +180,7 @@ class JadwalTandingController {
     })
   }
 
-  async rekapSeni( { request, view, response} ) {
+  async rekapSeni({ request, view, response }) {
     const tournament = request.activeTournament
 
     const kategoriList = [];
@@ -190,16 +190,16 @@ class JadwalTandingController {
     return
   }
 
-  async cetakSemuaJadwal({request, view, response}) {
+  async cetakSemuaJadwal({ request, view, response }) {
     const param = request.only(['kelas'])
     const pertandinganList = await this.pertandinganService.getPertandinganList(
-      {kelas: param.kelas},
+      { kelas: param.kelas },
       request.activeTournament.id, true
     )
 
-    let filteredList = pertandinganList.filter(p => p.nomor_partai != null && p.nomor_gelanggang != null)    
+    let filteredList = pertandinganList.filter(p => p.nomor_partai != null && p.nomor_gelanggang != null)
     let orderedList = _.map(filteredList, (p) => {
-      let dto =  {
+      let dto = {
         id: p.id,
         ronde: p.ronde,
         kelas: p.kelas.nama,
@@ -213,7 +213,7 @@ class JadwalTandingController {
       dto.merah_kontingen = p.merah ? p.merah.kontingen.nama : '-'
       dto.biru_nama = p.biru ? p.biru.nama : '-'
       dto.biru_kontingen = p.biru ? p.biru.kontingen.nama : '-'
-        
+
       return dto
     })
     orderedList = _.sortBy(orderedList, 'ronde')
@@ -226,24 +226,24 @@ class JadwalTandingController {
     const doc = await handler.process(templateFile, {
       pertandinganList: orderedList
     });
-    
+
     const filename = 'jadwal-tanding-' + new Date().getTime() + '.docx';
     response.response.setHeader('Content-disposition', 'attachment; filename=' + filename);
     response.type('application/octet-stream')
     response.send(doc)
   }
 
-  async cetakJadwal({request, view, response}) {
+  async cetakJadwal({ request, view, response }) {
     const param = request.only(['kelas', 'nomor_gelanggang'])
     const pertandinganList = await this.pertandinganService.getPertandinganList(
-      {kelas: param.kelas},
+      { kelas: param.kelas },
       request.activeTournament.id, true
     )
 
     let idx = 1
-    let filteredList = pertandinganList.filter(p => p.nomor_partai != null && p.nomor_gelanggang == param.nomor_gelanggang)    
+    let filteredList = pertandinganList.filter(p => p.nomor_partai != null && p.nomor_gelanggang == param.nomor_gelanggang)
     let orderedList = _.map(filteredList, (p) => {
-      let dto =  {
+      let dto = {
         idx: idx,
         id: p.id,
         ronde: p.ronde,
@@ -270,10 +270,10 @@ class JadwalTandingController {
     const handler = new TemplateHandler();
     const doc = await handler.process(templateFile, {
       jadwalList: [
-        { nomor_gelanggang: param.nomor_gelanggang,  pertandinganList: orderedList }
+        { nomor_gelanggang: param.nomor_gelanggang, pertandinganList: orderedList }
       ]
     });
-    
+
     const filename = 'jadwal-tanding-gelanggang -' + param.nomor_gelanggang + '-' + new Date().getTime() + '.docx';
     response.response.setHeader('Content-disposition', 'attachment; filename=' + filename);
     response.type('application/octet-stream')
@@ -283,31 +283,32 @@ class JadwalTandingController {
   async getNilai({ request, response, view }) {
     const { pertandingan_id } = request.all()
 
-    const result = await Database.select('data_pertandingan').from('pertandingan').where({id: pertandingan_id}).first()
+    const result = await Database.select('data_pertandingan').from('pertandingan').where({ id: pertandingan_id }).first()
     const data_pertandingan = JSON.parse(result.data_pertandingan)
 
     let juri_seri = []
     for (let [key, value] of Object.entries(data_pertandingan.dewanJuri)) {
-      const { nomorJuri, penilaian } = value
-      const totalNilaiMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah'), (memo, n) => memo + n.nilai, 0)
-      const totalNilaiBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru'), (memo, n) => memo + n.nilai, 0)
-      if (totalNilaiMerah == totalNilaiBiru) {
-        const hukumanMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
-        const hukumanBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
-        juri_seri.push({
-          nomor_juri: nomorJuri,
-          nilai_merah: totalNilaiMerah,
-          nilai_biru: totalNilaiBiru,
-          hukuman_merah: hukumanMerah,
-          hukuman_biru: hukumanBiru
-        })
-      }}
-
-
-    response.json({juri_seri: juri_seri})
+      if (key == "1") {
+        const { nomorJuri, penilaian } = value
+        const totalNilaiMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah'), (memo, n) => memo + n.nilai, 0)
+        const totalNilaiBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru'), (memo, n) => memo + n.nilai, 0)
+        if (totalNilaiMerah == totalNilaiBiru) {
+          const hukumanMerah = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'merah' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
+          const hukumanBiru = _.reduce(_.filter(penilaian, (nilai) => nilai.sudut == 'biru' && nilai.nilai < 0), (memo, n) => memo + n.nilai, 0)
+          juri_seri.push({
+            nomor_juri: nomorJuri,
+            nilai_merah: totalNilaiMerah,
+            nilai_biru: totalNilaiBiru,
+            hukuman_merah: hukumanMerah,
+            hukuman_biru: hukumanBiru
+          })
+        }
+      }
+    }
+    response.json({ juri_seri: juri_seri })
     return
   }
 
-} 
+}
 
 module.exports = JadwalTandingController

@@ -502,7 +502,30 @@
         buttons: ["Cancel", "Buat"],
       }).then(function (confirm) {
         if (confirm) {
-          window.location.href = url;
+          // window.location.href = url;
+          $('#loadingModal').modal('toggle')
+          $.ajax({
+            method: "GET",
+            url: url,
+            data: {
+              _csrf: window['_csrf'],
+            },
+            success: function (response) {
+              setTimeout(function () {
+                $('#loadingModal').modal('toggle')
+                alert("generate jadwal berhasil")
+                window.location.reload();
+              }, 2000)
+            },
+
+            // Error callback function
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.error("Error:", textStatus, errorThrown);
+              $('#loadingModal').modal('toggle')
+              alert("generate jadwal gagal: " + errorThrown)
+            },
+
+          })
         }
       });
     });
@@ -760,7 +783,11 @@
       var sudut = window.sudut
       var sudutTemplate = "<option>Pilih Sudut</option>"
       _.each(sudut, function (s) {
-        sudutTemplate += '<option value="' + s + '">' + s + '</option>'
+        var label = s
+        if (s == "Merah") {
+          label = "Kuning"
+        }
+        sudutTemplate += '<option value="' + s + '">' + label + '</option>'
       })
 
       $modal.find('form select[name="sudut"]').html(sudutTemplate)

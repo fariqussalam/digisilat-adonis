@@ -45,7 +45,7 @@
                             <th width="5%">Partai</th>
                             <th width="5%">Gelanggang</th>
                             <th>Kelas</th>
-                            <th>Sudut Merah</th>
+                            <th>Sudut Kuning</th>
                             <th>Sudut Biru</th>
                             <th>Jenis</th>
                             <th>Status</th>
@@ -77,8 +77,15 @@
                             </td>
                             <td>{{ pertandingan.jenis }}</td>
                             <td>{{ pertandingan.status.value }}</td>
-                            <td>{{ pertandingan.pemenang ? pertandingan.pemenang : '-' }}</td>
-                            <td>{{ pertandingan.alasan_kemenangan ? pertandingan.alasan_kemenangan : '-' }}</td>
+                            @if(pertandingan.pemenang)
+                                @if(pertandingan.pemenang == "MERAH")
+                                <td>KUNING</td>
+                                @else
+                                <td>{{ pertandingan.pemenang }}</td>
+                                @endif
+                            @else
+                            <td>{{ '-' }}</td>
+                            @endif                            
                             <td>
                                 @if(pertandingan.status.name == 'BELUM_DIMULAI')
                                 <button class="btn btn-sm btn-primary js-jadwal__atur-pertandingan" data-url="{{ route('JadwalTandingController.updatePartai') }}" data-id="{{pertandingan.id}}" >Atur</button>
@@ -139,7 +146,7 @@
                         <tr>
                             <th>No Partai</th>
                             <th>Kelas</th>
-                            <th>Sudut Merah</th>
+                            <th>Sudut Kuning</th>
                             <th>Sudut Biru</th>
                             <th>Jenis</th>
                             <th>Status</th>

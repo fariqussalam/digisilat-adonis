@@ -1,0 +1,401 @@
+:root {
+  --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+    "Source Han Sans CN", sans-serif;
+}
+
+.main-container {
+  overflow: hidden;
+}
+
+.main-container,
+.main-container * {
+  box-sizing: border-box;
+}
+
+input,
+select,
+textarea,
+button {
+  outline: 0;
+}
+
+.main-container {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  margin: 0 auto;
+  background: #ffffff;
+  overflow: hidden;
+}
+.bg {
+  position: absolute;
+  width: 1921px;
+  height: 1080px;
+  top: 0;
+  left: 0;
+  background: url(./assets/images/1f6f2b67d4815e64bd83d14a4917389910478a33.png)
+    no-repeat center;
+  background-size: cover;
+}
+.flex-column-d {
+  position: absolute;
+  width: 83.02%;
+  height: 86.87%;
+  top: 6.02%;
+  left: 32.81%;
+  z-index: 34;
+}
+.nama-kuning {
+  position: absolute;
+  width: 53.14%;
+  height: 17.27%;
+  top: 0;
+  left: 24.91%;
+  background: url(./assets/images/1402d3d49cad3f10417b5b1dc5278afd6cd77423.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 25;
+}
+.nama-pesilat-sudut-kuning {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  height: 31.03%;
+  top: 48.15%;
+  left: 31.52%;
+  color: #000594;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40.289px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 26;
+}
+.logo {
+  position: absolute;
+  width: 277px;
+  height: 390px;
+  top: 42px;
+  left: 199px;
+  background: url(./assets/images/c97fd0a1-d704-4f5e-8871-783e49fd9a39.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 8;
+}
+.number-one {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  height: 100px;
+  top: 217px;
+  left: 113px;
+  color: #ffffff;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 100px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 36;
+}
+.yellow-container {
+  position: absolute;
+  width: 50.5%;
+  height: 14.5%;
+  top: 13.22%;
+  left: 29.17%;
+  background: url(./assets/images/e4983251-d28d-40bb-8958-4b5f2285e33e.png)
+    no-repeat center;
+  background-size: 100% 100%;
+  z-index: 28;
+}
+.yellow-corner-button {
+  position: absolute;
+  width: 62.7%;
+  height: 36.73%;
+  top: 46.53%;
+  left: 20.79%;
+  cursor: pointer;
+  color: #000594;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40.289px;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  z-index: 29;
+}
+.yellow-score {
+  position: absolute;
+  width: 30.74%;
+  height: 44.56%;
+  top: 32.08%;
+  left: 40.34%;
+  background: url(./assets/images/3477eaaacaa7d46a423f46442bbe187d0ce7295e.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 31;
+}
+.score-button {
+  position: absolute;
+  width: 74.29%;
+  height: 40.19%;
+  top: 26.79%;
+  left: 12.86%;
+  cursor: pointer;
+  color: #000594;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 150px;
+  font-weight: 700;
+  line-height: 167.871px;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  z-index: 32;
+}
+.eagle {
+  position: absolute;
+  width: 15.06%;
+  height: 25.09%;
+  top: 39.33%;
+  left: 13.68%;
+  background: url(./assets/images/b0262f85b4a3b3cfd0987f81dcf553d9766b0f0d.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 9;
+}
+.nomor-partai {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: 10px;
+  position: absolute;
+  width: 739px;
+  height: 79px;
+  top: 584px;
+  left: 0;
+  z-index: 1;
+}
+.nomor-partai-1 {
+  flex-shrink: 0;
+  position: relative;
+  width: 725px;
+  height: 81px;
+  background: url(./assets/images/24611682c92fe10a5d059b0c9c0cba39937613e3.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 2;
+}
+.no-partai-kelas {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  flex-basis: auto;
+  position: absolute;
+  width: 407.578px;
+  height: 67.16%;
+  top: 9.63%;
+  left: 16.51%;
+  color: #ffffff;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 55px;
+  font-weight: 700;
+  line-height: 53.06px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 3;
+}
+.timer {
+  position: absolute;
+  width: 19.64%;
+  height: 10.43%;
+  top: 72.61%;
+  left: 12.48%;
+  background: url(./assets/images/f7c248ac40e6faaa7cc1635a4162dd7e6edaa2e2.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 14;
+}
+.timer-2 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  height: 10.72%;
+  top: 73.33%;
+  left: 17.5%;
+  color: #ffffff;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 78.34px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 15;
+}
+.defeat-kuning-bendera {
+  position: absolute;
+  width: 944px;
+  height: 158px;
+  top: 780px;
+  left: 596px;
+  background: url(./assets/images/98b044ed-4d72-41e0-9dfb-e22f8e4d3556.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 16;
+}
+.winner-bendera {
+  position: absolute;
+  width: 953px;
+  height: 146px;
+  top: 784px;
+  left: 550px;
+  background: url(./assets/images/f4b67abb-cede-4000-b3de-ecd56ffca61d.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 34;
+}
+.defead-kuning {
+  position: absolute;
+  width: 945px;
+  height: 154px;
+  top: 784.162px;
+  left: 649px;
+  background: url(./assets/images/2b0254718466bb9eb3abb6d3dbd3704cdb40c369.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 7;
+}
+.flex-column-ae {
+  position: absolute;
+  width: 58.85%;
+  height: 85.93%;
+  top: 6.2%;
+  left: -12.14%;
+  z-index: 33;
+}
+.nama-biru {
+  position: absolute;
+  width: 76.46%;
+  height: 19.18%;
+  top: 0;
+  left: 23.54%;
+  background: url(./assets/images/3a3c4e8e9a44729e7f1ceb12292c48443dcd465d.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 19;
+}
+.nama-pesilat-sudut-biru {
+  position: absolute;
+  width: 55.16%;
+  height: 28.11%;
+  top: 49.03%;
+  left: 21.71%;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40.289px;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  z-index: 20;
+}
+.kontingen-biruu {
+  position: absolute;
+  width: 70.35%;
+  height: 11.1%;
+  top: 15.19%;
+  left: 22.48%;
+  background: url(./assets/images/f54c1773-ccce-45cc-b64f-f1406292bd75.png)
+    no-repeat center;
+  background-size: 100% 100%;
+  z-index: 22;
+}
+.kontongen-sudut-biru {
+  position: absolute;
+  width: 56.93%;
+  height: 50%;
+  top: 44.3%;
+  left: 27.12%;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40.289px;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  z-index: 23;
+}
+.skor-biru {
+  position: absolute;
+  width: 41.5%;
+  height: 46.55%;
+  top: 32.11%;
+  left: 36.64%;
+  background: url(./assets/images/ac0bcda8a5055a4f9bb8004b60fa9568db460e5a.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 11;
+}
+.score {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  height: 21.4%;
+  top: 44.72%;
+  left: 41.59%;
+  color: #ffffff;
+  font-family: Sansation, var(--default-font-family);
+  font-size: 150px;
+  font-weight: 700;
+  line-height: 167.871px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 12;
+}
+.winner-biru {
+  position: absolute;
+  width: 1003px;
+  height: 147px;
+  top: 781px;
+  left: 34px;
+  background: url(./assets/images/31845f08-febe-4140-bf62-b969b9fdefda.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 17;
+}
+.defeat-biru-bendera {
+  position: absolute;
+  width: 997px;
+  height: 142px;
+  top: 786px;
+  left: 0;
+  background: url(./assets/images/2d71b890-efa6-4392-bcd5-51954ae4f587.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 33;
+}
+.defead-biru-bendera {
+  position: absolute;
+  width: 997px;
+  height: 128px;
+  top: 800px;
+  left: 5px;
+  background: url(./assets/images/a0d0da7aca58fd81d018339a7afde751af44c6ba.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 5;
+}
