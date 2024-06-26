@@ -7,20 +7,20 @@ const io = use('socket.io')(Server.getInstance())
 const tandingService = new TandingService()
 const seniService = new SeniService()
 
-io.on('connection', async function(socket){
+io.on('connection', async function (socket) {
     var query = socket.handshake.query
     var room = `${query.type}-${query.pertandinganId}`
-    
-    socket.join(room)
-    socket.on('disconnect', function() {});
 
-    socket.on('get-data-pertandingan', async function(data) {
+    socket.join(room)
+    socket.on('disconnect', function () { });
+
+    socket.on('get-data-pertandingan', async function (data) {
         if (!data.pertandinganId) return;
         var pertandinganData = await tandingService.getPertandinganData(data.pertandinganId);
         io.to(room).emit('data-pertandingan', pertandinganData);
     });
 
-    socket.on('input-skor', async function(data) {
+    socket.on('input-skor', async function (data) {
         var pertandinganData = await tandingService.getPertandinganData(data.pertandinganId);
         if (!pertandinganData) return false;
         var latestData = await tandingService.inputSkor(data.pertandinganId, pertandinganData, data.nomorJuri, data.nilai);
@@ -28,7 +28,7 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan', latestData);
     })
 
-    socket.on('hapus-skor', async function(data) {
+    socket.on('hapus-skor', async function (data) {
         var pertandinganData = await tandingService.getPertandinganData(data.pertandinganId);
         if (!pertandinganData) return false;
         var latestData = await tandingService.hapusSkor(data.pertandinganId, pertandinganData, data.nomorJuri, data.sudut, data.ronde);
@@ -36,16 +36,16 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan', latestData);
     });
 
-    socket.on('kontrol-ronde', async function(data) {
+    socket.on('kontrol-ronde', async function (data) {
         if (!data.ronde) return false
         var currentRonde = await tandingService.kontrolRonde(data);
         io.to(room).emit('kontrol-ronde', currentRonde);
     })
 
-    socket.on('timer-command', async function(data) {
+    socket.on('timer-command', async function (data) {
         io.to(room).emit('timer-command', data)
     })
-    
+
     /**
      * Seni
      */
@@ -53,12 +53,12 @@ io.on('connection', async function(socket){
         var data = await seniService.getPertandinganData(id)
         io.to(room).emit('data-pertandingan-seni', data);
     }
-     socket.on('get-data-pertandingan-seni', async function(data) {
+    socket.on('get-data-pertandingan-seni', async function (data) {
         if (!data.pertandinganId) return;
         sendPertandinganSeniData(data.pertandinganId, io)
     });
 
-    socket.on('input-skor-pengurangan', async function(data) {
+    socket.on('input-skor-pengurangan', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.inputSkorPengurangan(data.pertandinganId, pertandingan_data, data.nomorJuri, data.nilai);
@@ -66,15 +66,15 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
-    socket.on('input-skor-kemantapan', async function(data) {
+    socket.on('input-skor-kemantapan', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
-        var latestData = await seniService.inputSkorKemantapan(data.pertandinganId, pertandingan_data, data.nomorJuri, data.nilai);
+        var latestData = await seniService.inputSkorKemantapan(data.pertandinganId, pertandingan_data, data.nomorJuri, data.nilai, data.inputMode);
         if (!latestData) return false;
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
-    socket.on('input-skor-hukuman', async function(data) {
+    socket.on('input-skor-hukuman', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.inputSkorHukuman(data.pertandinganId, pertandingan_data, data.nomorJuri, data.hukuman);
@@ -82,7 +82,7 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
-    socket.on('hapus-skor-hukuman', async function(data) {
+    socket.on('hapus-skor-hukuman', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.hapusSkorHukuman(data.pertandinganId, pertandingan_data, data.nomorJuri);
@@ -90,7 +90,7 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
-    socket.on('set-diskualifikasi', async function(data) {
+    socket.on('set-diskualifikasi', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.setDiskualifikasi(data.pertandinganId, pertandingan_data, data.nomorJuri);
@@ -98,7 +98,7 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
-    socket.on("seni-pengumuman-skor", async function(data) {
+    socket.on("seni-pengumuman-skor", async function (data) {
         var latestData = await seniService.setPengumumanSkor(data.pertandinganId, query.type);
         if (!latestData) return false;
         io.to(room).emit('data-pertandingan-seni', latestData);
@@ -107,7 +107,7 @@ io.on('connection', async function(socket){
     /**
      * Ganda
      */
-     socket.on('input-skor-ganda', async function(data) {
+    socket.on('input-skor-ganda', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.inputSkorGanda(data.pertandinganId, pertandingan_data, data.nomorJuri, data.nilai, data.kategoriNilai);
@@ -115,7 +115,7 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
-    socket.on('input-skor-hukuman-ganda', async function(data) {
+    socket.on('input-skor-hukuman-ganda', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.inputSkorHukumanGanda(data.pertandinganId, pertandingan_data, data.nomorJuri, data.kategori);
@@ -123,7 +123,7 @@ io.on('connection', async function(socket){
         io.to(room).emit('data-pertandingan-seni', latestData);
     })
 
-    socket.on('hapus-skor-hukuman-ganda', async function(data) {
+    socket.on('hapus-skor-hukuman-ganda', async function (data) {
         var pertandingan_data = await seniService.getPertandinganData(data.pertandinganId)
         if (!pertandingan_data) return false;
         var latestData = await seniService.hapusHukumanGanda(data.pertandinganId, pertandingan_data, data.nomorJuri);
@@ -134,7 +134,7 @@ io.on('connection', async function(socket){
     /*
     Refresh Pertandingan
     * */
-    socket.on('refresh-pertandingan', function(aktifId) {
+    socket.on('refresh-pertandingan', function (aktifId) {
         // if (type == 'seni') {
         //     var rooms = Array.from( io.sockets.adapter.rooms.keys() );
         //     var filtered = _.filter(rooms, (name) => name.indexOf('tunggal') >= 0 || name.indexOf('ganda') >= 0 || name.indexOf('regu') >= 0)
@@ -147,8 +147,8 @@ io.on('connection', async function(socket){
         //     _.each(filtered, (r) => io.to(r).emit('refresh'))
         // }
 
-        var rooms = Array.from( io.sockets.adapter.rooms.keys() );
-            var filtered = _.filter(rooms, (name) => name.indexOf(aktifId) >= 0)
+        var rooms = Array.from(io.sockets.adapter.rooms.keys());
+        var filtered = _.filter(rooms, (name) => name.indexOf(aktifId) >= 0)
 
         if (filtered && filtered.length > 0) {
             _.each(filtered, (r) => io.to(r).emit('refresh'))

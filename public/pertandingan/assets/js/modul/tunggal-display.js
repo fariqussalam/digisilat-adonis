@@ -47,6 +47,11 @@
                     continue
                 }
                 var juri = data.dewanJuri[nomorJuri]
+
+                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wiraga"]').text(juri.wiraga)
+                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wirasa"]').text(juri.wirasa)
+                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wirama"]').text(juri.wirama)
+
                 renderNilaiJurus(juri)
                 renderNilaiHukuman(juri)
                 renderTotalNilai(juri)

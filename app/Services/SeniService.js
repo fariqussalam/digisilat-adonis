@@ -66,7 +66,7 @@ class SeniService {
                 master_data.dewanJuri[juri].daftarNilai = this.nilaiReguTemplate()
             }
         }
-     
+
         return master_data
     }
 
@@ -77,7 +77,7 @@ class SeniService {
         var jurusTunggal = []
         for (var i = 0; i < daftarNilai.length; i++) {
             jurusTunggal.push({
-                nomorJurus: i+1,
+                nomorJurus: i + 1,
                 jumlahNilai: daftarNilai[i]
             })
         }
@@ -91,7 +91,7 @@ class SeniService {
         var jurusTunggal = []
         for (var i = 0; i < daftarNilai.length; i++) {
             jurusTunggal.push({
-                nomorJurus: i+1,
+                nomorJurus: i + 1,
                 jumlahNilai: daftarNilai[i]
             })
         }
@@ -107,8 +107,19 @@ class SeniService {
         return await this.getPertandinganData(pertandinganId);
     }
 
-    async inputSkorKemantapan(pertandinganId, pertandinganData, nomorJuri, nilai) {
-        pertandinganData.dewanJuri[nomorJuri].kemantapan = nilai
+    async inputSkorKemantapan(pertandinganId, pertandinganData, nomorJuri, nilai, inputMode) {
+        console.log("input mode", inputMode)
+        if (inputMode) {
+            if (inputMode == "WIRAGA") {
+                pertandinganData.dewanJuri[nomorJuri].wiraga = nilai
+            } else if (inputMode == "WIRASA") {
+                pertandinganData.dewanJuri[nomorJuri].wirasa = nilai
+            } else if (inputMode == "WIRAMA") {
+                pertandinganData.dewanJuri[nomorJuri].wirama = nilai
+            }
+        } else {
+            pertandinganData.dewanJuri[nomorJuri].kemantapan = nilai
+        }
         await this.setPertandinganData(pertandinganId, pertandinganData);
         return await this.getPertandinganData(pertandinganId);
     }
@@ -148,7 +159,7 @@ class SeniService {
 
         var skor_seni = this.getSkorSeni(data_pertandingan)
         data_pertandingan.skor_akhir = skor_seni
-        
+
         await this.setPertandinganData(pertandinganId, data_pertandingan)
         const pertandingan = await PertandinganSeni.find(pertandinganId)
         pertandingan.skor_akhir = skor_seni.totalNilai
@@ -163,7 +174,7 @@ class SeniService {
 
         var skor_seni = this.getSkorSeni(data_pertandingan)
         data_pertandingan.skor_akhir = skor_seni
-        
+
         await this.setPertandinganData(pertandinganId, data_pertandingan)
         const pertandingan = await PertandinganSeni.find(pertandinganId)
         pertandingan.skor_akhir = skor_seni.totalNilai
@@ -178,7 +189,7 @@ class SeniService {
 
         var skor_seni = this.getSkorGanda(data_pertandingan)
         data_pertandingan.skor_akhir = skor_seni
-        
+
         await this.setPertandinganData(pertandinganId, data_pertandingan)
         const pertandingan = await PertandinganSeni.find(pertandinganId)
         pertandingan.skor_akhir = skor_seni.totalNilai
@@ -254,21 +265,21 @@ class SeniService {
     getTotalNilaiJurus(juri) {
         var instance = this
         var totalNilai = 0;
-        _.each(juri.daftarNilai, function(jurus) {
+        _.each(juri.daftarNilai, function (jurus) {
             totalNilai += instance.getNilaiJurus(juri, jurus.nomorJurus);
         })
         return totalNilai
     }
 
     getNilaiJurus(juri, nomorJurus) {
-        var jurus = _.filter(juri.daftarNilai, function(n) {
+        var jurus = _.filter(juri.daftarNilai, function (n) {
             return n.nomorJurus.toString() === nomorJurus.toString()
         })
         var jumlahNilai = jurus[0].jumlahNilai;
-        var penguranganJurus = _.filter(juri.pengurangan, function(n) {
+        var penguranganJurus = _.filter(juri.pengurangan, function (n) {
             return n.nomorJurus.toString() === nomorJurus.toString()
         })
-        _.each(penguranganJurus, function(n) {
+        _.each(penguranganJurus, function (n) {
             jumlahNilai += n.nilai;
         })
         return jumlahNilai
@@ -276,14 +287,14 @@ class SeniService {
 
     getTotalNilaiHukuman(juri) {
         var nilaiHukuman = 0
-        _.each(juri.hukuman, function(n) {
+        _.each(juri.hukuman, function (n) {
             nilaiHukuman += n.nilai
         })
         return nilaiHukuman;
     }
 
     getTotalNilai(juri) {
-      
+
         var totalNilaiJurus = this.getTotalNilaiJurus(juri)
         var totalNilaiHukuman = this.getTotalNilaiHukuman(juri)
         return totalNilaiJurus + totalNilaiHukuman + juri.kemantapan
@@ -300,16 +311,16 @@ class SeniService {
         } else if (kategoriNilai == 'penghayatan') {
             pertandinganData.dewanJuri[nomorJuri].nilaiPenghayatan = nilai
         }
-        
+
         await this.setPertandinganData(pertandinganId, pertandinganData);
         return await this.getPertandinganData(pertandinganId);
     }
 
     async inputSkorHukumanGanda(pertandinganId, pertandinganData, nomorJuri, kategori) {
         try {
-            pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[kategori] +=1
+            pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[kategori] += 1
             await this.setPertandinganData(pertandinganId, pertandinganData);
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
         return await this.getPertandinganData(pertandinganId);
@@ -321,7 +332,7 @@ class SeniService {
                 pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[jenisHukuman] = 0
             }
             await this.setPertandinganData(pertandinganId, pertandinganData);
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
         return await this.getPertandinganData(pertandinganId);
@@ -356,7 +367,7 @@ class SeniService {
 
     hitungNilaiHukuman(nilaiHukuman) {
         var total = 0;
-        _.each(nilaiHukuman, function(jumlah, nama) {
+        _.each(nilaiHukuman, function (jumlah, nama) {
             var nilai = nama === "w-10" ? 10 : 5;
             var jumlahNilai = jumlah * nilai;
             total += jumlahNilai;
@@ -399,7 +410,7 @@ class SeniService {
         }
     }
 
-  
+
 }
 
 module.exports = SeniService
