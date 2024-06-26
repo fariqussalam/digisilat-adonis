@@ -1,62 +1,62 @@
 'use strict';
 
 /* jshint ignore:start */
-(function(window){
+(function (window) {
     var DigiSilat = {
-        getSudutList: function() {
+        getSudutList: function () {
             return ["merah", "biru"]
         },
-        getRondeList: function() {
+        getRondeList: function () {
             return [1, 2, 3]
         },
-        Juri: function(nomorJuri) {
+        Juri: function (nomorJuri) {
             this.nama = ""
             this.nomorJuri = nomorJuri
             this.penilaian = []
-            this.getPoin = function(sudut, ronde) {
-                var nilaiList = _.filter(this.penilaian, function(n) { return n.ronde === ronde && n.sudut === sudut && n.nilai > 0})
+            this.getPoin = function (sudut, ronde) {
+                var nilaiList = _.filter(this.penilaian, function (n) { return n.ronde === ronde && n.sudut === sudut && n.nilai > 0 })
                 var nilaiString = []
-                _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
+                _.each(nilaiList, function (n) { nilaiString.push(n.nilaiString) })
                 return nilaiString
             }
-            this.getMinus = function(sudut, ronde) {
-                var nilaiList = _.filter(this.penilaian, function(n) { return n.ronde === ronde && n.sudut === sudut && n.nilai < 0})
+            this.getMinus = function (sudut, ronde) {
+                var nilaiList = _.filter(this.penilaian, function (n) { return n.ronde === ronde && n.sudut === sudut && n.nilai < 0 })
                 var nilaiString = []
-                _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
+                _.each(nilaiList, function (n) { nilaiString.push(n.nilaiString) })
                 return nilaiString
             }
-            var isJatuhan = function(nilai, nilaiString) {
+            var isJatuhan = function (nilai, nilaiString) {
                 return nilai > 0 && (nilaiString == '1+3' || nilaiString == '3')
             }
-            this.getJatuhan = function(sudut, ronde) {
-                var nilaiList = _.filter(this.penilaian, function(n) {
+            this.getJatuhan = function (sudut, ronde) {
+                var nilaiList = _.filter(this.penilaian, function (n) {
                     return n.ronde === ronde && n.sudut === sudut && isJatuhan(n.nilai, n.nilaiString)
                 })
                 var nilaiString = []
-                _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
+                _.each(nilaiList, function (n) { nilaiString.push(n.nilaiString) })
                 return nilaiString
             }
-            this.getNilaiPoin = function(sudut, ronde) {
-                var nilaiList = _.filter(this.penilaian, function(n) {
+            this.getNilaiPoin = function (sudut, ronde) {
+                var nilaiList = _.filter(this.penilaian, function (n) {
                     return n.ronde === ronde && n.sudut === sudut && !isJatuhan(n.nilai, n.nilaiString)
                 })
                 var nilaiString = []
-                _.each(nilaiList, function(n) { nilaiString.push(n.nilaiString) })
+                _.each(nilaiList, function (n) { nilaiString.push(n.nilaiString) })
                 return nilaiString
             }
-            this.getTotalRonde = function(sudut, ronde) {
-                var nilaiList = _.filter(this.penilaian, function(n) { return n.ronde === ronde && n.sudut === sudut })
+            this.getTotalRonde = function (sudut, ronde) {
+                var nilaiList = _.filter(this.penilaian, function (n) { return n.ronde === ronde && n.sudut === sudut })
                 var nilai = 0
-                _.each(nilaiList, function(n) { nilai+=n.nilai })
+                _.each(nilaiList, function (n) { nilai += n.nilai })
                 return nilai
             }
-            this.getTotal = function(sudut) {
-                var nilaiList = _.filter(this.penilaian, function(n) { return n.sudut === sudut })
+            this.getTotal = function (sudut) {
+                var nilaiList = _.filter(this.penilaian, function (n) { return n.sudut === sudut })
                 var nilai = 0
-                _.each(nilaiList, function(n) { nilai+=n.nilai })
+                _.each(nilaiList, function (n) { nilai += n.nilai })
                 return nilai
             }
-            this.getRingkasanNilai = function() {
+            this.getRingkasanNilai = function () {
                 var nilaiMerah = 0
                 var nilaiBiru = 0
                 var totalMerah = this.getTotal("merah")
@@ -77,7 +77,7 @@
                     justifikasi: justifikasi
                 }
             }
-            this.getNilai = function(sudut, ronde) {
+            this.getNilai = function (sudut, ronde) {
                 var poin = this.getPoin(sudut, ronde),
                     minus = this.getMinus(sudut, ronde),
                     totalRonde = this.getTotalRonde(sudut, ronde),
@@ -95,7 +95,7 @@
                 }
             }
         },
-        Nilai: function(sudut, ronde, indikator, nilai, nilaiString) {
+        Nilai: function (sudut, ronde, indikator, nilai, nilaiString) {
             this.sudut = sudut;
             this.ronde = ronde;
             this.indikator = indikator;
@@ -103,35 +103,35 @@
             this.nilaiString = nilaiString;
         },
         State: {
-            Juri: function() {
+            Juri: function () {
                 this.nomorJuri = null
                 this.ronde = 1
                 this.juri = {}
             },
-            Display: function() {
+            Display: function () {
                 this.ronde = 1
                 this.dewanJuri = {}
                 this.countdown = 0
             },
-            Dewan: function() {
+            Dewan: function () {
                 this.ronde = 1
                 this.dewanJuri = {}
             },
-            Timer: function() {
+            Timer: function () {
                 this.ronde = 1
                 this.countdown = 0
             }
         },
-        setGlobalEvent: function(socket) {
-            socket.on('connect', function() {
+        setGlobalEvent: function (socket) {
+            socket.on('connect', function () {
                 console.log("Connected to Server")
             });
-            socket.on('refresh', function() {
+            socket.on('refresh', function () {
                 window.location.reload();
             });
         },
-        createSocket: function(type, name, pertandinganId) {
-            var socket = io({ query: { type: type, name : name, pertandinganId: pertandinganId } });
+        createSocket: function (type, name, pertandinganId) {
+            var socket = io({ query: { type: type, name: name, pertandinganId: pertandinganId } });
             this.setGlobalEvent(socket);
             setSeniEvent(socket, pertandinganId)
             return socket
@@ -139,58 +139,62 @@
     }
 
     DigiSilat.Seni = {
-        getNilaiTunggalTemplate: function() {
+        getNilaiTunggalTemplate: function () {
             var daftarNilai = [
                 7, 6, 5, 7, 6, 8, 11, 7, 6, 12, 6, 5, 5, 9
             ]
             var jurusTunggal = []
-            $.each(daftarNilai, function(idx, el) {
+            $.each(daftarNilai, function (idx, el) {
                 jurusTunggal.push(new this.NilaiJurus(idx + 1, el))
             })
             return jurusTunggal
         },
-        NilaiJurus: function(nomorJurus, jumlahNilai) {
+        NilaiJurus: function (nomorJurus, jumlahNilai) {
             this.nomorJurus = nomorJurus;
             this.jumlahNilai = jumlahNilai;
         },
-        JuriTunggal: function(nomorJuri) {
+        JuriTunggal: function (nomorJuri) {
             this.nomorJuri = nomorJuri;
             this.daftarNilai = this.getNilaiTunggalTemplate();
             this.pengurangan = [];
             this.hukuman = [];
             this.kemantapan = 0;
-            this.getNilaiJurus = function(nomorJurus) {
-                var jurus = _.filter(this.daftarNilai, function(n) {
+            this.wiraga = 0;
+            this.wirasa = 0;
+            this.wirama = 0;
+            this.getNilaiJurus = function (nomorJurus) {
+                var jurus = _.filter(this.daftarNilai, function (n) {
                     return n.nomorJurus.toString() === nomorJurus.toString()
                 })
                 var jumlahNilai = jurus[0].jumlahNilai;
-                var penguranganJurus = _.filter(this.pengurangan, function(n) {
+                var penguranganJurus = _.filter(this.pengurangan, function (n) {
                     return n.nomorJurus.toString() === nomorJurus.toString()
                 })
-                _.each(penguranganJurus, function(n) {
+                _.each(penguranganJurus, function (n) {
                     jumlahNilai += n.nilai;
                 })
                 return jumlahNilai
             }
-            this.getTotalNilaiJurus = function() {
+            this.getTotalNilaiJurus = function () {
+                return 0
                 var instance = this;
                 var totalNilai = 0;
-                _.each(this.daftarNilai, function(jurus) {
+                _.each(this.daftarNilai, function (jurus) {
                     totalNilai += instance.getNilaiJurus(jurus.nomorJurus);
                 })
                 return totalNilai
             }
-            this.getTotalNilaiHukuman = function() {
+            this.getTotalNilaiHukuman = function () {
                 var nilaiHukuman = 0
-                _.each(this.hukuman, function(n) {
+                _.each(this.hukuman, function (n) {
                     nilaiHukuman += n.nilai
                 })
                 return nilaiHukuman;
             }
-            this.getTotalNilai = function() {
+            this.getTotalNilai = function () {
                 var totalNilaiJurus = this.getTotalNilaiJurus();
                 var totalNilaiHukuman = this.getTotalNilaiHukuman();
-                return totalNilaiJurus + totalNilaiHukuman + this.kemantapan;
+                return totalNilaiJurus + totalNilaiHukuman + this.kemantapan + this.wiraga + this.wirasa + this.wirama;
             }
         },
         State: {
@@ -212,16 +216,16 @@
     }
 
     function setSeniEvent(socket, pertandinganId) {
-        $('.js-seni-pengumuman-skor').click(function() {
+        $('.js-seni-pengumuman-skor').click(function () {
             console.log("pegumuman skor")
-            socket.emit("seni-pengumuman-skor", {pertandinganId: pertandinganId})
+            socket.emit("seni-pengumuman-skor", { pertandinganId: pertandinganId })
         })
     }
 
-    if ( typeof module === 'object' && module && typeof module.exports === 'object' ) {
+    if (typeof module === 'object' && module && typeof module.exports === 'object') {
         module.exports = DigiSilat;
     } else {
         window.DigiSilat = DigiSilat;
     }
-})( this );
+})(this);
 /* jshint ignore:end */

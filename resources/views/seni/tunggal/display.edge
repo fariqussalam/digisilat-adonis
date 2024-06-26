@@ -1,128 +1,198 @@
-@layout('layouts/pertandingan')
-@section('module_css')
-<link href="/pertandingan/starter-template.css" rel="stylesheet">
-@endsection
-@section('content')
-<div class="container" style="width:100%">
-        <div class="row">
-            <table class="table text-center table-borderless table-noborder">
-                <thead>
-                <tr style="padding-left:10%;padding-right:10%">
-                    <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
-                        @if(tournament.logo_1)
-                        <img style="width:150px;height:150px;" src="{{tournament.logo_1}}" alt="">  
-                        @endif
-                    </th>
-                    <th class="text-center" style="width:60%;font-size:50px;vertical-align:middle">
-                        <h1>{{tournament.nama}}</h1>
-                        <h3>{{pertandingan.kategori.nama}}</h3>
-                    </th>
-                    <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
-                        @if(tournament.logo_2)
-                        <img style="width:150px;height:150px;" src="{{tournament.logo_2}}" alt="">  
-                        @endif
-                    </th>
-                </tr>
-                </thead>
-            </table>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Display Tunggal</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="/tsseni/assets/css/style.css" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/tsseni/assets/bootstrap5/css/bootstrap.css" />
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="/tsseni/assets/fontawesome/css/all.css" />
+</head>
+
+<body>
+    <input type="hidden" name="pertandingan_id" value="{{ pertandingan.id }}" />
+    <input type="hidden" name="tournament_id" value="{{ tournament.id }}" />
+    <input type="hidden" name="csrf" value="{{ csrfToken }}" />
+    <!-- container -->
+    <div class="container-fluid bg-warning" id="content">
+
+        <!-- kop -->
+        <div class="d-flex justify-content-around align-items-center text-bg-danger">
+            <!-- logo -->
+            <div>
+                <img src="/tsseni/assets/img/rewako.png" alt="" srcset="" width="100px" />
+            </div>
+            <!-- /logo -->
+
+            <!-- tulisan kop -->
+            <div class="d-flex flex-column align-items-center fw-bold" id="kop">
+                <h2 class="p-0 m-0">OPEN TURNAMEN NASIONAL PENCAK SILAT TAPAK SUCI</h2>
+                <h4 class="p-0 m-0">Usia Dini, Pra Remaja, Remaja, Dewasa dan Master</h4>
+            </div>
+            <!-- /tulisan kop -->
+
+            <!-- logo -->
+            <div>
+                <img src="/tsseni/assets/img/sikap-pasang.png" alt="" srcset="" width="80px" />
+            </div>
+            <!-- /logo -->
         </div>
-    <div class="row">
-        <div class="col-sm-12" style="margin-left:10px;">
-            <table class="table" style="font-size:32px;">
-                <thead>
-                <tr>
-                    <th style="font-size:25px;">{{pertandingan.pesilat.nama}}</th>
-                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="1">JURI 1</th>
-                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="2">JURI 2</th>
-                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="3">JURI 3</th>
-                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="4">JURI 4</th>
-                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="5">JURI 5</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="text-center">
-                    <td class="text-left success">NILAI KEBENARAN</td>
-                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="1">86</td>
-                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="2">86</td>
-                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="3">86</td>
-                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="4">86</td>
-                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="5">86</td>
-                </tr>
-                <tr class="text-center">
-                    <td class="text-left active">KEMANTAPAN</td>
-                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="1">60</td>
-                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="2">60</td>
-                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="3">60</td>
-                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="4">60</td>
-                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="5">60</td>
-                </tr>
-                <tr class="text-center">
-                    <td class="text-left danger">HUKUMAN</td>
-                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="1">-20</td>
-                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="2">-20</td>
-                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="3">-20</td>
-                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="4">-20</td>
-                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="5">-20</td>
-                </tr>
-                <tr class="text-center">
-                    <td class="text-left info">TOTAL</td>
-                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="1">126</td>
-                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="2">126</td>
-                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="3">126</td>
-                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="4">126</td>
-                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="5">126</td>
-                </tr>
-                <tr class="text-center js-tunggal-display__pengumuman" hidden>
-                    <td class="text-left"></td>
-                    <td class="js-tunggal-display__pengumuman-juri" data-juri="1"></td>
-                    <td class="js-tunggal-display__pengumuman-juri" data-juri="2"></td>
-                    <td class="js-tunggal-display__pengumuman-juri" data-juri="3"></td>
-                    <td class="js-tunggal-display__pengumuman-juri" data-juri="4"></td>
-                    <td class="js-tunggal-display__pengumuman-juri" data-juri="5"></td>
-                </tr>
-                </tbody>
-            </table>
+        <!-- /kop -->
+
+        <!-- jenis pertandingan -->
+        <div class="row my-3">
+            <!-- golongan dan kategori -->
+          
+            <!-- nama pertandingan -->
+            <div class="col-3">
+                <h3 class="text-center p-0 m-0 text-bg-secondary py-1 js-tunggal-display-kategori">Tunggal Bersenjata</h3>
+            </div>
+            <!-- pesilat kontingen -->
+            <div class="col-6">
+                <h3 class="text-center p-0 m-0 text-bg-secondary py-1 js-tunggal-display-nama">Yayan / Gowa A</h3>
+            </div>
+            <!-- no undian -->
+            <div class="col-3">
+                <h3 class="text-center p-0 m-0 text-bg-secondary py-1 js-tunggal-display-nomor">No. 123</h3>
+            </div>
         </div>
+        <!-- /jenis pertandingan -->
+
+        <!-- penilaian -->
+        <div class="row pt-1 pb-1">
+            <!-- unsur nilai -->
+            <div class="col-8">
+                <div class="bg-white">
+                    <table class="table m-0 tbl-nilai">
+                        <thead class="text-bg-primary">
+                            <tr>
+                                <th>No.</th>
+                                <th>Unsur Nilai</th=>
+                                <th class="text-center">Juri 1</th>
+                                <th class="text-center">Juri 2</th>
+                                <th class="text-center">Juri 3</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Wiraga</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">2</td>
+                                <td class="text-center">3</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Wirasa</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">2</td>
+                                <td class="text-center">3</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Wirama</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">2</td>
+                                <td class="text-center">3</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Hukuman</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">2</td>
+                                <td class="text-center">3</td>
+                            </tr>
+                            <tr class="text-center fw-bold">
+                                <td colspan="2">Jumlah</td>
+                                <td>100</td>
+                                <td>200</td>
+                                <td>300</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button id="fullscreen-btn"><i class="fas fa-expand"></i> full</button>
+                <button id="fullscreen-btn"><i class="fas fa-compress"></i> full</button>
+            </div>
+            <!-- /unsur nilai -->
+
+            <div class="col-4">
+                <!-- hasil akhir -->
+                <div class="text-bg-success p-2 mb-3">
+                    <h3>Pengumuman Pemenang:</h3>
+                    <table class="table table-sm table-borderless m-0 fw-bold text-bg-success" id="tbl-hasil">
+                        <tr>
+                            <td>No. Undian</td>
+                            <td>:</td>
+                            <td><span class="text-bg-light d-block px-2">150</span></td>
+                        </tr>
+                        <tr>
+                            <td>Nama Pesilat</td>
+                            <td>:</td>
+                            <td>
+                                <span class="text-bg-light d-block px-2">Yayan Ruhyan</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nama Kontingen</td>
+                            <td>:</td>
+                            <td>
+                                <span class="text-bg-light d-block px-2">Banda Aceh</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Nilai</td>
+                            <td>:</td>
+                            <td><span class="text-bg-light d-block px-2">600</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- /hasil akhir -->
+
+                <!-- timer -->
+                <div class=" mb-3">
+                    <h3 class="m-0 p-2 text-bg-dark">TIMER:</h3>
+                    <span class="text-center text-bg-light js-timer-clock" id="timer">00:00</span>
+                </div>
+                <!-- /timer -->
+            </div>
+
+        </div>
+        <!-- /penilaian -->
+
+        <!-- footer -->
+        <div class="bg-danger" style="height:34px;"></div>
+        <!-- /footer -->
+
     </div>
-    <div>
-        <div class="row">
-            <div class="col-sm-4">
-                <table class="table" style="font-size:20px">
-                    <thead>
-                    <tr>
-                        <th class="text-center bg-primary">TUNGGAL</th>
-                    </tr>
-                    </thead>
-                    <tbody style="background-color:green;color:white">
-                    <tr>
-                        <td class="text-center bg-primary js-tunggal-display__pool">Pool {{pertandingan.nomor_pool}} / Penampil {{pertandingan.nomor_penampil}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center bg-primary js-tunggal-display__kontingen">{{pertandingan.kontingen.nama}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-sm-4 col-md-4">
-                <div class="lead js-timer-clock text-center" style="font-size:100px;">00:00</div>
-            </div>
-            <div class="col-sm-4">
-                <table class="js-tunggal-display__tabel-total table table-striped table-bordered table-condensed" style="font-size:60px;">
-                    <thead>
-                    <tr>
-                        <th>SKOR</th>
-                        <th class="text-center total-skor" style="background-color:green;color:white">100</th>
-                    </tr>
-                    </thead>
-                    <tbody style="background-color:green;color:white">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
-@section('module_js')
-<script src="/pertandingan/lib/easytimer.min.js"></script>
-<script src="/pertandingan/assets/js/modul/tunggal-display.js"></script>
-@endsection
+    <!-- /container -->
+
+    <script src="/tsseni/assets/bootstrap5/js/bootstrap.bundle.min.js"></script>
+    <script src="/tsseni/assets/js/script.js"></script>
+    <script src="/pertandingan/lib/jquery.min.js"></script>
+
+<script src="/pertandingan/socket.io.min.js"></script>
+<script src="/pertandingan/lib/html2canvas.min.js"></script>
+<script src="/pertandingan/lib/underscore-min.js"></script>
+<script src="/pertandingan/lib/daysjs/dayjs.min.js"></script>
+<script src="/pertandingan/lib/daysjs/id.js"></script>
+<script src="/pertandingan/common/utils.js"></script>
+<script src="/pertandingan/common/socketEvent.js"></script>
+<script src="/pertandingan/common/model.js"></script>
+<script src="/pertandingan/common/globals.js"></script>
+<script src="/pertandingan/helpers.js"></script>
+<script src="/pertandingan/assets/js/jquery.serialize-object.min.js"></script>
+
+    <script src="/pertandingan/lib/easytimer.min.js"></script>
+    <script src="/pertandingan/assets/js/modul/tunggal-display.js"></script>  
+</body>
+
+</html>

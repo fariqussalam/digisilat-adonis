@@ -1,0 +1,128 @@
+@layout('layouts/pertandingan')
+@section('module_css')
+<link href="/pertandingan/starter-template.css" rel="stylesheet">
+@endsection
+@section('content')
+<div class="container" style="width:100%">
+        <div class="row">
+            <table class="table text-center table-borderless table-noborder">
+                <thead>
+                <tr style="padding-left:10%;padding-right:10%">
+                    <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                        @if(tournament.logo_1)
+                        <img style="width:150px;height:150px;" src="{{tournament.logo_1}}" alt="">  
+                        @endif
+                    </th>
+                    <th class="text-center" style="width:60%;font-size:50px;vertical-align:middle">
+                        <h1>{{tournament.nama}}</h1>
+                        <h3>{{pertandingan.kategori.nama}}</h3>
+                    </th>
+                    <th rowspan="1" colspan="1" class="text-center" style="width:20%;vertical-align:middle">
+                        @if(tournament.logo_2)
+                        <img style="width:150px;height:150px;" src="{{tournament.logo_2}}" alt="">  
+                        @endif
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    <div class="row">
+        <div class="col-sm-12" style="margin-left:10px;">
+            <table class="table" style="font-size:32px;">
+                <thead>
+                <tr>
+                    <th style="font-size:25px;">{{pertandingan.pesilat.nama}}</th>
+                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="1">JURI 1</th>
+                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="2">JURI 2</th>
+                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="3">JURI 3</th>
+                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="4">JURI 4</th>
+                    <th class="text-center js-tunggal-display__nomor-juri js-tunggal-display__juri" data-juri="5">JURI 5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center">
+                    <td class="text-left success">NILAI KEBENARAN</td>
+                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="1">86</td>
+                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="2">86</td>
+                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="3">86</td>
+                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="4">86</td>
+                    <td class="js-tunggal-display__nilai-kebenaran js-tunggal-display__juri" data-juri="5">86</td>
+                </tr>
+                <tr class="text-center">
+                    <td class="text-left active">KEMANTAPAN</td>
+                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="1">60</td>
+                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="2">60</td>
+                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="3">60</td>
+                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="4">60</td>
+                    <td class="js-tunggal-display__nilai-kemantapan js-tunggal-display__juri" data-juri="5">60</td>
+                </tr>
+                <tr class="text-center">
+                    <td class="text-left danger">HUKUMAN</td>
+                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="1">-20</td>
+                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="2">-20</td>
+                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="3">-20</td>
+                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="4">-20</td>
+                    <td class="js-tunggal-display__nilai-hukuman js-tunggal-display__juri" data-juri="5">-20</td>
+                </tr>
+                <tr class="text-center">
+                    <td class="text-left info">TOTAL</td>
+                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="1">126</td>
+                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="2">126</td>
+                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="3">126</td>
+                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="4">126</td>
+                    <td class="js-tunggal-display__nilai-total js-tunggal-display__juri" data-juri="5">126</td>
+                </tr>
+                <tr class="text-center js-tunggal-display__pengumuman" hidden>
+                    <td class="text-left"></td>
+                    <td class="js-tunggal-display__pengumuman-juri" data-juri="1"></td>
+                    <td class="js-tunggal-display__pengumuman-juri" data-juri="2"></td>
+                    <td class="js-tunggal-display__pengumuman-juri" data-juri="3"></td>
+                    <td class="js-tunggal-display__pengumuman-juri" data-juri="4"></td>
+                    <td class="js-tunggal-display__pengumuman-juri" data-juri="5"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-sm-4">
+                <table class="table" style="font-size:20px">
+                    <thead>
+                    <tr>
+                        <th class="text-center bg-primary">TUNGGAL</th>
+                    </tr>
+                    </thead>
+                    <tbody style="background-color:green;color:white">
+                    <tr>
+                        <td class="text-center bg-primary js-tunggal-display__pool">Pool {{pertandingan.nomor_pool}} / Penampil {{pertandingan.nomor_penampil}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center bg-primary js-tunggal-display__kontingen">{{pertandingan.kontingen.nama}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="lead js-timer-clock text-center" style="font-size:100px;">00:00</div>
+            </div>
+            <div class="col-sm-4">
+                <table class="js-tunggal-display__tabel-total table table-striped table-bordered table-condensed" style="font-size:60px;">
+                    <thead>
+                    <tr>
+                        <th>SKOR</th>
+                        <th class="text-center total-skor" style="background-color:green;color:white">100</th>
+                    </tr>
+                    </thead>
+                    <tbody style="background-color:green;color:white">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('module_js')
+<script src="/pertandingan/lib/easytimer.min.js"></script>
+<script src="/pertandingan/assets/js/modul/tunggal-display.js"></script>
+@endsection
