@@ -4,6 +4,7 @@
         var pertandinganId = $('input[name="pertandingan_id"]').val();
         var jumlahJuri = $('input[name="jumlah_juri"]').val();
         var state = new DigiSilat.State.Display();
+        var $indikatorKemenangan = $('.js-indikator-kemenangan');
 
         function renderInitialData(juri) {
             _.each(DigiSilat.getSudutList(), function (sudut) {
@@ -61,27 +62,32 @@
         function renderPemenang(data, pemberiPoin, hasil_seri) {
             // var $indikatorMerah = $('[data-indikator-merah="true"], .js-tanding-display__nilai[data-sudut="merah"]')
             // var $indikatorBiru = $('[data-indikator-biru="true"], .js-tanding-display__nilai[data-sudut="biru"]')
-            $('.js-tanding-display-merah-nama').text(data.merah.nama)
-            $('.js-tanding-display-biru-nama').text(data.biru.nama)
+            // $('.js-tanding-display-merah-nama').text(data.merah.nama)
+            // $('.js-tanding-display-biru-nama').text(data.biru.nama)
             // $indikatorMerah.removeClass("sisi-merah")
             // $indikatorBiru.removeClass("sisi-biru")
             // $indikatorMerah.removeClass("glow-img-danger").css("background-color", "dimgrey")
             // $indikatorBiru.removeClass("glow-img-primary").css("background-color", "dimgrey")
-            $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"]')
-                .removeClass('glow-img-danger').removeClass('sisi-merah')
-                .addClass('sisi-total')
-            $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"]')
-                .removeClass('sisi-biru')
-                .removeClass('glow-img-primary')
-                .addClass('sisi-total')
+            // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="merah"]')
+            //     .removeClass('glow-img-danger').removeClass('sisi-merah')
+            //     .addClass('sisi-total')
+            // $('.js-tanding-display__nilai[data-ronde="total"][data-sudut="biru"]')
+            //     .removeClass('sisi-biru')
+            //     .removeClass('glow-img-primary')
+            //     .addClass('sisi-total')
+
             if (data.pemenang === 'MERAH') {
-                $('.js-tanding-display-merah-nama').text(data.merah.nama + " (Pemenang)")
-                $('.sisi-biru.display-name').css("background-color", "dimgrey")
-                $('.sisi-merah.display-name').addClass("glow-img-danger")
+                // $('.js-tanding-display-merah-nama').text(data.merah.nama + " (Pemenang)")
+                // $('.sisi-biru.display-name').css("background-color", "dimgrey")
+                // $('.sisi-merah.display-name').addClass("glow-img-danger")
+                $('.js-indikator-kemenangan[data-sudut="merah"][data-indikator="menang"]').show()
+                $('.js-indikator-kemenangan[data-sudut="biru"][data-indikator="kalah"]').show()
             } else if (data.pemenang === 'BIRU') {
-                $('.js-tanding-display-biru-nama').text(data.biru.nama + " (Pemenang)")
-                $('.sisi-merah.display-name').css("background-color", "dimgrey")
-                $('.sisi-biru.display-name').addClass("glow-img-primary")
+                // $('.js-tanding-display-biru-nama').text(data.biru.nama + " (Pemenang)")
+                // $('.sisi-merah.display-name').css("background-color", "dimgrey")
+                // $('.sisi-biru.display-name').addClass("glow-img-primary")
+                $('.js-indikator-kemenangan[data-sudut="biru"][data-indikator="menang"]').show()
+                $('.js-indikator-kemenangan[data-sudut="merah"][data-indikator="kalah"]').show()
             }
 
             _.each(pemberiPoin.merah, function (m) {
@@ -114,6 +120,7 @@
         $(document).ready(function () {
             renderRonde(state.ronde)
             socket.emit('get-data-pertandingan', { pertandinganId: pertandinganId })
+            $indikatorKemenangan.hide()
         });
 
         var socket = DigiSilat.createSocket("tanding", "Tanding Display", pertandinganId);
@@ -153,7 +160,7 @@
                 $('.js-tanding-display__nilai[data-juri="' + nomorJuri + '"]').css("display", "none");
                 $('.js-tanding-display__juri[data-juri="' + nomorJuri + '"]').css("display", "none");
             });
-            setWarnaRonde(state.ronde)
+            renderRonde(state.ronde)
             if (data.pemenang) {
                 state.hasil_seri = data.hasil_seri
                 renderPemenang(data, pemberiPoin, data.hasil_seri)
