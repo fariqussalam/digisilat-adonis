@@ -13,8 +13,10 @@
                     var nilai = juri.getNilai(sudut, ronde);
                     // renderNilai(sudut, juri.nomorJuri, ronde, nilai.totalRonde, nilai.total);
                     nilaiPerSudut = nilaiPerSudut + nilai.totalRonde
+                    if (state.ronde == ronde) {
+                        renderNilaiSudut(sudut, nilai.totalRonde)
+                    }
                 })
-                renderNilaiSudut(sudut, nilaiPerSudut)
             })
         }
 
@@ -170,6 +172,11 @@
         socket.on('kontrol-ronde', function (currentRonde) {
             state.ronde = currentRonde
             renderRonde(currentRonde)
+            var nomorJuri = "1"
+            var juri = new DigiSilat.Juri(nomorJuri);
+            juri.penilaian = state.dewanJuri[nomorJuri].penilaian
+            renderInitialData(juri);
+
         })
 
         function resetCountdown() {
