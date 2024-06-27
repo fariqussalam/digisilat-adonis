@@ -108,7 +108,6 @@ class SeniService {
     }
 
     async inputSkorKemantapan(pertandinganId, pertandinganData, nomorJuri, nilai, inputMode) {
-        console.log("input mode", inputMode)
         if (inputMode) {
             if (inputMode == "WIRAGA") {
                 pertandinganData.dewanJuri[nomorJuri].wiraga = nilai

@@ -396,10 +396,12 @@ class PertandinganService {
     let tipeSeni
     if (s.include(nama, 'tunggal')) {
       tipeSeni = 'tunggal'
-    } else if (s.include(nama), 'ganda') {
+    } else if (s.include(nama, 'ganda')) {
       tipeSeni = 'ganda'
-    } else if (s.include(nama), 'regu') {
-      tipeSeni = 'regu'
+    } else if (s.include(nama, 'regu')) {
+      tipeSeni = 'tunggal'
+    } else if (s.include(nama, 'trio')) {
+      tipeSeni = 'ganda'
     }
 
     if (kategori.jenis == 'TUNGGAL') tipeSeni = "tunggal"

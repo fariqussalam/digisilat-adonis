@@ -52,12 +52,12 @@
                 <div class="col-sm-4">
                     <table>
                         <tr>
-                            <td style="color:white;background-color:red"><b>PESILAT MERAH</b></td>
+                            <td style="color:black;background-color:yellow"><b>PESILAT KUNING</b></td>
                             <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-data-pertandingan__merah-nama"></td>
                         </tr>
                         <tr>
-                            <td style="color:white;background-color:red"><b>KONTINGEN</b></td>
+                            <td style="color:black;background-color:yellow"><b>KONTINGEN</b></td>
                             <td class="text-center p-r-5"><b>&nbsp;&nbsp;:</b></td>
                             <td class="js-data-pertandingan__merah-kontingen"></td>
                         </tr>
@@ -91,11 +91,11 @@
                             <th colspan="6" class="text-center">Babak III</th>
                         </tr>
                         <tr>
-                            <th colspan="3" class="text-center" style="background-color:red;color:white">Merah</th>
+                            <th colspan="3" class="text-center" style="background-color:yellow;color:black">Kuning</th>
                             <th colspan="3" class="text-center" style="background-color:blue;color:white">Biru</th>
-                            <th colspan="3" class="text-center" style="background-color:red;color:white">Merah</th>
+                            <th colspan="3" class="text-center" style="background-color:yellow;color:black">Kuning</th>
                             <th colspan="3" class="text-center" style="background-color:blue;color:white">Biru</th>
-                            <th colspan="3" class="text-center" style="background-color:red;color:white">Merah</th>
+                            <th colspan="3" class="text-center" style="background-color:yellow;color:black">Kuning</th>
                             <th colspan="3" class="text-center" style="background-color:blue;color:white">Biru</th>
                         </tr>
                         <tr style="font-size:10px;">
@@ -240,15 +240,15 @@
                             <th colspan="2" class="text-center js-juri-pertandingan" data-juri="5">Juri 5</th>
                         </tr>
                         <tr>
-                            <th  class="text-center js-juri-pertandingan" data-juri="1" style="background-color:red;color:white">Merah</th>
+                            <th  class="text-center js-juri-pertandingan" data-juri="1" style="background-color:yellow;color:black">Kuning</th>
                             <th  class="text-center js-juri-pertandingan" data-juri="1" style="background-color:blue;color:white">Biru</th>
-                            <th  class="text-center js-juri-pertandingan" data-juri="2" style="background-color:red;color:white">Merah</th>
+                            <th  class="text-center js-juri-pertandingan" data-juri="2" style="background-color:yellow;color:black">Kuning</th>
                             <th  class="text-center js-juri-pertandingan" data-juri="2" style="background-color:blue;color:white">Biru</th>
-                            <th  class="text-center js-juri-pertandingan" data-juri="3" style="background-color:red;color:white">Merah</th>
+                            <th  class="text-center js-juri-pertandingan" data-juri="3" style="background-color:yellow;color:black">Kuning</th>
                             <th  class="text-center js-juri-pertandingan" data-juri="3" style="background-color:blue;color:white">Biru</th>
-                            <th  class="text-center js-juri-pertandingan" data-juri="4" style="background-color:red;color:white">Merah</th>
+                            <th  class="text-center js-juri-pertandingan" data-juri="4" style="background-color:yellow;color:black">Kuning</th>
                             <th  class="text-center js-juri-pertandingan" data-juri="4" style="background-color:blue;color:white">Biru</th>
-                            <th  class="text-center js-juri-pertandingan" data-juri="5" style="background-color:red;color:white">Merah</th>
+                            <th  class="text-center js-juri-pertandingan" data-juri="5" style="background-color:yellow;color:black">Kuning</th>
                             <th  class="text-center js-juri-pertandingan" data-juri="5" style="background-color:blue;color:white">Biru</th>
                         </tr>
                       
@@ -429,7 +429,7 @@
       <script id="menangAngkaTemplate" type="x-tmpl-mustache">
         <div class="row">
           <div class="mb-3 col-md-6" style="margin-bottom: 3px;">
-            <label class="form-label" >Poin Merah</label>
+            <label class="form-label" >Poin Kuning</label>
             <input type="number" class="form-control" name="poin_merah" value="0">
           </div>
           <div class="mb-3 col-md-6" style="margin-bottom: 3px;">
@@ -443,14 +443,14 @@
         <div class="col-md-5">
           <span><b>Juri @{{nomor_juri}} </b></span>
           <ul>
-            <li>Nilai Merah =  @{{nilai_merah}}</li>
-            <li>Hukuman Merah =  @{{hukuman_merah}}</li>
+            <li>Nilai Kuning =  @{{nilai_merah}}</li>
+            <li>Hukuman Kuning =  @{{hukuman_merah}}</li>
             <li>Nilai Biru =  @{{nilai_biru}}</li>
             <li>Hukuman Biru =  @{{hukuman_biru}}</li>
             <div class="mt-1">
               <h5>Pemenang</h5>
               <input type="radio" class="m-2" name="pemenang_juri_@{{nomor_juri}}" value="merah">
-              <label>Merah</label>
+              <label>Kuning</label>
               <input type="radio" class="m-2" name="pemenang_juri_@{{nomor_juri}}" value="biru">
               <label>Biru</label>
             </div>

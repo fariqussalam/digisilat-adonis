@@ -166,6 +166,12 @@
             }
         }
 
+        function NilaiHukuman(kategori) {
+            this.kategori = kategori;
+            if (kategori === "w-10") this.nilai = -10;
+            else this.nilai = -5;
+        }
+
         $('.js-tunggal-juri__input-hukuman').click(function () {
             var kategori = $(this).data("hukuman");
             var isHukumanWaktu = $(this).data("waktu") === true;

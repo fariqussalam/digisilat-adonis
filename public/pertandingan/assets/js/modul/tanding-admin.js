@@ -2,8 +2,8 @@
     $(function () {
 
         function renderInitialData(juri) {
-            _.each(DigiSilat.getSudutList(), function(sudut) {
-                _.each(DigiSilat.getRondeList(), function(ronde) {
+            _.each(DigiSilat.getSudutList(), function (sudut) {
+                _.each(DigiSilat.getRondeList(), function (ronde) {
                     var nilai = juri.getNilai(sudut, ronde);
                     renderNilai(sudut, juri.nomorJuri, ronde, nilai.poin, nilai.minus, nilai.totalRonde, nilai.total, nilai.nilaiPoin, nilai.jatuhan);
                 })
@@ -11,12 +11,12 @@
         }
 
         function renderNilai(sudut, nomorJuri, ronde, poin, minus, totalRonde, total, nilaiPoin, jatuhan) {
-            var $poin = $(".js-nilai-pertandingan[data-ronde='"+ ronde +"'][data-juri='"+nomorJuri +"'][data-sudut='"+sudut+"'][data-tipe='poin']")
-            var $minus = $(".js-nilai-pertandingan[data-ronde='"+ ronde +"'][data-juri='"+ nomorJuri +"'][data-sudut='"+sudut+"'][data-tipe='minus']")
-            var $totalRonde = $(".js-nilai-pertandingan[data-ronde='"+ ronde +"'][data-juri='"+ nomorJuri +"'][data-sudut='"+sudut+"'][data-tipe='total']")
-            var $jatuhan = $(".js-nilai-pertandingan[data-ronde='"+ ronde +"'][data-juri='"+ nomorJuri +"'][data-sudut='"+sudut+"'][data-tipe='jatuhan']")
-            var $nilaiPoin = $(".js-nilai-pertandingan[data-ronde='"+ ronde +"'][data-juri='"+ nomorJuri +"'][data-sudut='"+sudut+"'][data-tipe='nilai']")
-            var $total = $(".js-nilai-pertandingan[data-ronde='total'][data-juri='"+ nomorJuri +"'][data-sudut='"+sudut+"'][data-tipe='total']")
+            var $poin = $(".js-nilai-pertandingan[data-ronde='" + ronde + "'][data-juri='" + nomorJuri + "'][data-sudut='" + sudut + "'][data-tipe='poin']")
+            var $minus = $(".js-nilai-pertandingan[data-ronde='" + ronde + "'][data-juri='" + nomorJuri + "'][data-sudut='" + sudut + "'][data-tipe='minus']")
+            var $totalRonde = $(".js-nilai-pertandingan[data-ronde='" + ronde + "'][data-juri='" + nomorJuri + "'][data-sudut='" + sudut + "'][data-tipe='total']")
+            var $jatuhan = $(".js-nilai-pertandingan[data-ronde='" + ronde + "'][data-juri='" + nomorJuri + "'][data-sudut='" + sudut + "'][data-tipe='jatuhan']")
+            var $nilaiPoin = $(".js-nilai-pertandingan[data-ronde='" + ronde + "'][data-juri='" + nomorJuri + "'][data-sudut='" + sudut + "'][data-tipe='nilai']")
+            var $total = $(".js-nilai-pertandingan[data-ronde='total'][data-juri='" + nomorJuri + "'][data-sudut='" + sudut + "'][data-tipe='total']")
             $poin.text(poin.join(","));
             $minus.text(minus.join(","));
             $jatuhan.text(jatuhan.join(","));
@@ -31,11 +31,11 @@
         var state = new DigiSilat.State.Dewan();
         var socket = DigiSilat.createSocket("tanding", "Tanding Dewan", pertandinganId)
 
-        socket.on("connect", function() {
+        socket.on("connect", function () {
             console.log(socket.connected)
             socket.emit('get-data-pertandingan', { pertandinganId: pertandinganId })
         });
-        socket.on('data-pertandingan', function(data) {
+        socket.on('data-pertandingan', function (data) {
             setDataPertandingan(data)
             state.dewanJuri = data.dewanJuri;
             var juriList = _.keys(state.dewanJuri);
@@ -44,23 +44,27 @@
                 var sisaJuri = _.difference(juriList, modified);
                 juriList = modified
             }
-            _.each(juriList, function(nomorJuri) {
+            _.each(juriList, function (nomorJuri) {
                 var juri = new DigiSilat.Juri(nomorJuri);
                 juri.penilaian = state.dewanJuri[nomorJuri].penilaian
                 renderInitialData(juri);
-            }) ;
-            _.each(sisaJuri, function(nomorJuri) {
-                $('.js-nilai-pertandingan[data-juri="'+ nomorJuri +'"]').css("display", "none");
-                $('.js-juri-pertandingan[data-juri="'+ nomorJuri +'"]').css("display", "none");
+            });
+            _.each(sisaJuri, function (nomorJuri) {
+                $('.js-nilai-pertandingan[data-juri="' + nomorJuri + '"]').css("display", "none");
+                $('.js-juri-pertandingan[data-juri="' + nomorJuri + '"]').css("display", "none");
             });
             if (data.pemenang == "MERAH" || data.pemenang == "BIRU") {
                 if (data.updated_at) setDateAndTime(data.updated_at)
                 setDataPemenang(data)
             }
         })
-        socket.on('pengumuman-pemenang', function(data) {
+        socket.on('pengumuman-pemenang', function (data) {
             if (!data) return false;
-            $(".js-pemenang__sudut").text("  " + data.sudut);
+            var sudut = data.sudut
+            if (data.sudut == "MERAH") {
+                sudut = "KUNING"
+            }
+            $(".js-pemenang__sudut").text("  " + sudut);
             $(".js-pemenang__nama").text("  " + data.nama);
             $(".js-pemenang__kontingen").text("  " + data.kontingen);
             $(".js-pemenang__point").text("  " + data.poin);
@@ -95,8 +99,8 @@
             var pemenang, sudut, alasan_kemenangan = "-";
             if (data.pemenang === 'MERAH') {
                 pemenang = data.merah
-                sudut = 'Merah'
-            } else if(data.pemenang === 'BIRU') {
+                sudut = 'Kuning'
+            } else if (data.pemenang === 'BIRU') {
                 pemenang = data.biru
                 sudut = 'Biru'
             }
@@ -110,7 +114,7 @@
             }
         }
 
-        $('.js-dewan-tanding__save-pdf').click(function() {
+        $('.js-dewan-tanding__save-pdf').click(function () {
             var url = window.location.href + "?for_printed=1"
             console.log(url)
             $('input[name="printed_url"]').val(url)

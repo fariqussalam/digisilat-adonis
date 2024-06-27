@@ -4,6 +4,7 @@
         var $tabelMax = $('.js-tunggal-display__tabel-max');
         var $tabelMin = $('.js-tunggal-display__tabel-min');
         var $tabelTotal = $('.js-tunggal-display__tabel-total');
+        var $pengumuman = $('.js-tunggal-display-pengumuman-pemenang');
 
         $(document).ready(function () {
             $tabelMax.hide();
@@ -25,10 +26,14 @@
             var nama = data.pesilat.nama + " / " + data.pesilat.kontingen.nama
             $('.js-tunggal-display-nama').text(nama)
             $('.js-tunggal-display-nomor').text("Pool " + data.nomor_pool + " / No. " + data.nomor_penampil)
+            $('.js-tunggal-display-pengumuman-pemenang__nomor').text(data.nomor_penampil)
+            $('.js-tunggal-display-pengumuman-pemenang__nama').text(data.pesilat.nama)
+            $('.js-tunggal-display-pengumuman-pemenang__kontingen').text(data.pesilat.kontingen.nama)
             renderPertandingan(data)
         })
 
         function renderPertandingan(data) {
+            $pengumuman.hide()
             var excludedJuri = ["4", "5"]
             var isDisqualified = _.find(_.values(data.dewanJuri), function (j) {
                 return j.diskualifikasi == true
@@ -48,14 +53,19 @@
                 }
                 var juri = data.dewanJuri[nomorJuri]
 
-                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wiraga"]').text(juri.wiraga)
-                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wirasa"]').text(juri.wirasa)
-                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wirama"]').text(juri.wirama)
+                var wiraga = 0, wirasa = 0, wirama = 0;
+                if (juri.wiraga) wiraga = juri.wiraga
+                if (juri.wirasa) wirasa = juri.wirasa
+                if (juri.wirama) wirama = juri.wirama
 
-                renderNilaiJurus(juri)
+                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wiraga"]').text(wiraga)
+                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wirasa"]').text(wirasa)
+                $('.js-tunggal-display-nilai[data-juri="' + nomorJuri + '"][data-nilai="wirama"]').text(wirama)
+
+                // renderNilaiJurus(juri)
                 renderNilaiHukuman(juri)
                 renderTotalNilai(juri)
-                renderNilaiKemantapan(juri)
+                // renderNilaiKemantapan(juri)
                 if (data.skor_akhir != null) {
                     renderSkorAkhir(data.skor_akhir)
                 }
@@ -97,9 +107,17 @@
         }
 
         function getTotalNilai(juri) {
-            var totalNilaiJurus = getTotalNilaiJurus(juri)
-            var totalNilaiHukuman = getTotalNilaiHukuman(juri)
-            return totalNilaiJurus + totalNilaiHukuman + juri.kemantapan
+            var nilai = getTotalNilaiHukuman(juri)
+            if (juri.wiraga) {
+                nilai += juri.wiraga
+            }
+            if (juri.wirasa) {
+                nilai += juri.wirasa
+            }
+            if (juri.wirama) {
+                nilai += juri.wirama
+            }
+            return nilai
         }
 
         function renderNilaiJurus(juri) {
@@ -108,7 +126,7 @@
         }
         function renderNilaiHukuman(juri) {
             var nilaiHukuman = getTotalNilaiHukuman(juri);
-            $('.js-tunggal-display__nilai-hukuman[data-juri="' + juri.nomorJuri + '"]').text(nilaiHukuman);
+            $('.js-tunggal-display-nilai[data-nilai="hukuman"][data-juri="' + juri.nomorJuri + '"]').text(nilaiHukuman);
         }
         function renderNilaiKemantapan(juri) {
             var nilaiKemantapan = juri.kemantapan
@@ -116,7 +134,7 @@
         }
         function renderTotalNilai(juri) {
             var totalNilai = getTotalNilai(juri);
-            $('.js-tunggal-display__nilai-total[data-juri="' + juri.nomorJuri + '"]').text(totalNilai);
+            $('.js-tunggal-display-nilai[data-nilai="total"][data-juri="' + juri.nomorJuri + '"]').text(totalNilai);
         }
 
         function renderSkorAkhir(skor_akhir) {
@@ -153,6 +171,10 @@
             $('.js-tunggal-display__pengumuman-juri[data-juri="' + nomorJuriTerendah + '"]').text("Terendah")
 
             $('.js-tunggal-display__pengumuman').removeAttr("hidden")
+
+
+            $('.js-tunggal-display-pengumuman-pemenang__nilai')
+            $pengumuman.show()
         }
 
         function resetCountdown() {
