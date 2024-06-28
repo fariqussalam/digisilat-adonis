@@ -26,8 +26,11 @@ class JadwalTandingController {
     }
 
     let undianList = []
+    // const kelasList = await Kelas.query().where({
+    //   tournament_id: tournament.id
+    // }).fetch().then((result) => result.toJSON())
     const kelasList = await Kelas.query().where({
-      tournament_id: tournament.id
+      id: 1038
     }).fetch().then((result) => result.toJSON())
 
     try {
