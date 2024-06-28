@@ -404,10 +404,6 @@ class PertandinganService {
       tipeSeni = 'ganda'
     }
 
-    if (kategori.jenis == 'TUNGGAL') tipeSeni = "tunggal"
-    else if (kategori.jenis == 'GANDA') tipeSeni = "ganda"
-    else if (kategori.jenis == 'REGU') tipeSeni = 'tunggal'
-
     return tipeSeni
   }
 

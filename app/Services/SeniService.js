@@ -303,26 +303,23 @@ class SeniService {
     Ganda
      */
     async inputSkorGanda(pertandinganId, pertandinganData, nomorJuri, nilai, kategoriNilai) {
-        if (kategoriNilai == 'teknik-serang-bela') {
-            pertandinganData.dewanJuri[nomorJuri].nilaiSerangBela = nilai
-        } else if (kategoriNilai == 'kekompakan') {
-            pertandinganData.dewanJuri[nomorJuri].nilaiKemantapan = nilai
-        } else if (kategoriNilai == 'penghayatan') {
-            pertandinganData.dewanJuri[nomorJuri].nilaiPenghayatan = nilai
-        }
-
+        pertandinganData.dewanJuri[nomorJuri][kategoriNilai] = nilai
         await this.setPertandinganData(pertandinganId, pertandinganData);
-        return await this.getPertandinganData(pertandinganId);
+        return pertandinganData;
     }
 
     async inputSkorHukumanGanda(pertandinganId, pertandinganData, nomorJuri, kategori) {
         try {
-            pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[kategori] += 1
+            if (pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[kategori] != null) {
+                pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[kategori] += 1
+            } else {
+                pertandinganData.dewanJuri[nomorJuri].nilaiHukuman[kategori] = 1
+            }
             await this.setPertandinganData(pertandinganId, pertandinganData);
         } catch (e) {
             console.log(e)
         }
-        return await this.getPertandinganData(pertandinganId);
+        return pertandinganData;
     }
 
     async hapusHukumanGanda(pertandinganId, pertandinganData, nomorJuri) {

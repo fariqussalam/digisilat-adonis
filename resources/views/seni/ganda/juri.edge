@@ -43,11 +43,17 @@
                         <table class="table table-bordered table-condensed text-center" style="font-size:20px">
                             <thead>
                             <tr class="text-center">
-                                <th class="js-ganda-juri__display text-center" data-tipe="teknik-serang-bela">Teknik Serang Bela (60-80)</th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="kualitas-teknik">Kualitas Teknik</th>
                                 <th class="text-center"></th>
-                                <th class="js-ganda-juri__display text-center" data-tipe="kekompakan">Nilai Kemantapan (50-60)</th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="kuantitas-teknik">Kuantitas Teknik</th>
                                 <th class="text-center"></th>
-                                <th class="js-ganda-juri__display text-center" data-tipe="penghayatan">Nilai Pengahayatan (50-60)</th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="ketangkasan">Ketangkasan</th>
+                                <th class="text-center"></th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="stamina">Stamina</th>
+                                <th class="text-center"></th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="kemantapan">Kemantapan</th>
+                                <th class="text-center"></th>
+                                <th class="js-ganda-juri__display text-center" data-tipe="irama">Irama</th>
                                 <th class="text-center"></th>
                                 <th class="js-ganda-juri__display text-center" data-tipe="hukuman">Nilai Hukuman</th>
                                 <th class="text-center"></th>
@@ -56,11 +62,17 @@
                             </thead>
                             <tbody>
                             <tr style="=">
-                                <td class="js-ganda-juri__display-skor" data-tipe="teknik-serang-bela">0</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="kualitas-teknik">0</td>
                                 <td>+</td>
-                                <td class="js-ganda-juri__display-skor" data-tipe="kekompakan">0</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="kuantitas-teknik">0</td>
                                 <td>+</td>
-                                <td class="js-ganda-juri__display-skor" data-tipe="penghayatan">0</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="ketangkasan">0</td>
+                                <td>+</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="stamina">0</td>
+                                <td>+</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="kemantapan">0</td>
+                                <td>+</td>
+                                <td class="js-ganda-juri__display-skor" data-tipe="irama">0</td>
                                 <td>-</td>
                                 <td class="js-ganda-juri__display-skor" data-tipe="hukuman">0</td>
                                 <td>=</td>
@@ -128,10 +140,14 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-2">
-                <button type="button" data-state="teknik-serang-bela" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:25px">N. TSB</button>
+                <button type="button" data-state="kualitas-teknik" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:20px">Kualitas TK</button>
+                <button type="button" data-state="kuantitas-teknik" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:20px">Kuantitas TK</button>
+                <button type="button" data-state="ketangkasan" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:20px">Ketangkasan</button>
             </div>
             <div class="col-sm-2">
-                <button type="button" data-state="kekompakan" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:25px">N. KMN</button>
+                <button type="button" data-state="stamina" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:20px">Stamina</button>
+                <button type="button" data-state="kemantapan" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:20px">Kemantapan</button>
+                <button type="button" data-state="irama" class="js-ganda-juri__set-state btn btn-danger btn-lg btn-block" style="font-size:25px">Irama</button>
             </div>
         </div>
         <div class="row" style="margin-top:10px">
@@ -149,10 +165,7 @@
             </div>
             <div class="col-sm-3">
             </div>
-            <div class="col-sm-2">
-                <button id="inputPGN" type="button" data-state="penghayatan" class="js-ganda-juri__set-state btn btn-lg btn-danger btn-block" style="font-size:25px;">N. PGN</button>
-            </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <button id="vButtonKG" type="button" data-hukuman="keluar-garis" class="js-ganda-juri__input-hukuman btn btn-lg btn-danger" style="font-size:25px">KG</button>
             </div>
             <div class="col-md-1 col-sm-1">
@@ -199,10 +212,13 @@
                 <button id="vButtonDis" type="button" class="btn btn-danger btn-block btn-lg" style="font-size:25px">DIS</button>
             </div>
             <div class="col-sm-1">
-                <button type="button" data-hukuman="w-5" data-waktu="true" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-5</button>
+                <button type="button" data-hukuman="w-10" data-waktu="true" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-10</button>
             </div>
             <div class="col-sm-1">
-                <button type="button" data-hukuman="w-10" data-waktu="true" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-10</button>
+                <button type="button" data-hukuman="w-15" data-waktu="true" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-15</button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" data-hukuman="w-20" data-waktu="true" class="js-ganda-juri__input-hukuman btn btn-danger btn-lg" style="font-size:25px">W-20</button>
             </div>
         </div>
         <div class="row" style="margin-top: 10px;">
@@ -291,8 +307,6 @@
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
                     </select>
                 </div>
             </div>

@@ -18,6 +18,9 @@
 
 <body>
 	<!-- container -->
+	<input type="hidden" name="pertandingan_id" value="{{ pertandingan.id }}" />
+    <input type="hidden" name="tournament_id" value="{{ tournament.id }}" />
+    <input type="hidden" name="csrf" value="{{ csrfToken }}" />
 	<div class="container-fluid bg-warning pb-2 ">
 
 		<!-- kop -->
@@ -37,7 +40,7 @@
 
 			<!-- logo -->
 			<div>
-				<img src="assets/img/sikap-pasang.png" alt="" srcset="" width="80px" />
+				<img src="/tsseni/assets/img/sikap-pasang.png" alt="" srcset="" width="80px" />
 			</div>
 			<!-- /logo -->
 		</div>
@@ -46,7 +49,7 @@
 		<!-- golongan dan kategori -->
         <div class="row mt-2">
             <div class="col-4 offset-4">
-                <h3 class="text-center p-0 m-0 text-bg-secondary py-1">REMAJA - PUTRI</h3>
+                <h3 class="text-center p-0 m-0 text-bg-secondary py-1 js-ganda-display-kategori">REMAJA - PUTRI</h3>
             </div>
         </div>
         <!-- /golongan dan kategori -->
@@ -54,10 +57,10 @@
 		<!-- kontingen dan no undian -->
         <div class="row mt-1 mb-2 ">
             <div class="col-4 offset-2">
-                <h3 class="text-center p-0 m-0 bg-white py-1">Yayan Ruhyan / Aceh B</h3>
+                <h3 class="text-center p-0 m-0 bg-white py-1 js-ganda-display-nama">Yayan Ruhyan / Aceh B</h3>
             </div>
             <div class="col-4">
-                <h3 class="text-center p-0 m-0 bg-white py-1">No. Undian 129</h3>
+                <h3 class="text-center p-0 m-0 bg-white py-1 js-ganda-display-nomor">No. Undian 129</h3>
             </div>
         </div>
         <!-- /kontingen dan no undian -->
@@ -71,7 +74,7 @@
 						<thead class="text-bg-primary">
 							<tr>
 								<th>No.</th>
-								<th>Unsur Nilai</th=>
+								<th>Unsur Nilai</th>
 								<th class="text-center">Juri 1</th>
 								<th class="text-center">Juri 2</th>
 								<th class="text-center">Juri 3</th>
@@ -82,57 +85,57 @@
 							<tr>
 								<td>1.</td>
 								<td>Kualitas Teknik</td>
-								<td class="text-center">1</td>
-								<td class="text-center">2</td>
-								<td class="text-center">3</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="kualitas-teknik">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="kualitas-teknik">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="kualitas-teknik">3</td>
 							</tr>
 							<tr>
 								<td>2.</td>
 								<td>Kuantitas Teknik</td>
-								<td class="text-center">1</td>
-								<td class="text-center">2</td>
-								<td class="text-center">3</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="kuantitas-teknik">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="kuantitas-teknik">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="kuantitas-teknik">3</td>
 							</tr>
 							<tr>
 								<td>3.</td>
 								<td>Ketangkasan dan Kecepatan</td>
-								<td class="text-center">1</td>
-								<td class="text-center">2</td>
-								<td class="text-center">3</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="ketangkasan">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="ketangkasan">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="ketangkasan">3</td>
 							</tr>
 							<tr>
 								<td>4.</td>
 								<td>Stamina dan Pernafasan</td>
-								<td class="text-center">1</td>
-								<td class="text-center">2</td>
-								<td class="text-center">3</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="stamina">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="stamina">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="stamina">3</td>
 							</tr>
 							<tr>
 								<td>5.</td>
 								<td>Kemantapan Sikap</td>
-								<td class="text-center">1</td>
-								<td class="text-center">2</td>
-								<td class="text-center">3</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="kemantapan">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="kemantapan">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="kemantapan">3</td>
 							</tr>
 							<tr>
 								<td>6.</td>
-								<td>Irama / Musik Pengirim</td>
-								<td class="text-center">1</td>
-								<td class="text-center">2</td>
-								<td class="text-center">3</td>
+								<td>Irama / Musik Pengiring</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="irama">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="irama">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="irama">3</td>
 							</tr>
 							<tr>
 								<td>7.</td>
 								<td>Hukuman</td>
-								<td class="text-center">1</td>
-								<td class="text-center">2</td>
-								<td class="text-center">3</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="hukuman">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="hukuman">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="hukuman">3</td>
 							</tr>
 							<tr class="text-center fw-bold">
 								<td colspan="2">Jumlah</td>
-								<td>100</td>
-								<td>200</td>
-								<td>300</td>
+								<td class="text-center js-nilai" data-juri="1" data-nilai="total">1</td>
+								<td class="text-center js-nilai" data-juri="2" data-nilai="total">2</td>
+								<td class="text-center js-nilai" data-juri="3" data-nilai="total">3</td>
 							</tr>
 						</tbody>
 					</table>
@@ -142,32 +145,32 @@
 
 			<!-- hasil akhir -->
 			<div class="col-4">
-				<div class="text-bg-success p-2 mb-3">
+				<div class="text-bg-success p-2 mb-3 js-ganda-display-pengumuman-pemenang">
 					<h3>Pengumuman Pemenang:</h3>
 					<table class="table table-sm table-borderless m-0 fw-bold text-bg-success" id="tbl-hasil">
 						<tr>
 							<td>No. Undian</td>
 							<td>:</td>
-							<td><span class="text-bg-light d-block px-2">150</span></td>
+							<td><span class="text-bg-light d-block px-2 js-ganda-display-nomor">150</span></td>
 						</tr>
 						<tr>
 							<td>Nama Pesilat</td>
 							<td>:</td>
 							<td>
-								<span class="text-bg-light d-block px-2">Yayan Ruhyan</span>
+								<span class="text-bg-light d-block px-2 js-ganda-display-nama-only">Yayan Ruhyan</span>
 							</td>
 						</tr>
 						<tr>
 							<td>Nama Kontingen</td>
 							<td>:</td>
 							<td>
-								<span class="text-bg-light d-block px-2">Banda Aceh</span>
+								<span class="text-bg-light d-block px-2 js-ganda-display-kontingen">Banda Aceh</span>
 							</td>
 						</tr>
 						<tr>
 							<td>Total Nilai</td>
 							<td>:</td>
-							<td><span class="text-bg-light d-block px-2">600</span></td>
+							<td><span class="text-bg-light d-block px-2 js-ganda-display-total-nilai">600</span></td>
 						</tr>
 					</table>
 				</div>
@@ -175,7 +178,7 @@
 				<!-- timer -->
 				<div class=" mb-2">
 					<h3 class="m-0 p-2 text-bg-dark">TIMER:</h3>
-					<span class="text-center text-bg-light" id="timer">00:00</span>
+					<span class="text-center text-bg-light js-timer-clock" id="timer">00:00</span>
 				</div>
 				<!-- /timer -->
 
@@ -191,7 +194,7 @@
 	</div>
 	<!-- /container -->
     <script src="/tsseni/assets/bootstrap5/js/bootstrap.bundle.min.js"></script>
-    <script src="/tsseni/assets/js/script.js"></script>
+    
     <script src="/pertandingan/lib/jquery.min.js"></script>
 
 <script src="/pertandingan/socket.io.min.js"></script>

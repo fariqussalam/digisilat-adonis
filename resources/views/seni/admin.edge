@@ -6,6 +6,7 @@
         <div class="col-auto d-none d-sm-block">
             <h3>Pool {{ nomor_pool }}</h3>
             <a href="{{route('JadwalSeniController.jadwalSeni')}}">Kembali Ke Jadwal</a>
+            <input type="hidden" name="pertandingan_id" value="{{ pertandinganAktif.id }}" />
         </div>
     </div>
     <div class="row">
@@ -87,6 +88,7 @@
                       </tr>
                      </tbody>
                     </table>
+                    <button type="button" class="btn btn-success js-seni-pengumuman-skor" style="margin:5px">Pengumuman Skor</button>
                   <table class="table table-striped" style="width:100%">
                       <thead>
                       <tr>

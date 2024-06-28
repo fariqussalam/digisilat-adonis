@@ -999,5 +999,11 @@
       });
     });
 
+    $('.js-seni-pengumuman-skor').click(function () {
+      var pertandinganId = $('input[name="pertandingan_id"]').val();
+      console.log("pegumuman skor")
+      socket.emit("seni-pengumuman-skor", { pertandinganId: pertandinganId })
+    })
+
   })
 })(jQuery);
