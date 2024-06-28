@@ -99,6 +99,7 @@ io.on('connection', async function (socket) {
     })
 
     socket.on("seni-pengumuman-skor", async function (data) {
+        // console.log(query.type)
         var latestData = await seniService.setPengumumanSkor(data.pertandinganId, query.type);
         if (!latestData) return false;
         io.to(room).emit('data-pertandingan-seni', latestData);

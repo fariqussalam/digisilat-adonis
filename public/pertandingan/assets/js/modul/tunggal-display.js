@@ -67,9 +67,10 @@
                 renderNilaiHukuman(juri)
                 renderTotalNilai(juri)
                 // renderNilaiKemantapan(juri)
-                if (data.skor_akhir != null) {
-                    renderSkorAkhir(data.skor_akhir)
-                }
+
+            }
+            if (data.skor_akhir != null) {
+                renderSkorAkhir(data.skor_akhir)
             }
 
             var totalNilai = 0
