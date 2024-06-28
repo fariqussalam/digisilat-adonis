@@ -47,6 +47,7 @@
                 }
                 return;
             }
+
             for (var nomorJuri in data.dewanJuri) {
                 if (excludedJuri.includes(nomorJuri)) {
                     continue
@@ -71,9 +72,11 @@
                 }
             }
 
-            _.each(excludedJuri, function (nomorJuri) {
-                $('.js-tunggal-display__juri[data-juri="' + nomorJuri + '"]').css("display", "none")
-            })
+            var totalNilai = 0
+            for (var nomorJuri in data.dewanJuri) {
+                totalNilai += getTotalNilai(data.dewanJuri[nomorJuri])
+            }
+            $('.js-tunggal-display-pengumuman-pemenang__nilai').text(totalNilai)
         }
 
         function getNilaiJurus(juri, nomorJurus) {
@@ -106,16 +109,24 @@
             return nilaiHukuman;
         }
 
+        function displayNilai(nilai) {
+            if (!nilai || nilai == undefined || nilai == null) {
+                return 0
+            } else {
+                return nilai
+            }
+        }
+
         function getTotalNilai(juri) {
             var nilai = getTotalNilaiHukuman(juri)
             if (juri.wiraga) {
-                nilai += juri.wiraga
+                nilai += displayNilai(juri.wiraga)
             }
             if (juri.wirasa) {
-                nilai += juri.wirasa
+                nilai += displayNilai(juri.wirasa)
             }
             if (juri.wirama) {
-                nilai += juri.wirama
+                nilai += displayNilai(juri.wirama)
             }
             return nilai
         }
@@ -173,7 +184,6 @@
             $('.js-tunggal-display__pengumuman').removeAttr("hidden")
 
 
-            $('.js-tunggal-display-pengumuman-pemenang__nilai')
             $pengumuman.show()
         }
 
